@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovementView : MonoBehaviour
 {
-    private Player _player;
+    private PlayerMovement _playerMovement;
     private CharacterController _characterController;
 
     private void Awake()
@@ -13,11 +13,14 @@ public class PlayerMovementView : MonoBehaviour
 
     private void Update()
     {
-        _characterController.Move(_player.MovementDirection * Time.deltaTime);
+        Vector3 motion = _playerMovement.MovementDirection * Time.deltaTime * _playerMovement.MovementSpeed;
+
+        _characterController.Move(motion);
+        transform.LookAt(_playerMovement.PositionToRotate);
     }
 
-    public void Init(Player player)
+    public void Init(PlayerMovement playerMovement)
     {
-        _player = player;
+        _playerMovement = playerMovement;
     }
 }

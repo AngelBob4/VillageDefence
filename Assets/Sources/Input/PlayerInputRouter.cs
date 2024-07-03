@@ -16,6 +16,7 @@ public class PlayerInputRouter
         Vector2 moveDirection = _playerInput.Player.Move.ReadValue<Vector2>();
 
         _playerMovement.ResetMoveDirection(moveDirection);
+        _playerMovement.Rotate();
     }
 
     public void OnEnable()
