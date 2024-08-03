@@ -2,10 +2,9 @@ using System;
 
 public class Gun
 {
-    public event Action<Enemy> Shoot;
+    public event Action<Enemy> Shot;
 
     private float _currentReloadTime = 0;
-
     private float _reloadTime;
 
     private Inventory _inventory;
@@ -16,21 +15,29 @@ public class Gun
         _inventory = inventory;
     }
 
-    public void TryToShoot(Enemy enemy)
+    public void Shoot(Enemy enemy)
     {
         if (ReadyToShoot())
         {
-            Shoot.Invoke(enemy);
+            Shot?.Invoke(enemy);
+            _currentReloadTime = _reloadTime;
         }
     }
 
     public void Tick(float time)
     {
-        _currentReloadTime -= time;
+        if (_currentReloadTime < 0)
+        {
+            _currentReloadTime = 0;
+        }
+        else
+        {
+            _currentReloadTime -= time;
+        }
     }
 
     private bool ReadyToShoot()
     {
-        return _currentReloadTime == 0 && _inventory.HasBullets;
+        return _currentReloadTime <= 0 && _inventory.HasBullets;
     }
 }

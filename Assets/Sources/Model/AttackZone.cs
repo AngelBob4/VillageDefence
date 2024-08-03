@@ -27,7 +27,7 @@ public class AttackZone
             }
             else
             {
-                _gun.TryToShoot(Target);
+                _gun.Shoot(Target);
             }
         }
     }
