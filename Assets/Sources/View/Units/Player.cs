@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Player : Unit
 {
-    public void PlayerInit(float maxHealth)
+    public new void Init(float maxHealth)
     {
-        Init(maxHealth);
+        base.Init(maxHealth);
     }
 }

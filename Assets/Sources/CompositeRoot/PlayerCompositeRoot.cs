@@ -3,8 +3,6 @@ using UnityEngine;
 public class PlayerCompositeRoot : CompositeRoot
 {
     [SerializeField] private Player _player;
-    [SerializeField] private CameraCompositeRoot _cameraCompositeRoot;
-
     [SerializeField] private PlayerMovementView _playerMovementView;
     [SerializeField] private AttackZoneView _attackZoneView;
     [SerializeField] private BackPackView _backPackView;
@@ -18,7 +16,7 @@ public class PlayerCompositeRoot : CompositeRoot
 
     public override void Compose()
     {
-        _player.PlayerInit(100f);
+        _player.Init(100f);
         _inventory = new Inventory();
 
         _gun = new Gun(1f, _inventory);
@@ -31,7 +29,6 @@ public class PlayerCompositeRoot : CompositeRoot
         _attackZoneView.Init(_attackZone);
         _inventory.Init(_backPackView, _gun, 5);
         _lootZoneView.Init(_inventory);
-        _cameraCompositeRoot.Init(_player);
         _backPackView.Init(0.3f);
     }
 

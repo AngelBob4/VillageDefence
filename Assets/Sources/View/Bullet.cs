@@ -1,26 +1,23 @@
-public class Enemy : Unit, IPoolable
-{
-    private IPool _pool;
+using UnityEngine;
 
-    public new void Init(float maxHealth)
-    {
-        base.Init(maxHealth);
-    }
+public class Bullet : MonoBehaviour, IPoolable
+{
+    private IPool _objectPool;
 
     public void SetPool(IPool objectPool)
     {
-        _pool = objectPool;
+        _objectPool = objectPool;
     }
 
     public void BackToPool()
     {
         gameObject.SetActive(false);
-        _pool.Release(this);
+        _objectPool.Release(this);
     }
 
     public void Destroy()
     {
-        if (_pool != null)
+        if (_objectPool != null)
         {
             BackToPool();
             return;

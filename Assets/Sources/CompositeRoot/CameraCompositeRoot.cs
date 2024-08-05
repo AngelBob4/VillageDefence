@@ -7,10 +7,6 @@ public class CameraCompositeRoot : CompositeRoot
 
     public override void Compose()
     {
-    }
-
-    public void Init(Player player)
-    {
-        _cameraFollowingView.Init(player);
+        _cameraFollowingView.Init(_player);
     }
 }
