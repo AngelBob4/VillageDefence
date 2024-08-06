@@ -1,32 +1,38 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemyGeneratorView : MonoBehaviour
 {
-    [SerializeField] private Enemy _template;
+    private EnemyPool _enemyPool;
+    private Player _player;
 
     private int _waveCounter = 0;
     private int _startAmountOfEnemies = 10;
+    private WaitForSeconds _spawnDelay;
 
-    private void Awake()
+    public void Init(Enemy template, Player player, float spawnDelay)
     {
-        //_enemies = new ObjectPool(_template);
-        //GenerateEnemy(2);
+        _enemyPool = new EnemyPool(template);
+        _player = player;
+        _spawnDelay = new WaitForSeconds(spawnDelay);
+
+        StartNextWave();
     }
 
     public void StartNextWave()
     {
-        //StartCoroutine(GenerateWave());
+        StartCoroutine(GenerateWave(_startAmountOfEnemies));
+        _waveCounter++;
     }
 
-    private void GenerateWave(int amountOfEnemies)
+    private IEnumerator GenerateWave(int amountOfEnemies)
     {
-        /*
         for (int i = 0; i < amountOfEnemies; i++)
         {
-            Enemy enemy = _enemies.GetObject();
+            Enemy enemy = _enemyPool.GetObject();
             enemy.gameObject.SetActive(true);
-            Debug.Log(enemy.name);
+
+            yield return _spawnDelay;
         }
-        */
     }
 }

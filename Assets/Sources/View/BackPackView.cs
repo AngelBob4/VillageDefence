@@ -20,7 +20,7 @@ public class BackPackView : MonoBehaviour
     public void RemoveBullet()
     {
         Bullet oldBullet = _bullets.Pop();
-        oldBullet.gameObject.SetActive(false);
+        oldBullet.Destroy();
     }
 
     private void SetPosition(Bullet bullet)

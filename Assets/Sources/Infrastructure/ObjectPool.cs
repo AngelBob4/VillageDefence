@@ -4,8 +4,8 @@ using UnityEngine;
 public abstract class ObjectPool<T> : IPool
     where T : Object, IPoolable
 {
-    private T _template;
-    private Queue<T> _pool;
+    protected T _template;
+    protected Queue<T> _pool;
 
     public ObjectPool(T template)
     {
@@ -13,7 +13,7 @@ public abstract class ObjectPool<T> : IPool
         _pool = new Queue<T>();
     }
 
-    public T GetObject()
+    public virtual T GetObject()
     {
         if (_pool.TryDequeue(out T item) == false)
         {
