@@ -15,13 +15,12 @@ public class EnemyGeneratorView : MonoBehaviour
         _enemyPool = new EnemyPool(template);
         _player = player;
         _spawnDelay = new WaitForSeconds(spawnDelay);
-
-        StartNextWave();
     }
 
     public void StartNextWave()
     {
-        StartCoroutine(GenerateWave(_startAmountOfEnemies));
+        int amountOfEnemies = _startAmountOfEnemies + _waveCounter;
+        StartCoroutine(GenerateWave(amountOfEnemies));
         _waveCounter++;
     }
 
