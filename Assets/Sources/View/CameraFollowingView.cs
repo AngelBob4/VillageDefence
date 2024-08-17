@@ -9,7 +9,7 @@ public class CameraFollowingView : MonoBehaviour
     public void Init(Player player)
     {
         _player = player;
-        _offset = new Vector3(0, 10f, -5);
+        _offset = transform.position - _player.transform.position;
     }
 
     private void Update()

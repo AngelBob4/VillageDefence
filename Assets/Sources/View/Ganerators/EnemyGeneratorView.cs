@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class EnemyGeneratorView : MonoBehaviour
+public class EnemyGeneratorView : GeneratorView
 {
     private EnemyPool _enemyPool;
     private Player _player;
@@ -9,6 +9,8 @@ public class EnemyGeneratorView : MonoBehaviour
     private int _waveCounter = 0;
     private int _startAmountOfEnemies = 10;
     private WaitForSeconds _spawnDelay;
+    private float _spawnRadius = 10f;
+    private Coroutine _currentCoroutine;
 
     public void Init(Enemy template, Player player, float spawnDelay)
     {
@@ -20,7 +22,7 @@ public class EnemyGeneratorView : MonoBehaviour
     public void StartNextWave()
     {
         int amountOfEnemies = _startAmountOfEnemies + _waveCounter;
-        StartCoroutine(GenerateWave(amountOfEnemies));
+        _currentCoroutine = StartCoroutine(GenerateWave(amountOfEnemies));
         _waveCounter++;
     }
 
@@ -29,7 +31,7 @@ public class EnemyGeneratorView : MonoBehaviour
         for (int i = 0; i < amountOfEnemies; i++)
         {
             Enemy enemy = _enemyPool.GetObject();
-            enemy.gameObject.SetActive(true);
+            SetPositionOnRadius(enemy.gameObject, _spawnRadius, _player);
 
             yield return _spawnDelay;
         }

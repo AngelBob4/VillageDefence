@@ -1,5 +1,7 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Rigidbody))]
 public class Bullet : MonoBehaviour, IPoolable
 {
     private IPool _objectPool;
@@ -9,10 +11,10 @@ public class Bullet : MonoBehaviour, IPoolable
         _objectPool = objectPool;
     }
 
-    public void BackToPool()
+    public void Reset()
     {
-        gameObject.SetActive(false);
-        _objectPool.Release(this);
+        gameObject.transform.parent = null;
+        gameObject.SetActive(true);
     }
 
     public void Destroy()
@@ -24,5 +26,11 @@ public class Bullet : MonoBehaviour, IPoolable
         }
 
         Destroy(gameObject);
+    }
+
+    public void BackToPool()
+    {
+        gameObject.SetActive(false);
+        _objectPool.Release(this);
     }
 }

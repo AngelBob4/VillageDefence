@@ -17,6 +17,12 @@ public class EnemyGenerator
         _isWaveStarting = true;
     }
 
+    public void StartWave()
+    {
+        _currentTime = _timeBetweenWaves;
+        _isWaveStarting = true;
+    }
+
     public void Tick(float time)
     {
         if (_isWaveStarting)

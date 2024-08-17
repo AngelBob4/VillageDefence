@@ -31,7 +31,7 @@ public class BackPackView : MonoBehaviour
         float verticalOffset = (_bullets.Count - 1) * _distanceBetweenBullets;
         bullet.transform.localPosition += new Vector3(0, verticalOffset, 0);
 
-        Vector3 rotationToHorizontal = new Vector3(0f, 0f, 90f);
+        Vector3 rotationToHorizontal = new Vector3(0f, 90f, 0f);
         bullet.transform.localEulerAngles = rotationToHorizontal;
     }
 }

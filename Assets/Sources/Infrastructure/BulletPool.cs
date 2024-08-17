@@ -22,10 +22,6 @@ public class BulletPool : ObjectPool<Bullet>
 
                 return newItem;
             }
-            else
-            {
-                return null;
-            }
         }
 
         return item;

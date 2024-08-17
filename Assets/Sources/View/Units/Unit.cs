@@ -3,17 +3,19 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    private float _maxHealth;
+
     public event Action Death;
 
-    public float MaxHealth { get; private set; }
     public float Health { get; private set; }
 
     public Vector3 Position => transform.position;
 
+
     public void Init(float maxHealth)
     {
-        MaxHealth = maxHealth;
-        Health = MaxHealth;
+        _maxHealth = maxHealth;
+        Health = _maxHealth;
     }
 
     public void GetDamage(float damage)
