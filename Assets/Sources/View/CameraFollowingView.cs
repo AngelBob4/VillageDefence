@@ -10,6 +10,7 @@ public class CameraFollowingView : MonoBehaviour
     {
         _player = player;
         _offset = transform.position - _player.transform.position;
+        _offset.x = 0;
     }
 
     private void Update()

@@ -7,12 +7,9 @@ public class Gun
     private float _currentReloadTime = 0;
     private float _reloadTime;
 
-    private Inventory _inventory;
-
-    public Gun(float reloadTime, Inventory inventory)
+    public Gun(float reloadTime)
     {
         _reloadTime = reloadTime;
-        _inventory = inventory;
     }
 
     public void Shoot(Enemy enemy)
@@ -24,7 +21,7 @@ public class Gun
         }
     }
 
-    public void Tick(float time)
+    public void Update(float time)
     {
         if (_currentReloadTime < 0)
         {
@@ -36,8 +33,5 @@ public class Gun
         }
     }
 
-    private bool ReadyToShoot()
-    {
-        return _currentReloadTime <= 0 && _inventory.HasBullets;
-    }
+    private bool ReadyToShoot() => _currentReloadTime <= 0;
 }

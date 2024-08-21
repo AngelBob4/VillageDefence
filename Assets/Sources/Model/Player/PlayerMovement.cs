@@ -42,8 +42,5 @@ public class PlayerMovement
             );
     }
 
-    private Vector3 ConvertVector2ToVector3(Vector2 vector)
-    {
-        return new Vector3(vector.x, 0, vector.y);
-    }
+    private Vector3 ConvertVector2ToVector3(Vector2 vector) => new Vector3(vector.x, 0, vector.y);
 }
