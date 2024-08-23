@@ -1,9 +1,14 @@
+using UnityEngine;
+
 public class Enemy : Unit, IPoolable
 {
     private IPool _pool;
+    private EnemyParticles _enemyParticles;
 
-    public new void Init(float maxHealth)
+    public void Init(float maxHealth, Particle hit, ParticleSystem death)
     {
+        _enemyParticles = new EnemyParticles(this, death, hit);
+        Death += Destroy;
         base.Init(maxHealth);
     }
 

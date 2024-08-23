@@ -8,31 +8,42 @@ public class PlayerCompositeRoot : CompositeRoot
     [SerializeField] private BackPackView _backPackView;
     [SerializeField] private LootZoneView _lootZoneView;
     [SerializeField] private Animator _animator;
+    [SerializeField] private Gun _gun;
+    [SerializeField] private Particle _shootParticle;
+    [SerializeField] private Transform _gunParticleTransform;
 
     private PlayerMovement _playerMovement;
     private PlayerInputRouter _playerInputRouter;
     private Inventory _inventory;
     private AttackZone _attackZone;
-    private Gun _gun;
     private PlayerAnimator _playerAnimator;
+    private GunParticles _gunParticles;
+
+    private float _maxHealth = 100f;
+    private float _gunReloadTime = 1f;
+    private float _gunDamage = 10f;
+    private float _movementSpeed = 5f;
+    private int _inventoryMaxBullets = 5;
+    private float _backpackBulletsOffset = 0.3f;
 
     public override void Compose()
     {
-        _player.Init(100f);
+        _player.Init(_maxHealth);
         _inventory = new Inventory();
         _playerAnimator = new PlayerAnimator();
+        _gun = new Gun(_gunReloadTime, _gunDamage);
 
-        _gun = new Gun(1f);
+        _gunParticles = new GunParticles(_shootParticle, _gun, _gunParticleTransform);
         _attackZone = new AttackZone(_gun, _playerAnimator, _inventory);
 
-        _playerMovement = new PlayerMovement(5f, _attackZone, _player);
+        _playerMovement = new PlayerMovement(_movementSpeed, _attackZone, _player);
         _playerInputRouter = new PlayerInputRouter(_playerMovement);
 
         _playerMovementView.Init(_playerMovement);
         _attackZoneView.Init(_attackZone);
-        _inventory.Init(_backPackView, _gun, 5);
+        _inventory.Init(_backPackView, _gun, _inventoryMaxBullets);
         _lootZoneView.Init(_inventory);
-        _backPackView.Init(0.3f);
+        _backPackView.Init(_backpackBulletsOffset);
         _playerAnimator.Init(_animator, _playerMovement);
     }
 
@@ -41,7 +52,7 @@ public class PlayerCompositeRoot : CompositeRoot
         _playerInputRouter.Update();
         _attackZone.Update();
         _playerAnimator.Update();
-        _gun.Update(Time.deltaTime);
+        _gun.Tick(Time.deltaTime);
     }
 
     private void OnEnable()

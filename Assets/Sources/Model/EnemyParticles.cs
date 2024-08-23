@@ -1,0 +1,35 @@
+using UnityEngine;
+
+public class EnemyParticles : Object
+{
+    private Enemy _enemy;
+    private ParticlePool _hitPool;
+    private ParticleSystem _death;
+    private Vector3 _deathParticleOffset = new Vector3(0, 1.5f, 0);
+
+    public EnemyParticles(Enemy enemy, ParticleSystem death, Particle hit)
+    {
+        _enemy = enemy;
+        _death = death;
+        _hitPool = new ParticlePool(hit);
+
+        _enemy.Death += Die;
+        _enemy.OnHit += GetHit;
+    }
+
+    public void GetHit()
+    {
+        Particle particle = _hitPool.GetObject();
+        particle.gameObject.SetActive(true);
+        particle.gameObject.transform.SetParent(_enemy.gameObject.transform);
+        particle.gameObject.transform.localPosition = Vector3.zero;
+        particle.Play();
+    }
+
+    public void Die()
+    {
+        ParticleSystem deathParticle = Object.Instantiate(_death);
+        deathParticle.gameObject.transform.position = _enemy.Position + _deathParticleOffset;
+        deathParticle.Play();
+    }
+}

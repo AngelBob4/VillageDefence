@@ -2,26 +2,29 @@ using System;
 
 public class Gun
 {
-    public event Action<Enemy> Shot;
+    public event Action Shot;
 
     private float _currentReloadTime = 0;
     private float _reloadTime;
+    private float _damage;
 
-    public Gun(float reloadTime)
+    public Gun(float reloadTime, float damage)
     {
         _reloadTime = reloadTime;
+        _damage = damage;
     }
 
     public void Shoot(Enemy enemy)
     {
         if (ReadyToShoot())
         {
-            Shot?.Invoke(enemy);
+            Shot?.Invoke();
             _currentReloadTime = _reloadTime;
+            enemy.GetDamage(_damage);
         }
     }
 
-    public void Update(float time)
+    public void Tick(float time)
     {
         if (_currentReloadTime < 0)
         {
