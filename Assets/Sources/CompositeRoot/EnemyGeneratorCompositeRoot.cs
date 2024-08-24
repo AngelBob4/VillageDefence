@@ -8,9 +8,8 @@ public class EnemyGeneratorCompositeRoot : CompositeRoot
     [SerializeField] private EnemyGeneratorView _enemyGeneratorView;
     [SerializeField] private Particle _hit;
     [SerializeField] private ParticleSystem _death;
+    [SerializeField] private EnemyFactory _enemyFactory;
 
-    private float _spawnDelay = 1f;
-    private int _timeBetweenWaves = 15;
     private EnemyGenerator _enemyGenerator;
 
     private void Update()
@@ -20,8 +19,9 @@ public class EnemyGeneratorCompositeRoot : CompositeRoot
 
     public override void Compose()
     {
-        _enemyGeneratorView.Init(_template, _player, _spawnDelay, _hit, _death);
-        _enemyGenerator = new EnemyGenerator(_enemyGeneratorView, _timeBetweenWaves);
+        _enemyFactory.Init(_template, _player, _hit, _death);
+        _enemyGeneratorView.Init(_player, _enemyFactory);
+        _enemyGenerator = new EnemyGenerator(_enemyGeneratorView);
         _enemyGenerator.StartWave();
     }
 }

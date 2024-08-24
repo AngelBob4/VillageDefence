@@ -28,7 +28,7 @@ public class Inventory
         }
     }
 
-    public void OnShoot()
+    public void OnShoot(Enemy enemy)
     {
         _bullets--;
         _backPackView.RemoveBullet();

@@ -23,11 +23,14 @@ public class Unit : MonoBehaviour
         if (damage > 0)
         {
             Health -= damage;
-            OnHit?.Invoke();
 
             if (Health <= 0)
             {
                 Death?.Invoke();
+            }
+            else
+            {
+                OnHit?.Invoke();
             }
         }
     }

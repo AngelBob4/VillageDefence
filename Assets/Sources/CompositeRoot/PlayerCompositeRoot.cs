@@ -11,6 +11,7 @@ public class PlayerCompositeRoot : CompositeRoot
     [SerializeField] private Gun _gun;
     [SerializeField] private Particle _shootParticle;
     [SerializeField] private Transform _gunParticleTransform;
+    [SerializeField] private TrailRenderer _shootingTrail;
 
     private PlayerMovement _playerMovement;
     private PlayerInputRouter _playerInputRouter;
@@ -33,7 +34,7 @@ public class PlayerCompositeRoot : CompositeRoot
         _playerAnimator = new PlayerAnimator();
         _gun = new Gun(_gunReloadTime, _gunDamage);
 
-        _gunParticles = new GunParticles(_shootParticle, _gun, _gunParticleTransform);
+        _gunParticles = new GunParticles(_shootParticle, _gun, _gunParticleTransform, _shootingTrail);
         _attackZone = new AttackZone(_gun, _playerAnimator, _inventory);
 
         _playerMovement = new PlayerMovement(_movementSpeed, _attackZone, _player);

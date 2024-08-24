@@ -2,7 +2,7 @@ using System;
 
 public class Gun
 {
-    public event Action Shot;
+    public event Action<Enemy> Shot;
 
     private float _currentReloadTime = 0;
     private float _reloadTime;
@@ -18,7 +18,7 @@ public class Gun
     {
         if (ReadyToShoot())
         {
-            Shot?.Invoke();
+            Shot?.Invoke(enemy);
             _currentReloadTime = _reloadTime;
             enemy.GetDamage(_damage);
         }

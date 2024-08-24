@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 28573753}
   - component: {fileID: 28573752}
   - component: {fileID: 28573754}
+  - component: {fileID: 28573755}
   m_Layer: 0
   m_Name: Generators
   m_TagString: Untagged
@@ -180,6 +181,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c4a71d34d4d03948b0a9a309062096f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &28573755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28573751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dd775d039d37944c8f40edaae3e8b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &171891554
@@ -1224,6 +1237,7 @@ MonoBehaviour:
   _animator: {fileID: 4742051493421519840}
   _shootParticle: {fileID: 1739290825215964288, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
   _gunParticleTransform: {fileID: 370722326}
+  _shootingTrail: {fileID: 8940828786187838174, guid: 0800f3499c5b4634aa1aad70b70dba53, type: 3}
 --- !u!114 &1186472328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1258,8 +1272,11 @@ MonoBehaviour:
   _template: {fileID: 6848961775766634435, guid: 868dcf237a545584d8abb47f313f2381, type: 3}
   _player: {fileID: 2622815598285528396}
   _enemyGeneratorView: {fileID: 28573754}
-  _hit: {fileID: 5579744808131541710, guid: 2e1e9506f5904a64b81744324fb7cd50, type: 3}
+  _hit: {fileID: -7957348683013517078, guid: a956a4a8af08ec14fb55e897faebfd98, type: 3}
   _death: {fileID: 5985634496115995770, guid: 463cf9f7af4680240898f6aeba3fe3e6, type: 3}
+  _enemyFactory: {fileID: 28573755}
+  _movement: {fileID: 5217978776780313628, guid: 868dcf237a545584d8abb47f313f2381, type: 3}
+  _attackZone: {fileID: 0}
 --- !u!114 &1186472330
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,43 +3,35 @@ using System.Collections;
 
 public class EnemyGeneratorView : GeneratorView
 {
-    private EnemyPool _enemyPool;
     private Player _player;
-
-    private int _waveCounter = 0;
-    private int _startAmountOfEnemies = 2;
-
-    private float _enemyMaxHealth = 20f;
-    private float _spawnRadius = 7f;
-    private WaitForSeconds _spawnDelay;
+    private EnemyFactory _enemyFactory;
     private Coroutine _currentCoroutine;
 
-    private Particle _hit;
-    private ParticleSystem _death;
+    private Vector3 _enemyOffset = new Vector3(0, 0.1f, 0);
+    private float _spawnRadius = 7f;
+    private WaitForSeconds _spawnDelay;
+    private float _delay = 1f;
 
-    public void Init(Enemy template, Player player, float spawnDelay, Particle hit, ParticleSystem death)
+    public void Init(Player player, EnemyFactory enemyFactory)
     {
-        _enemyPool = new EnemyPool(template);
         _player = player;
-        _spawnDelay = new WaitForSeconds(spawnDelay);
-        _hit = hit;
-        _death = death;
+        _spawnDelay = new WaitForSeconds(_delay);
+        _enemyFactory = enemyFactory;
     }
 
-    public void StartNextWave()
+    public void StartNextWave(int amountOfEnemies)
     {
-        int amountOfEnemies = _startAmountOfEnemies + _waveCounter;
         _currentCoroutine = StartCoroutine(GenerateWave(amountOfEnemies));
-        _waveCounter++;
     }
 
     private IEnumerator GenerateWave(int amountOfEnemies)
     {
         for (int i = 0; i < amountOfEnemies; i++)
         {
-            Enemy enemy = _enemyPool.GetObject();
-            enemy.Init(_enemyMaxHealth, _hit, _death);
+            Enemy enemy = _enemyFactory.Create();
             SetPositionOnRadius(enemy.gameObject, _spawnRadius, _player);
+            enemy.gameObject.transform.position += _enemyOffset;
+            enemy.gameObject.SetActive(true);
 
             yield return _spawnDelay;
         }
