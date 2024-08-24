@@ -16,7 +16,7 @@ public class Enemy : Unit, IPoolable
         enemyAnimator.Init(animator);
 
         _movement.Init(target);
-        _attackZone.Init(target, enemyAnimator);
+        _attackZone.Init(enemyAnimator);
 
         Death += Destroy;
         base.Init(maxHealth);
