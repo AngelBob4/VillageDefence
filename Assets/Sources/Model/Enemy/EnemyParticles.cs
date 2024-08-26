@@ -13,7 +13,7 @@ public class EnemyParticles : Object
         _death = death;
         _hitPool = new ParticlePool(hit);
 
-        _enemy.Death += Die;
+        _enemy.OnDeath += Die;
         _enemy.OnHit += GetHit;
     }
 

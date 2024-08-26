@@ -12,7 +12,7 @@ public class EnemyAttackZone : MonoBehaviour
         _animator = animator;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.TryGetComponent(out Player player))
         {

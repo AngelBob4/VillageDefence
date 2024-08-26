@@ -18,7 +18,7 @@ public class Enemy : Unit, IPoolable
         _movement.Init(target);
         _attackZone.Init(enemyAnimator);
 
-        Death += Destroy;
+        OnDeath += Destroy;
         base.Init(maxHealth);
     }
 
@@ -42,5 +42,10 @@ public class Enemy : Unit, IPoolable
         }
 
         Destroy(gameObject);
+    }
+
+    public void HitPlayer()
+    {
+        _attackZone.HitPlayer();
     }
 }

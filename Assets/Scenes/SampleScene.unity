@@ -1275,8 +1275,6 @@ MonoBehaviour:
   _hit: {fileID: -7957348683013517078, guid: a956a4a8af08ec14fb55e897faebfd98, type: 3}
   _death: {fileID: 5985634496115995770, guid: 463cf9f7af4680240898f6aeba3fe3e6, type: 3}
   _enemyFactory: {fileID: 28573755}
-  _movement: {fileID: 5217978776780313628, guid: 868dcf237a545584d8abb47f313f2381, type: 3}
-  _attackZone: {fileID: 0}
 --- !u!114 &1186472330
 MonoBehaviour:
   m_ObjectHideFlags: 0

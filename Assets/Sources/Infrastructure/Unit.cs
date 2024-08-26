@@ -5,7 +5,7 @@ public class Unit : MonoBehaviour
 {
     private float _maxHealth;
 
-    public event Action Death;
+    public event Action OnDeath;
     public event Action OnHit;
 
     public float Health { get; private set; }
@@ -26,7 +26,7 @@ public class Unit : MonoBehaviour
 
             if (Health <= 0)
             {
-                Death?.Invoke();
+                OnDeath?.Invoke();
             }
             else
             {
