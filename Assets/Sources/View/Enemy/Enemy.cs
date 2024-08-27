@@ -5,6 +5,7 @@ public class Enemy : Unit, IPoolable
 {
     [SerializeField] private EnemyMovement _movement;
     [SerializeField] private EnemyAttackZone _attackZone;
+    [SerializeField] private UnitHelathBar _healthBar;
 
     private IPool _pool;
 
@@ -13,13 +14,13 @@ public class Enemy : Unit, IPoolable
         new EnemyParticles(this, death, hit);
         Animator animator = GetComponent<Animator>();
         EnemyAnimator enemyAnimator = new EnemyAnimator();
-        enemyAnimator.Init(animator);
 
+        enemyAnimator.Init(animator);
         _movement.Init(target);
         _attackZone.Init(enemyAnimator);
 
         OnDeath += Destroy;
-        base.Init(maxHealth);
+        base.Init(maxHealth, _healthBar);
     }
 
     public void SetPool(IPool objectPool)

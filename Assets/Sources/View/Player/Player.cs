@@ -1,15 +1,13 @@
-using UnityEngine;
-
 public class Player : Unit
 {
-    public new void Init(float maxHealth)
+    public new void Init(float maxHealth, UnitHelathBar healthBar)
     {
         OnDeath += Death;
-        base.Init(maxHealth);
+        base.Init(maxHealth, healthBar);
     }
 
     private void Death()
     {
-        Destroy(this);
+        gameObject.SetActive(false);
     }
 }

@@ -12,6 +12,7 @@ public class PlayerCompositeRoot : CompositeRoot
     [SerializeField] private Particle _shootParticle;
     [SerializeField] private Transform _gunParticleTransform;
     [SerializeField] private TrailRenderer _shootingTrail;
+    [SerializeField] private UnitHelathBar _healthBar;
 
     private PlayerMovement _playerMovement;
     private PlayerInputRouter _playerInputRouter;
@@ -29,7 +30,7 @@ public class PlayerCompositeRoot : CompositeRoot
 
     public override void Compose()
     {
-        _player.Init(_maxHealth);
+        _player.Init(_maxHealth, _healthBar);
         _inventory = new Inventory();
         _playerAnimator = new PlayerAnimator();
         _gun = new Gun(_gunReloadTime, _gunDamage);

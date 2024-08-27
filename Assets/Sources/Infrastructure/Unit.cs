@@ -12,10 +12,11 @@ public class Unit : MonoBehaviour
 
     public Vector3 Position => transform.position;
 
-    public void Init(float maxHealth)
+    public void Init(float maxHealth, UnitHelathBar healthBar)
     {
         _maxHealth = maxHealth;
         Health = _maxHealth;
+        healthBar.Init(_maxHealth, this);
     }
 
     public void GetDamage(float damage)
