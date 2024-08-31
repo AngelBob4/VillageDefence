@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GeneratorView : MonoBehaviour
+public class Generator : MonoBehaviour
 {
     protected void SetPositionOnRadius(GameObject gameObject, float radius, Player player)
     {

@@ -36,5 +36,10 @@ public class Gun
         }
     }
 
+    public void ResetDamage(float damage)
+    {
+        _damage = damage;
+    }
+
     private bool ReadyToShoot() => _currentReloadTime <= 0;
 }

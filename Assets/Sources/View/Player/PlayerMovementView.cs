@@ -5,6 +5,7 @@ public class PlayerMovementView : MonoBehaviour
 {
     private PlayerMovement _playerMovement;
     private CharacterController _characterController;
+    private Transform _body;
 
     private void Awake()
     {
@@ -16,7 +17,7 @@ public class PlayerMovementView : MonoBehaviour
         Vector3 motion = _playerMovement.MovementDirection * _playerMovement.MovementSpeed * Time.deltaTime;
 
         _characterController.Move(motion);
-        transform.LookAt(_playerMovement.PositionToRotate);
+        _body.LookAt(_playerMovement.PositionToRotate);
 
         if (_characterController.isGrounded == false)
         {
@@ -25,8 +26,9 @@ public class PlayerMovementView : MonoBehaviour
         }
     }
 
-    public void Init(PlayerMovement playerMovement)
+    public void Init(PlayerMovement playerMovement, Transform body)
     {
         _playerMovement = playerMovement;
+        _body = body;
     }
 }

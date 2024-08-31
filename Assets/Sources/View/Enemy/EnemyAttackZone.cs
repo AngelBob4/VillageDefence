@@ -6,6 +6,7 @@ public class EnemyAttackZone : MonoBehaviour
     private Player _target;
     private EnemyAnimator _animator;
     private float _damage = 10f;
+    private bool _isAttacking = false;
 
     public void Init(EnemyAnimator animator)
     {
@@ -14,9 +15,13 @@ public class EnemyAttackZone : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if (_isAttacking)
+            return;
+
         if (other.TryGetComponent(out Player player))
         {
             _target = player;
+            _isAttacking = true;
             _animator.Shoot();
         }
     }
@@ -24,5 +29,6 @@ public class EnemyAttackZone : MonoBehaviour
     public void HitPlayer()
     {
         _target.GetDamage(_damage);
+        _isAttacking = false;
     }
 }

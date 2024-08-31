@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BulletGeneratorView : GeneratorView
+public class BulletGeneratorView : Generator
 {
     private Bullet _template;
     private Player _player;

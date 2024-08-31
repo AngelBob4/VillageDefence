@@ -8,12 +8,13 @@ public class PlayerCompositeRoot : CompositeRoot
     [SerializeField] private BackPackView _backPackView;
     [SerializeField] private LootZoneView _lootZoneView;
     [SerializeField] private Animator _animator;
-    [SerializeField] private Gun _gun;
     [SerializeField] private Particle _shootParticle;
     [SerializeField] private Transform _gunParticleTransform;
     [SerializeField] private TrailRenderer _shootingTrail;
     [SerializeField] private UnitHelathBar _healthBar;
+    [SerializeField] private Transform _body;
 
+    private Gun _gun;
     private PlayerMovement _playerMovement;
     private PlayerInputRouter _playerInputRouter;
     private Inventory _inventory;
@@ -41,7 +42,7 @@ public class PlayerCompositeRoot : CompositeRoot
         _playerMovement = new PlayerMovement(_movementSpeed, _attackZone, _player);
         _playerInputRouter = new PlayerInputRouter(_playerMovement);
 
-        _playerMovementView.Init(_playerMovement);
+        _playerMovementView.Init(_playerMovement, _body);
         _attackZoneView.Init(_attackZone);
         _inventory.Init(_backPackView, _gun, _inventoryMaxBullets);
         _lootZoneView.Init(_inventory);

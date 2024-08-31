@@ -10,12 +10,12 @@ public class UnitHelathBar : MonoBehaviour
 
     public void Init(float maxHealth, Unit unit)
     {
+        gameObject.transform.GetChild(0).TryGetComponent(out Slider slider);
         _maxHealth = maxHealth;
         _unit = unit;
-        unit.OnHit += HealthChanged;
-        gameObject.transform.GetChild(0).TryGetComponent(out Slider slider);
-        _slider = slider;
         _mainCamera = Camera.main.transform;
+        _slider = slider;
+        unit.OnHit += HealthChanged;
     }
 
     public void HealthChanged()

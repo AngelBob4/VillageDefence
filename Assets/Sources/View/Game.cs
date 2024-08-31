@@ -5,15 +5,21 @@ public class Game : MonoBehaviour
     private StartScreen _startScreen;
     private EndGameScreen _endGameScreen;
     private EnemyGenerator _enemyGenerator;
+    private UpgradeScreen _upgradeScreen;
 
-    public void Init(EnemyGenerator enemyGenerator, StartScreen startScreen, EndGameScreen endGameScreen)
+    public void Init(EnemyGenerator enemyGenerator, StartScreen startScreen, EndGameScreen endGameScreen, UpgradeScreen upgradeScreen)
     {
         _enemyGenerator = enemyGenerator;
         _startScreen = startScreen;
         _endGameScreen = endGameScreen;
+        _upgradeScreen = upgradeScreen;
 
         _startScreen.PlayButtonClicked += OnPlayButtonClick;
         _endGameScreen.RestartButtonClicked += OnRestartButtonClick;
+
+        _endGameScreen.Close();
+        _startScreen.Close();
+        _upgradeScreen.Close();
     }
 
     private void OnDisable()
@@ -43,5 +49,10 @@ public class Game : MonoBehaviour
     private void StartGame()
     {
         Time.timeScale = 1;
+    }
+
+    private void UpgradePlayer()
+    {
+
     }
 }

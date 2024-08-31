@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class EnemyGeneratorView : GeneratorView
+public class EnemyGeneratorView : Generator
 {
     private Player _player;
     private EnemyFactory _enemyFactory;
