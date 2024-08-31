@@ -10,4 +10,9 @@ public class Player : Unit
     {
         gameObject.SetActive(false);
     }
+
+    public void UpgradePlayer()
+    {
+        Death();
+    }
 }

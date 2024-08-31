@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UpgradeScreen : Window
 {
     [SerializeField] private List<UpgradeButton> _upgradeButtons;
+    [SerializeField] private Image _upgradeDamage;
 
     private List<PlayerUpgrade> _playerUpgrades = new List<PlayerUpgrade>();
 
@@ -14,8 +16,7 @@ public class UpgradeScreen : Window
             button.Init(player);
         }
 
-        //_playerUpgrades.Add();
-
+        CreateUpgrades();
         base.Init();
     }
 
@@ -28,5 +29,11 @@ public class UpgradeScreen : Window
         }
 
         base.Open();
+    }
+
+    private void CreateUpgrades()
+    {
+        UpgradeDamage upgradeDamage = new UpgradeDamage(_upgradeDamage);
+        _playerUpgrades.Add(upgradeDamage);
     }
 }

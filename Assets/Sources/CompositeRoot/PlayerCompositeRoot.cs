@@ -35,7 +35,6 @@ public class PlayerCompositeRoot : CompositeRoot
         _inventory = new Inventory();
         _playerAnimator = new PlayerAnimator();
         _gun = new Gun(_gunReloadTime, _gunDamage);
-
         _gunParticles = new GunParticles(_shootParticle, _gun, _gunParticleTransform, _shootingTrail);
         _attackZone = new AttackZone(_gun, _playerAnimator, _inventory);
 

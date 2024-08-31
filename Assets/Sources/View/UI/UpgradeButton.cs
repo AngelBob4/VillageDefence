@@ -1,13 +1,15 @@
+using Lean.Localization;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
 public class UpgradeButton : MonoBehaviour
 {
-    [SerializeField] private Text _description;
-    [SerializeField] private Text _percentsOfEfficiency;
+    [SerializeField] private LeanLocalizedText _descriptionLocalization;
+    [SerializeField] private Text _percentsOfEfficiencyLocalization;
+    [SerializeField] private Image _image;
 
-    private PlayerUpgrade _playerUpgrade; 
+    private PlayerUpgrade _playerUpgrade;
     private Button _button;
     private Player _player;
 
@@ -19,8 +21,9 @@ public class UpgradeButton : MonoBehaviour
     public void Reset(PlayerUpgrade playerUpgrade)
     {
         _playerUpgrade = playerUpgrade;
-        _description.text = _playerUpgrade.Description;
-        _percentsOfEfficiency.text = _playerUpgrade.PercentsOfEfficiency;
+        _descriptionLocalization.TranslationName = _playerUpgrade.Description;
+        _percentsOfEfficiencyLocalization.text = _playerUpgrade.PercentsOfEfficiency;
+        _image.sprite = _playerUpgrade.Image.sprite;
     }
 
     private void OnEnable()
