@@ -2070,16 +2070,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 2622815598285528396}
-  _playerMovementView: {fileID: 2782637347531627335}
-  _attackZoneView: {fileID: 6722803363962053916}
-  _backPackView: {fileID: 8103888967097344506}
-  _lootZoneView: {fileID: 7527741383175106157}
-  _animator: {fileID: 4742051493421519840}
-  _shootParticle: {fileID: 1739290825215964288, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
-  _gunParticleTransform: {fileID: 370722326}
-  _shootingTrail: {fileID: 8940828786187838174, guid: 0800f3499c5b4634aa1aad70b70dba53, type: 3}
-  _healthBar: {fileID: 1607706315}
-  _body: {fileID: 4721430355220451607}
 --- !u!114 &1186472328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2304,7 +2294,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1309074380}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -4826,6 +4816,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486c0e89fc1a30a44ad4dcb8e0e0c005, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerMovementView: {fileID: 2782637347531627335}
+  _attackZoneView: {fileID: 6722803363962053916}
+  _backPackView: {fileID: 8103888967097344506}
+  _lootZoneView: {fileID: 7527741383175106157}
+  _animator: {fileID: 4742051493421519840}
+  _shootParticle: {fileID: 1739290825215964288, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+  _gunParticleTransform: {fileID: 370722326}
+  _shootingTrail: {fileID: 8940828786187838174, guid: 0800f3499c5b4634aa1aad70b70dba53, type: 3}
+  _healthBar: {fileID: 1607706315}
+  _body: {fileID: 4721430355220451607}
 --- !u!1 &2651395229088771693
 GameObject:
   m_ObjectHideFlags: 0

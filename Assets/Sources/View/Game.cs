@@ -20,7 +20,6 @@ public class Game : MonoBehaviour
         _endGameScreen.Close();
         _startScreen.Close();
         _upgradeScreen.Close();
-        _upgradeScreen.Open();
     }
 
     private void OnDisable()
