@@ -1,16 +1,11 @@
-using UnityEngine.UI;
+using UnityEngine;
 
 public class UpgradeDamage : PlayerUpgrade
 {
-    public UpgradeDamage(Image image)
+    public UpgradeDamage(Sprite image)
     {
         _description = "Increase damage";
-        _percentsOfEfficiency = "15%";
-        _image = image;
-    }
-
-    public override void Upgrade(Player player)
-    {
-        player.UpgradePlayer();
+        _efficiency = 15;
+        _sprite = image;
     }
 }

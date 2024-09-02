@@ -1,14 +1,17 @@
-using UnityEngine.UI;
+using UnityEngine;
 
 public abstract class PlayerUpgrade
 {
     protected string _description;
-    protected string _percentsOfEfficiency;
-    protected Image _image;
+    protected int _efficiency;
+    protected Sprite _sprite;
 
     public string Description => _description;
-    public string PercentsOfEfficiency => _percentsOfEfficiency;
-    public Image Image => _image;
+    public int Efficiency => _efficiency;
+    public Sprite Sprite => _sprite;
 
-    public abstract void Upgrade(Player player);
+    public void Upgrade(Player player)
+    {
+        player.UpgradePlayer(this);
+    }
 }

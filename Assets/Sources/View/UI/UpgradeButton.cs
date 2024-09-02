@@ -22,8 +22,8 @@ public class UpgradeButton : MonoBehaviour
     {
         _playerUpgrade = playerUpgrade;
         _descriptionLocalization.TranslationName = _playerUpgrade.Description;
-        _percentsOfEfficiencyLocalization.text = _playerUpgrade.PercentsOfEfficiency;
-        _image.sprite = _playerUpgrade.Image.sprite;
+        _percentsOfEfficiencyLocalization.text = _playerUpgrade.Efficiency.ToString() + "%";
+        _image.sprite = _playerUpgrade.Sprite;
     }
 
     private void OnEnable()

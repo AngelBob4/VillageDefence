@@ -20,6 +20,7 @@ public class PlayerCompositeRoot : CompositeRoot
 
     private void Update()
     {
+        _player.Tick(Time.deltaTime);
         _playerInputRouter.Update();
         _attackZone.Update();
         _playerAnimator.Update();

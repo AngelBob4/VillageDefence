@@ -22,6 +22,5 @@ public class EnemyGeneratorCompositeRoot : CompositeRoot
         _enemyFactory.Init(_template, _player, _hit, _death);
         _enemyGeneratorView.Init(_player, _enemyFactory);
         _enemyGenerator = new EnemyGenerator(_enemyGeneratorView);
-        _enemyGenerator.StartWave();
     }
 }

@@ -8,7 +8,7 @@ public class Unit : MonoBehaviour
     public event Action OnDeath;
     public event Action OnHit;
 
-    public float Health { get; private set; }
+    public float Health { get; protected set; }
 
     public Vector3 Position => transform.position;
 

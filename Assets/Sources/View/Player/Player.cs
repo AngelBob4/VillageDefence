@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class Player : Unit
 {
@@ -21,24 +22,34 @@ public class Player : Unit
     private PlayerAnimator _playerAnimator;
     private GunParticles _gunParticles;
 
-    private float _maxHealth = 100f;
+    private float _playerMaxHealth = 100f;
     private float _gunReloadTime = 1f;
     private float _gunDamage = 10f;
     private float _movementSpeed = 5f;
     private int _inventoryMaxBullets = 5;
-    private float _backpackBulletsOffset = 0.3f;
+    private float _backpackBulletsOffset = 0.3f; 
+    private float _regeneration = 0; 
 
     public Gun Gun => _gun;
     public PlayerInputRouter PlayerInputRouter => _playerInputRouter;
     public AttackZone AttackZone => _attackZone;
     public PlayerAnimator PlayerAnimator => _playerAnimator;
 
+    private void OnEnable()
+    {
+        _playerInputRouter.OnEnable();
+    }
+
+    private void OnDisable()
+    {
+        _playerInputRouter.OnDisable();
+    }
+
     public void Init()
     {
-        this.Init(_maxHealth, _healthBar);
         _inventory = new Inventory();
         _playerAnimator = new PlayerAnimator();
-        _gun = new Gun(_gunReloadTime, _gunDamage);
+        _gun = new Gun(_gunReloadTime, _gunDamage, this);
         _gunParticles = new GunParticles(_shootParticle, _gun, _gunParticleTransform, _shootingTrail);
         _attackZone = new AttackZone(_gun, _playerAnimator, _inventory);
 
@@ -53,26 +64,43 @@ public class Player : Unit
         _playerAnimator.Init(_animator, _playerMovement);
 
         OnDeath += Death;
-        base.Init(_maxHealth, _healthBar);
+        base.Init(_playerMaxHealth, _healthBar);
     }
 
-    private void OnEnable()
+    public void Tick(float time)
     {
-        _playerInputRouter.OnEnable();
+        Heal(_regeneration * time);
     }
 
-    private void OnDisable()
+    public void Heal(float heal)
     {
-        _playerInputRouter.OnDisable();
+        if (heal >= 0)
+            Health += heal;
+    }
+
+    public void UpgradePlayer(PlayerUpgrade upgrade)
+    {
+        Upgrade((dynamic)upgrade);
+    }
+
+    private void Upgrade(UpgradeDamage upgrade)
+    {
+        _gun.AppendDamage(upgrade.Efficiency);
+    }
+
+    private void Upgrade(UpgradeLifesteal upgrade)
+    {
+        _gun.AppendLifesteal(upgrade.Efficiency);
+    }
+
+    private void Upgrade(UpgradeRegeneration upgrade)
+    {
+        if (upgrade.Efficiency >= 0)
+            _regeneration += upgrade.Efficiency;
     }
 
     private void Death()
     {
         gameObject.SetActive(false);
-    }
-
-    public void UpgradePlayer()
-    {
-        Death();
     }
 }

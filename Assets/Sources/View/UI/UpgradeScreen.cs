@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using System.Linq;
+using System;
 
 public class UpgradeScreen : Window
 {
     [SerializeField] private List<UpgradeButton> _upgradeButtons;
-    [SerializeField] private Image _upgradeDamage;
+    [SerializeField] private Sprite _upgradeDamage;
+    [SerializeField] private Sprite _upgradeRegeneration;
+    [SerializeField] private Sprite _upgradeLifesteal;
 
     private List<PlayerUpgrade> _playerUpgrades = new List<PlayerUpgrade>();
 
@@ -22,10 +25,11 @@ public class UpgradeScreen : Window
 
     public override void Open()
     {
-        foreach (UpgradeButton button in _upgradeButtons)
+        var shuffledcards = _playerUpgrades.OrderBy(_ => Guid.NewGuid()).ToList();
+
+        for (int i = 0; i < _upgradeButtons.Count; i++)
         {
-            PlayerUpgrade randomUpgrade = _playerUpgrades[Random.Range(0, _playerUpgrades.Count)];
-            button.Reset(randomUpgrade);
+            _upgradeButtons[i].Reset(shuffledcards[i]);
         }
 
         base.Open();
@@ -34,6 +38,8 @@ public class UpgradeScreen : Window
     private void CreateUpgrades()
     {
         UpgradeDamage upgradeDamage = new UpgradeDamage(_upgradeDamage);
-        _playerUpgrades.Add(upgradeDamage);
+        UpgradeLifesteal upgradeLifesteal = new UpgradeLifesteal(_upgradeLifesteal);
+        UpgradeRegeneration upgradeRegeneration = new UpgradeRegeneration(_upgradeRegeneration);
+        _playerUpgrades = new List<PlayerUpgrade>() { upgradeDamage, upgradeLifesteal, upgradeRegeneration };
     }
 }

@@ -21,6 +21,7 @@ public class Enemy : Unit, IPoolable
 
         OnDeath += Destroy;
         base.Init(maxHealth, _healthBar);
+        _healthBar.HealthChanged();
     }
 
     public void SetPool(IPool objectPool)

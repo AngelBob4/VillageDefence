@@ -1,17 +1,22 @@
 using System;
 
-public class Gun
+public class Gun 
 {
     public event Action<Enemy> Shot;
 
     private float _currentReloadTime = 0;
     private float _reloadTime;
     private float _damage;
+    private float _percentOfLifesteal = 0;
+    private Player _player;
 
-    public Gun(float reloadTime, float damage)
+    private float Lifesteal => _damage * _percentOfLifesteal / 100;
+
+    public Gun(float reloadTime, float damage, Player player)
     {
         _reloadTime = reloadTime;
         _damage = damage;
+        _player = player;
     }
 
     public void Shoot(Enemy enemy)
@@ -21,6 +26,7 @@ public class Gun
             Shot?.Invoke(enemy);
             _currentReloadTime = _reloadTime;
             enemy.GetDamage(_damage);
+            _player.Heal(Lifesteal);
         }
     }
 
@@ -36,9 +42,16 @@ public class Gun
         }
     }
 
-    public void ResetDamage(float damage)
+    public void AppendDamage(float percentOfDamage)
     {
-        _damage = damage;
+        if (percentOfDamage >= 0)
+            _damage += _damage * percentOfDamage / 100;
+    }
+
+    public void AppendLifesteal(float percentOfLifesteal)
+    {
+        if (percentOfLifesteal >= 0)
+            _percentOfLifesteal += percentOfLifesteal;
     }
 
     private bool ReadyToShoot() => _currentReloadTime <= 0;

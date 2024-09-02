@@ -5,7 +5,7 @@ public class EnemyGenerator
     private bool _isWaveStarting = false;
 
     private int _waveCounter = 0;
-    private int _startAmountOfEnemies = 2;
+    private int _startAmountOfEnemies = 10;
     private int _timeBetweenWaves = 15;
 
     public EnemyGenerator(EnemyGeneratorView enemyGeneratorView)
