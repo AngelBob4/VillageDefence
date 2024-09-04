@@ -16,7 +16,7 @@ public class UpgradeScreen : Window
     {
         foreach (UpgradeButton button in _upgradeButtons)
         {
-            button.Init(player);
+            button.Init(player, this);
         }
 
         CreateUpgrades();

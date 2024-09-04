@@ -12,10 +12,12 @@ public class UpgradeButton : MonoBehaviour
     private PlayerUpgrade _playerUpgrade;
     private Button _button;
     private Player _player;
+    private UpgradeScreen _upgradeScreen;
 
-    public void Init(Player player)
+    public void Init(Player player, UpgradeScreen upgradeScreen)
     {
         _player = player;
+        _upgradeScreen = upgradeScreen;
     }
 
     public void Reset(PlayerUpgrade playerUpgrade)
@@ -34,11 +36,12 @@ public class UpgradeButton : MonoBehaviour
 
     private void OnDisable()
     {
-        _button.onClick.AddListener(OnButtonClick);
+        _button.onClick.RemoveListener(OnButtonClick);
     }
 
     private void OnButtonClick()
     {
         _playerUpgrade.Upgrade(_player);
+        _upgradeScreen.Close();
     }
 }
