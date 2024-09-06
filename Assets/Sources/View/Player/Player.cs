@@ -13,6 +13,7 @@ public class Player : Unit
     [SerializeField] private TrailRenderer _shootingTrail;
     [SerializeField] private UnitHelathBar _healthBar;
     [SerializeField] private Transform _body;
+    [SerializeField] private AudioSource _shoot;
 
     private Gun _gun;
     private PlayerMovement _playerMovement;
@@ -49,7 +50,7 @@ public class Player : Unit
     {
         _inventory = new Inventory();
         _playerAnimator = new PlayerAnimator();
-        _gun = new Gun(_gunReloadTime, _gunDamage, this);
+        _gun = new Gun(_gunReloadTime, _gunDamage, this, _shoot);
         _gunParticles = new GunParticles(_shootParticle, _gun, _gunParticleTransform, _shootingTrail);
         _attackZone = new AttackZone(_gun, _playerAnimator, _inventory);
 

@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class Gun 
 {
@@ -9,14 +10,16 @@ public class Gun
     private float _damage;
     private float _percentOfLifesteal = 0;
     private Player _player;
+    private AudioSource _shoot;
 
     private float Lifesteal => _damage * _percentOfLifesteal / 100;
 
-    public Gun(float reloadTime, float damage, Player player)
+    public Gun(float reloadTime, float damage, Player player, AudioSource shoot)
     {
         _reloadTime = reloadTime;
         _damage = damage;
         _player = player;
+        _shoot = shoot;
     }
 
     public void Shoot(Enemy enemy)
@@ -27,6 +30,7 @@ public class Gun
             _currentReloadTime = _reloadTime;
             enemy.GetDamage(_damage);
             _player.Heal(Lifesteal);
+            _shoot.Play();
         }
     }
 

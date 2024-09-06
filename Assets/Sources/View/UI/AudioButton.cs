@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,23 +8,24 @@ public class AudioButton : MonoBehaviour
     [SerializeField] private GameObject _audioOff;
 
     private Button _button;
-    private Game _game;
+    private GameAudio _gameAudio;
 
-    public void Init(Game game)
+    private void OnDisable()
     {
+        _button.onClick.RemoveListener(ToggleMusic);
+    }
+
+    public void Init(GameAudio gameAudio)
+    {
+        _gameAudio = gameAudio;
         _button = GetComponent<Button>();
-        _game = game;
+        _button.onClick.AddListener(ToggleMusic);
     }
 
-    private void AudioOn()
+    private void ToggleMusic()
     {
-        _audioOn.SetActive(true);
-        _audioOff.SetActive(false);
-    }
-
-    private void AudioOff()
-    {
-        _audioOn.SetActive(false);
-        _audioOff.SetActive(true);
+        _gameAudio.ToggleMusic();
+        _audioOn.SetActive(_gameAudio.MusicActive);
+        _audioOff.SetActive(!_gameAudio.MusicActive);
     }
 }
