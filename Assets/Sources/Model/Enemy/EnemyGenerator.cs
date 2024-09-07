@@ -25,6 +25,11 @@ public class EnemyGenerator
         _isWaveStarting = true;
     }
 
+    public void EndWave()
+    {
+        StartWithDelay();
+    }
+
     public void Tick(float time)
     {
         if (_isWaveStarting)

@@ -12,6 +12,8 @@ public class EnemyGeneratorCompositeRoot : CompositeRoot
 
     private EnemyGenerator _enemyGenerator;
 
+    public EnemyGenerator EnemyGenerator => _enemyGenerator;
+
     private void Update()
     {
         _enemyGenerator.Tick(Time.deltaTime);
