@@ -9,6 +9,11 @@ public class Enemy : Unit, IPoolable
 
     private IPool _pool;
 
+    private void OnDisable()
+    {
+        OnDeath -= Destroy;
+    }
+
     public void Init(float maxHealth, Particle hit, ParticleSystem death, Transform target)
     {
         new EnemyParticles(this, death, hit);

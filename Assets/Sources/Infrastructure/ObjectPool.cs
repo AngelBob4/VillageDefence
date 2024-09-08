@@ -26,7 +26,7 @@ public abstract class ObjectPool<T> : IPool
         return item;
     }
 
-    public void Release(IPoolable item)
+    public virtual void Release(IPoolable item)
     {
         _pool.Enqueue(item as T);
     }

@@ -1833,7 +1833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -1972,6 +1972,7 @@ RectTransform:
   - {fileID: 397662380}
   - {fileID: 4819515667053500360}
   - {fileID: 1822229146489664785}
+  - {fileID: 1148460653}
   m_Father: {fileID: 2520033461768825916}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3086,6 +3087,98 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1148460652
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1148460653}
+  - component: {fileID: 1148460656}
+  - component: {fileID: 1148460655}
+  - component: {fileID: 1148460654}
+  m_Layer: 5
+  m_Name: TimeToWave
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1148460653
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148460652}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 567396257}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.41258332, y: 0.8654815}
+  m_AnchorMax: {x: 0.59000003, y: 0.9663333}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1148460654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148460652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a0f364739257da448aa2ee48f4a14e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1148460655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148460652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 10
+    m_MaxSize: 60
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &1148460656
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148460652}
+  m_CullTransparentMesh: 1
 --- !u!1 &1186472324
 GameObject:
   m_ObjectHideFlags: 0
@@ -3098,9 +3191,9 @@ GameObject:
   - component: {fileID: 1186472328}
   - component: {fileID: 1186472327}
   - component: {fileID: 1186472325}
-  - component: {fileID: 1186472330}
   - component: {fileID: 1186472329}
   - component: {fileID: 1186472331}
+  - component: {fileID: 1186472330}
   - component: {fileID: 1186472332}
   m_Layer: 0
   m_Name: CompositeRoot
@@ -3167,8 +3260,8 @@ MonoBehaviour:
   - {fileID: 1186472327}
   - {fileID: 1186472325}
   - {fileID: 1186472329}
-  - {fileID: 1186472330}
   - {fileID: 1186472331}
+  - {fileID: 1186472330}
   - {fileID: 1186472332}
 --- !u!114 &1186472329
 MonoBehaviour:
@@ -3189,6 +3282,7 @@ MonoBehaviour:
   _hit: {fileID: -7957348683013517078, guid: a956a4a8af08ec14fb55e897faebfd98, type: 3}
   _death: {fileID: 5985634496115995770, guid: 463cf9f7af4680240898f6aeba3fe3e6, type: 3}
   _enemyFactory: {fileID: 28573755}
+  _timeToWave: {fileID: 1148460654}
 --- !u!114 &1186472330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3202,13 +3296,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _game: {fileID: 231934843}
-  _enemyGeneratorCompositeRoot: {fileID: 1186472329}
   _startScreen: {fileID: 1359477120}
   _endGameScreen: {fileID: 619632344}
   _upgradeScreen: {fileID: 1309074384}
   _startButton: {fileID: 1442730591}
   _endGameButton: {fileID: 1483180123}
   _player: {fileID: 2622815598285528396}
+  _enemyFactory: {fileID: 28573755}
 --- !u!114 &1186472331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3241,6 +3335,7 @@ MonoBehaviour:
   _game: {fileID: 231934843}
   _exitButton: {fileID: 6287459312207906457}
   _screenOfGameHelper: {fileID: 8053184136966738309}
+  _enemyGeneratorCompositeRoot: {fileID: 1186472329}
 --- !u!1 &1272122500
 GameObject:
   m_ObjectHideFlags: 0

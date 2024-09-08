@@ -8,10 +8,11 @@ public class UICompositeRoot : CompositeRoot
     [SerializeField] private Game _game;
     [SerializeField] private Button _exitButton;
     [SerializeField] private ScreenOfGameHelper _screenOfGameHelper;
+    [SerializeField] private EnemyGeneratorCompositeRoot _enemyGeneratorCompositeRoot;
 
     public override void Compose()
     {
         _audioButton.Init(_gameAudio);
-        _screenOfGameHelper.Init(_game, _exitButton);
+        _screenOfGameHelper.Init(_game, _exitButton, _enemyGeneratorCompositeRoot);
     }
 }

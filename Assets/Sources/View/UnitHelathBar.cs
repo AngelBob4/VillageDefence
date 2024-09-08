@@ -21,6 +21,7 @@ public class UnitHelathBar : MonoBehaviour
     public void HealthChanged()
     {
         float value = _unit.Health / _maxHealth;
+
         if (_slider != null)
             _slider.value = value;
     }

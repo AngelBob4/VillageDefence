@@ -9,6 +9,7 @@ public class EnemyGeneratorCompositeRoot : CompositeRoot
     [SerializeField] private Particle _hit;
     [SerializeField] private ParticleSystem _death;
     [SerializeField] private EnemyFactory _enemyFactory;
+    [SerializeField] private TimeToWave _timeToWave;
 
     private EnemyGenerator _enemyGenerator;
 
@@ -23,6 +24,6 @@ public class EnemyGeneratorCompositeRoot : CompositeRoot
     {
         _enemyFactory.Init(_template, _player, _hit, _death);
         _enemyGeneratorView.Init(_player, _enemyFactory);
-        _enemyGenerator = new EnemyGenerator(_enemyGeneratorView);
+        _enemyGenerator = new EnemyGenerator(_enemyGeneratorView, _timeToWave, _enemyFactory);
     }
 }

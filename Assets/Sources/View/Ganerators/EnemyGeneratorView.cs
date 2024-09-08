@@ -21,6 +21,7 @@ public class EnemyGeneratorView : Generator
 
     public void StartNextWave(int amountOfEnemies)
     {
+        _enemyFactory.ResetPool(amountOfEnemies);
         _currentCoroutine = StartCoroutine(GenerateWave(amountOfEnemies));
     }
 

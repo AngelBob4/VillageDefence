@@ -4,12 +4,10 @@ public class Game : MonoBehaviour
 {
     private StartScreen _startScreen;
     private EndGameScreen _endGameScreen;
-    private EnemyGenerator _enemyGenerator;
     private UpgradeScreen _upgradeScreen;
 
-    public void Init(EnemyGeneratorCompositeRoot enemyGeneratorCompositeRoot, StartScreen startScreen, EndGameScreen endGameScreen, UpgradeScreen upgradeScreen)
+    public void Init(StartScreen startScreen, EndGameScreen endGameScreen, UpgradeScreen upgradeScreen, EnemyFactory enemyFactory)
     {
-        _enemyGenerator = enemyGeneratorCompositeRoot.EnemyGenerator;
         _startScreen = startScreen;
         _endGameScreen = endGameScreen;
         _upgradeScreen = upgradeScreen;
@@ -20,6 +18,7 @@ public class Game : MonoBehaviour
         _endGameScreen.Close();
         _startScreen.Close();
         _upgradeScreen.Close();
+        enemyFactory.EnemyPool.WaveEnded += OpenUpgradeScreen;
     }
 
     private void OnDisable()
@@ -36,6 +35,11 @@ public class Game : MonoBehaviour
     public void Resume()
     {
         Time.timeScale = 1;
+    }
+
+    private void OpenUpgradeScreen()
+    {
+        _upgradeScreen.Open();
     }
 
     private void OnGameOver()

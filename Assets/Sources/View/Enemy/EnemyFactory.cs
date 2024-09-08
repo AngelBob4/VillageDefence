@@ -8,6 +8,8 @@ public class EnemyFactory : MonoBehaviour
     private ParticleSystem _death;
     private float _enemyMaxHealth = 20f;
 
+    public EnemyPool EnemyPool => _enemyPool;
+
     public void Init(Enemy template, Player player, Particle hit, ParticleSystem death)
     {
         _enemyPool = new EnemyPool(template);
@@ -21,5 +23,10 @@ public class EnemyFactory : MonoBehaviour
         Enemy enemy = _enemyPool.GetObject();
         enemy.Init(_enemyMaxHealth, _hit, _death, _player.transform);
         return enemy;
+    }
+
+    public void ResetPool(int amountOfEnemies)
+    {
+        _enemyPool.Reset(amountOfEnemies);
     }
 }

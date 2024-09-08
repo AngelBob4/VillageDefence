@@ -6,8 +6,8 @@ public class BulletGeneratorView : Generator
     private Bullet _template;
     private Player _player;
 
-    private int _maxBulletsAmount = 10;
-    private float _delay = 2f;
+    private int _maxBulletsAmount = 15;
+    private float _delay = 1f;
     private float _spawnRadius = 7f;
 
     private BulletPool _bulletPool;
@@ -20,6 +20,7 @@ public class BulletGeneratorView : Generator
         _player = player;
         _bulletPool = new BulletPool(_template, _maxBulletsAmount);
         _spawnDelay = new WaitForSeconds(_delay);
+        StartGeneration();
     }
 
     public void StartGeneration()
