@@ -5,12 +5,14 @@ public class Game : MonoBehaviour
     private StartScreen _startScreen;
     private EndGameScreen _endGameScreen;
     private UpgradeScreen _upgradeScreen;
+    private GameAudio _gameAudio;
 
-    public void Init(StartScreen startScreen, EndGameScreen endGameScreen, UpgradeScreen upgradeScreen, EnemyFactory enemyFactory)
+    public void Init(StartScreen startScreen, EndGameScreen endGameScreen, UpgradeScreen upgradeScreen, EnemyFactory enemyFactory, GameAudio gameAudio)
     {
         _startScreen = startScreen;
         _endGameScreen = endGameScreen;
         _upgradeScreen = upgradeScreen;
+        _gameAudio = gameAudio;
 
         _startScreen.PlayButtonClicked += OnPlayButtonClick;
         _endGameScreen.RestartButtonClicked += OnRestartButtonClick;
@@ -30,11 +32,13 @@ public class Game : MonoBehaviour
     public void Pause()
     {
         Time.timeScale = 0;
+        _gameAudio.ToggleMusic();
     }
 
     public void Resume()
     {
         Time.timeScale = 1;
+        _gameAudio.ToggleMusic();
     }
 
     private void OpenUpgradeScreen()

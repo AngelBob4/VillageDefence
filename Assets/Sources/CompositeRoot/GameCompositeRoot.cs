@@ -11,12 +11,13 @@ public class GameCompositeRoot : CompositeRoot
     [SerializeField] private Button _endGameButton;
     [SerializeField] private Player _player;
     [SerializeField] private EnemyFactory _enemyFactory;
+    [SerializeField] private GameAudio _gameAudio;
 
     public override void Compose()
     {
         _startScreen.Init(_startButton);
         _endGameScreen.Init(_endGameButton);
         _upgradeScreen.Init(_player);
-        _game.Init(_startScreen, _endGameScreen, _upgradeScreen, _enemyFactory);
+        _game.Init(_startScreen, _endGameScreen, _upgradeScreen, _enemyFactory, _gameAudio);
     }
 }
