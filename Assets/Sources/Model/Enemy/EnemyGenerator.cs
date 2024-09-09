@@ -1,4 +1,4 @@
-using UnityEngine;
+using Agava.YandexGames;
 
 public class EnemyGenerator
 {
@@ -34,6 +34,11 @@ public class EnemyGenerator
 
     public void EndWave()
     {
+        if (_waveCounter % 10 == 0)
+        {
+            InterstitialAd.Show();
+        }
+
         StartWithDelay();
     }
 
