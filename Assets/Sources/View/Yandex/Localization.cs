@@ -12,13 +12,9 @@ public class Localization : MonoBehaviour
     private const string Russian = "ru";
     private const string Turkish = "tr";
 
-    private LeanLocalization _leanLocalization;
-
     private void Awake()
     {
-        _leanLocalization = GetComponent<LeanLocalization>();
-
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if !UNITY_EDITOR
         ChangeLanguage();
 #endif
     }
@@ -29,14 +25,14 @@ public class Localization : MonoBehaviour
 
         switch (languageCode)
         {
-            case English:
-                _leanLocalization.SetCurrentLanguage(EnglishCode);
-                break;
             case Russian:
-                _leanLocalization.SetCurrentLanguage(RussianCode);
+                Lean.Localization.LeanLocalization.SetCurrentLanguageAll(RussianCode);
                 break;
             case Turkish:
-                _leanLocalization.SetCurrentLanguage(TurkishCode);
+                Lean.Localization.LeanLocalization.SetCurrentLanguageAll(TurkishCode);
+                break;
+            default:
+                Lean.Localization.LeanLocalization.SetCurrentLanguageAll(EnglishCode);
                 break;
         }
     }

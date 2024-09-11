@@ -1079,6 +1079,8 @@ GameObject:
   - component: {fileID: 231934842}
   - component: {fileID: 231934841}
   - component: {fileID: 231934843}
+  - component: {fileID: 231934845}
+  - component: {fileID: 231934844}
   m_Layer: 0
   m_Name: Yandex
   m_TagString: Untagged
@@ -1123,6 +1125,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58e1fa43f7a73c44ca6a3e500fdb8ed7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &231934844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231934840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aeb0a01afe734d42a0e7c84d1e6fee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &231934845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231934840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7b452270a1055145aa04bb9def62d45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &246831002
@@ -3284,6 +3310,7 @@ MonoBehaviour:
   _death: {fileID: 5985634496115995770, guid: 463cf9f7af4680240898f6aeba3fe3e6, type: 3}
   _enemyFactory: {fileID: 28573755}
   _timeToWave: {fileID: 1148460654}
+  _videoAdvertisement: {fileID: 231934845}
 --- !u!114 &1186472330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3338,7 +3365,7 @@ MonoBehaviour:
   _exitButton: {fileID: 6287459312207906457}
   _screenOfGameHelper: {fileID: 8053184136966738309}
   _enemyGeneratorCompositeRoot: {fileID: 1186472329}
-  _videoAdd: {fileID: 7100416412507227875}
+  _videoAdd: {fileID: 231934845}
 --- !u!1 &1272122500
 GameObject:
   m_ObjectHideFlags: 0
@@ -4175,7 +4202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLanguage: Russian
   detectLanguage: 1
-  defaultLanguage: 
+  defaultLanguage: English
   saveLoad: 1
   prefabs: []
 --- !u!4 &1636642591
@@ -5731,7 +5758,6 @@ GameObject:
   - component: {fileID: 1080263584471013858}
   - component: {fileID: 8091325730550349406}
   - component: {fileID: 5157006540286896038}
-  - component: {fileID: 5124077023319892491}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -6054,21 +6080,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
+      - m_Target: {fileID: 231934844}
+        m_TargetAssemblyTypeName: CheckAuthorization, Assembly-CSharp
+        m_MethodName: OnAuthorizeButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6105,7 +6119,6 @@ GameObject:
   - component: {fileID: 2214001299051766513}
   - component: {fileID: 736720240017243058}
   - component: {fileID: 205664241745310870}
-  - component: {fileID: 8397188078815653638}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -8963,7 +8976,6 @@ GameObject:
   - component: {fileID: 7100416412507227874}
   - component: {fileID: 4640276999461240679}
   - component: {fileID: 6269460751160828509}
-  - component: {fileID: 7100416412507227875}
   m_Layer: 5
   m_Name: AddCoinsVidioPanel
   m_TagString: Untagged
@@ -9600,18 +9612,6 @@ MonoBehaviour:
   waveFrequency: 0.5
   waveLength: 0.5
   waveOriginPosition: {x: 0, y: 0, z: 0}
---- !u!114 &5124077023319892491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 389338782304731361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5126488734951028305
 GameObject:
   m_ObjectHideFlags: 0
@@ -10472,6 +10472,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 231934845}
+        m_TargetAssemblyTypeName: VideoAdvertisement, Assembly-CSharp
+        m_MethodName: ShowVideo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6046568183202986026
 GameObject:
   m_ObjectHideFlags: 0
@@ -11251,18 +11263,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7100416412507227875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4314993088089789994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47d2a8a5cb306894c87b0adda9ac9168, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7119801848687246098
 GameObject:
   m_ObjectHideFlags: 0
@@ -12568,18 +12568,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8397188078815653638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 797116762482673773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &8422269149265950201
 Transform:
   m_ObjectHideFlags: 0
@@ -12915,18 +12903,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8973130164347267825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9047364679163014856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &8976869770386367161
 Transform:
   m_ObjectHideFlags: 0
@@ -12962,7 +12938,6 @@ GameObject:
   - component: {fileID: 8305943797173553879}
   - component: {fileID: 461092471369751773}
   - component: {fileID: 5622419545693883955}
-  - component: {fileID: 8973130164347267825}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged

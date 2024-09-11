@@ -9,7 +9,7 @@ public class UICompositeRoot : CompositeRoot
     [SerializeField] private Button _exitButton;
     [SerializeField] private ScreenOfGameHelper _screenOfGameHelper;
     [SerializeField] private EnemyGeneratorCompositeRoot _enemyGeneratorCompositeRoot;
-    [SerializeField] private VideoAdd _videoAdd;
+    [SerializeField] private VideoAdvertisement _videoAdd;
 
     public override void Compose()
     {

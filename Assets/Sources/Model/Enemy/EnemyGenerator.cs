@@ -5,6 +5,7 @@ public class EnemyGenerator
     private TimeToWave _timeToWave;
     private EnemyGeneratorView _enemyGeneratorView;
     private EnemyFactory _enemyFactory;
+    private VideoAdvertisement _videoAdvertisement;
 
     private float _currentTime = 0;
     private bool _isWaveStarting = false;
@@ -12,8 +13,9 @@ public class EnemyGenerator
     private int _startAmountOfEnemies = 1;
     private int _timeBetweenWaves = 5;
 
-    public EnemyGenerator(EnemyGeneratorView enemyGeneratorView, TimeToWave timeToWave, EnemyFactory enemyFactory)
+    public EnemyGenerator(EnemyGeneratorView enemyGeneratorView, TimeToWave timeToWave, EnemyFactory enemyFactory, VideoAdvertisement videoAdvertisement)
     {
+        _videoAdvertisement = videoAdvertisement;
         _enemyGeneratorView = enemyGeneratorView;
         _timeToWave = timeToWave;
         _enemyFactory = enemyFactory;
@@ -36,7 +38,7 @@ public class EnemyGenerator
     {
         if (_waveCounter % 10 == 0)
         {
-            InterstitialAd.Show();
+            _videoAdvertisement.ShowInterstitial();
         }
 
         StartWithDelay();
