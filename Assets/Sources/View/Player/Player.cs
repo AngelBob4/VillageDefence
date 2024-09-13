@@ -86,22 +86,17 @@ public class Player : Unit
         }
     }
 
-    public void UpgradePlayer(PlayerUpgrade upgrade)
-    {
-        Upgrade((dynamic)upgrade);
-    }
-
-    private void Upgrade(UpgradeDamage upgrade)
+    public void Upgrade(UpgradeDamage upgrade)
     {
         _gun.AppendDamage(upgrade.Efficiency);
     }
 
-    private void Upgrade(UpgradeLifesteal upgrade)
+    public void Upgrade(UpgradeLifesteal upgrade)
     {
         _gun.AppendLifesteal(upgrade.Efficiency);
     }
 
-    private void Upgrade(UpgradeRegeneration upgrade)
+    public void Upgrade(UpgradeRegeneration upgrade)
     {
         if (upgrade.Efficiency >= 0)
             _regeneration += upgrade.Efficiency;

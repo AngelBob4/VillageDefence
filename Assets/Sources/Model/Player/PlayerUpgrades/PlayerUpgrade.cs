@@ -10,8 +10,5 @@ public abstract class PlayerUpgrade
     public int Efficiency => _efficiency;
     public Sprite Sprite => _sprite;
 
-    public void Upgrade(Player player)
-    {
-        player.UpgradePlayer(this);
-    }
+    public abstract void Upgrade(Player player);
 }

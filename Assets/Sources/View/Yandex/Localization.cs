@@ -2,7 +2,6 @@ using Agava.YandexGames;
 using Lean.Localization;
 using UnityEngine;
 
-[RequireComponent(typeof(LeanLocalization))]
 public class Localization : MonoBehaviour
 {
     private const string EnglishCode = "English";
@@ -12,14 +11,7 @@ public class Localization : MonoBehaviour
     private const string Russian = "ru";
     private const string Turkish = "tr";
 
-    private void Awake()
-    {
-#if !UNITY_EDITOR
-        ChangeLanguage();
-#endif
-    }
-
-    private void ChangeLanguage()
+    public void ChangeLanguage()
     {
         string languageCode = YandexGamesSdk.Environment.i18n.lang;
 

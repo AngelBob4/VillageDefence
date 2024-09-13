@@ -8,4 +8,9 @@ public class UpgradeRegeneration : PlayerUpgrade
         _efficiency = 1;
         _sprite = sprite;
     }
+
+    public override void Upgrade(Player player)
+    {
+        player.Upgrade(this);
+    }
 }
