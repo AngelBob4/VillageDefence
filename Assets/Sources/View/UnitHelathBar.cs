@@ -15,7 +15,7 @@ public class UnitHelathBar : MonoBehaviour
         _unit = unit;
         _mainCamera = Camera.main.transform;
         _slider = slider;
-        unit.OnHit += HealthChanged;
+        unit.OnHealthChanged += HealthChanged;
     }
 
     public void HealthChanged()

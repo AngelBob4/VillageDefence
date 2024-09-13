@@ -73,19 +73,6 @@ public class Player : Unit
         Heal(_regeneration * time);
     }
 
-    public void Heal(float heal)
-    {
-        if (heal >= 0)
-        {
-            Health += heal;
-
-            if (Health > _playerMaxHealth)
-            {
-                Health = _playerMaxHealth;
-            }
-        }
-    }
-
     public void UpgradePlayer(PlayerUpgrade upgrade)
     {
         Upgrade((dynamic)upgrade);
