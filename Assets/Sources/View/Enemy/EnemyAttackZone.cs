@@ -6,11 +6,12 @@ public class EnemyAttackZone : MonoBehaviour
     private Player _target;
     private EnemyAnimator _animator;
     private float _damage = 10f;
-    private bool _isAttacking = false;
+    private bool _isAttacking;
 
     public void Init(EnemyAnimator animator)
     {
         _animator = animator;
+        _isAttacking = false;
     }
 
     private void OnTriggerStay(Collider other)

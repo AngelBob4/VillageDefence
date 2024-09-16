@@ -1,31 +1,31 @@
+using LeaderboardDemo;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
-    private StartScreen _startScreen;
     private EndGameScreen _endGameScreen;
     private UpgradeScreen _upgradeScreen;
     private GameAudio _gameAudio;
+    private int _gameScore = 0;
+    private int _rewardScoreForEnemy = 10;
 
-    public void Init(StartScreen startScreen, EndGameScreen endGameScreen, UpgradeScreen upgradeScreen, EnemyFactory enemyFactory, GameAudio gameAudio)
+    public void Init(EndGameScreen endGameScreen, UpgradeScreen upgradeScreen, EnemyFactory enemyFactory, GameAudio gameAudio)
     {
-        _startScreen = startScreen;
         _endGameScreen = endGameScreen;
         _upgradeScreen = upgradeScreen;
         _gameAudio = gameAudio;
 
-        _startScreen.PlayButtonClicked += OnPlayButtonClick;
         _endGameScreen.RestartButtonClicked += OnRestartButtonClick;
 
         _endGameScreen.Close();
-        _startScreen.Close();
         _upgradeScreen.Close();
         enemyFactory.EnemyPool.WaveEnded += OpenUpgradeScreen;
+        enemyFactory.EnemyPool.EnemyReturned += AddScore;
     }
 
     private void OnDisable()
     {
-        _startScreen.PlayButtonClicked -= OnPlayButtonClick;
         _endGameScreen.RestartButtonClicked -= OnRestartButtonClick;
     }
 
@@ -41,31 +41,31 @@ public class Game : MonoBehaviour
         _gameAudio.ToggleMusic();
     }
 
-    private void OpenUpgradeScreen()
-    {
-        _upgradeScreen.Open();
-    }
-
-    private void OnGameOver()
+    public void OnGameOver()
     {
         Time.timeScale = 0;
         _endGameScreen.Open();
     }
 
-    private void OnRestartButtonClick()
+    private void OpenUpgradeScreen()
     {
-        _endGameScreen.Close();
-        StartGame();
+        _upgradeScreen.Open();
     }
 
-    private void OnPlayButtonClick()
+    private void OnRestartButtonClick()
     {
-        _startScreen.Close();
-        StartGame();
+        Agava.YandexGames.Utility.PlayerPrefs.SetInt(Constants.SCORE_PREFS_KEY, _gameScore); 
+        Agava.YandexGames.Utility.PlayerPrefs.Save();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void StartGame()
     {
         Time.timeScale = 1;
+    }
+
+    private void AddScore()
+    {
+        _gameScore += _rewardScoreForEnemy;
     }
 }

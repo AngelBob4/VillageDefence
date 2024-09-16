@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class EnemyPool : ObjectPool<Enemy>
 {
-    public event Action WaveEnded;
+    public event Action WaveEnded;    
+    public event Action EnemyReturned;
 
     private int _requiredQuantity = 0;
     private int _releasedEnemies = 0;
@@ -29,6 +30,7 @@ public class EnemyPool : ObjectPool<Enemy>
     public override void Release(IPoolable item)
     {
         _releasedEnemies++;
+        EnemyReturned?.Invoke();
 
         if (_requiredQuantity == _releasedEnemies)
         {

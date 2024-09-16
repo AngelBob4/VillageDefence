@@ -14,6 +14,7 @@ public class Player : Unit
     [SerializeField] private UnitHelathBar _healthBar;
     [SerializeField] private Transform _body;
     [SerializeField] private AudioSource _shoot;
+    [SerializeField] private Game _game;
 
     private Gun _gun;
     private PlayerMovement _playerMovement;
@@ -104,6 +105,6 @@ public class Player : Unit
 
     private void Death()
     {
-        gameObject.SetActive(false);
+        _game.OnGameOver();
     }
 }

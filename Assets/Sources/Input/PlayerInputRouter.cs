@@ -14,6 +14,7 @@ public class PlayerInputRouter
     public void Update()
     {
         Vector2 moveDirection = _playerInput.Player.Move.ReadValue<Vector2>();
+        moveDirection.Normalize();
 
         _playerMovement.ResetMoveDirection(moveDirection);
         _playerMovement.Rotate();
