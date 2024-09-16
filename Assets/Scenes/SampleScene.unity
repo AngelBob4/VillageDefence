@@ -1193,6 +1193,8 @@ GameObject:
   - component: {fileID: 231934843}
   - component: {fileID: 231934845}
   - component: {fileID: 231934846}
+  - component: {fileID: 231934848}
+  - component: {fileID: 231934847}
   m_Layer: 0
   m_Name: Yandex
   m_TagString: Untagged
@@ -1267,6 +1269,31 @@ MonoBehaviour:
   _leaderboardView: {fileID: 1534645051}
   _authorizationOfferView: {fileID: 498617325}
   _authorizationErrorView: {fileID: 831472966}
+--- !u!114 &231934847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231934840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f345213df2388b44eac79eb1ee8e087c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _AuthorizationButton: {fileID: 9191977550156193059}
+--- !u!114 &231934848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231934840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 646f57b847892cd4a95e2cf9c1139683, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &246831002
 GameObject:
   m_ObjectHideFlags: 0
@@ -4794,6 +4821,7 @@ MonoBehaviour:
   _player: {fileID: 2622815598285528396}
   _enemyFactory: {fileID: 28573755}
   _gameAudio: {fileID: 155647234}
+  _addScore: {fileID: 8433119023929790164}
 --- !u!114 &1186472331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13792,6 +13820,7 @@ GameObject:
   - component: {fileID: 4428325142064343238}
   - component: {fileID: 5875585092361115867}
   - component: {fileID: 8433119023929790163}
+  - component: {fileID: 8433119023929790164}
   m_Layer: 5
   m_Name: Points Text
   m_TagString: Untagged
@@ -13833,6 +13862,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: '-'
+--- !u!114 &8433119023929790164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8433119023929790162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e5996c07575b0e48852ab6b4c490457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _score: {fileID: 8433119023929790163}
 --- !u!4 &8485356177179586031
 Transform:
   m_ObjectHideFlags: 0

@@ -9,9 +9,11 @@ public class Game : MonoBehaviour
     private GameAudio _gameAudio;
     private int _gameScore = 0;
     private int _rewardScoreForEnemy = 10;
+    private AddScore _addScore;
 
-    public void Init(EndGameScreen endGameScreen, UpgradeScreen upgradeScreen, EnemyFactory enemyFactory, GameAudio gameAudio)
+    public void Init(EndGameScreen endGameScreen, UpgradeScreen upgradeScreen, EnemyFactory enemyFactory, GameAudio gameAudio, AddScore addScore)
     {
+        _addScore = addScore;
         _endGameScreen = endGameScreen;
         _upgradeScreen = upgradeScreen;
         _gameAudio = gameAudio;
@@ -56,6 +58,7 @@ public class Game : MonoBehaviour
     {
         Agava.YandexGames.Utility.PlayerPrefs.SetInt(Constants.SCORE_PREFS_KEY, _gameScore); 
         Agava.YandexGames.Utility.PlayerPrefs.Save();
+        Agava.YandexGames.Leaderboard.SetScore(Constants.LEADERBOARD_NAME, _gameScore);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -67,5 +70,6 @@ public class Game : MonoBehaviour
     private void AddScore()
     {
         _gameScore += _rewardScoreForEnemy;
+        _addScore.UpdateScoreView(_gameScore);
     }
 }
