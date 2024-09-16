@@ -14,7 +14,7 @@ namespace LeaderboardDemo
 
         private List<LeaderboardEntryView> _leaderboardEntryViewInstances = new();
         private LeaderboardEntryView _leaderboardPlayerViewInstance;
-        
+
         private void Awake() => _closeButton.onClick.AddListener(Hide);
         private void OnDestroy() => _closeButton.onClick.RemoveListener(Hide);
 
@@ -38,7 +38,7 @@ namespace LeaderboardDemo
 
         private LeaderboardEntryView CreateEntryView(LeaderboardEntryData entryData, Transform container)
         {
-            LeaderboardEntryView entryView = Instantiate(_leaderboardEntryViewPrefab, _mainContainer);
+            LeaderboardEntryView entryView = Instantiate(_leaderboardEntryViewPrefab, container);
             entryView.Initialize(entryData);
             
             return entryView;

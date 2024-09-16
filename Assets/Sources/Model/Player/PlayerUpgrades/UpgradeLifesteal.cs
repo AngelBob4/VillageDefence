@@ -8,4 +8,9 @@ public class UpgradeLifesteal : PlayerUpgrade
         _efficiency = 3;
         _sprite = image;
     }
+
+    public override void Upgrade(Player player)
+    {
+        player.Upgrade(this);
+    }
 }

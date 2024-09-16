@@ -3,11 +3,15 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(Localization))]
 public class SDKInitializer : MonoBehaviour
 {
+    private Localization _localization;
+
     private void Awake()
     {
         YandexGamesSdk.CallbackLogging = true;
+        _localization = GetComponent<Localization>();
     }
 
     private IEnumerator Start()
@@ -17,6 +21,9 @@ public class SDKInitializer : MonoBehaviour
 
     private void OnInitialized()
     {
+#if !UNITY_EDITOR
+        _localization.ChangeLanguage();
+#endif
         SceneManager.LoadScene(1);
     }
 }

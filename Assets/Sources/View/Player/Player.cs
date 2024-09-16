@@ -14,6 +14,7 @@ public class Player : Unit
     [SerializeField] private UnitHelathBar _healthBar;
     [SerializeField] private Transform _body;
     [SerializeField] private AudioSource _shoot;
+    [SerializeField] private Game _game;
 
     private Gun _gun;
     private PlayerMovement _playerMovement;
@@ -73,22 +74,30 @@ public class Player : Unit
         Heal(_regeneration * time);
     }
 
-    public void UpgradePlayer(PlayerUpgrade upgrade)
+    public void Heal(float heal)
     {
-        Upgrade((dynamic)upgrade);
+        if (heal >= 0)
+        {
+            Health += heal;
+
+            if (Health > _playerMaxHealth)
+            {
+                Health = _playerMaxHealth;
+            }
+        }
     }
 
-    private void Upgrade(UpgradeDamage upgrade)
+    public void Upgrade(UpgradeDamage upgrade)
     {
         _gun.AppendDamage(upgrade.Efficiency);
     }
 
-    private void Upgrade(UpgradeLifesteal upgrade)
+    public void Upgrade(UpgradeLifesteal upgrade)
     {
         _gun.AppendLifesteal(upgrade.Efficiency);
     }
 
-    private void Upgrade(UpgradeRegeneration upgrade)
+    public void Upgrade(UpgradeRegeneration upgrade)
     {
         if (upgrade.Efficiency >= 0)
             _regeneration += upgrade.Efficiency;
@@ -96,6 +105,6 @@ public class Player : Unit
 
     private void Death()
     {
-        gameObject.SetActive(false);
+        _game.OnGameOver();
     }
 }
