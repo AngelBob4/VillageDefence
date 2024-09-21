@@ -14,7 +14,7 @@ public class EnemyParticles : Object
         _hitPool = new ParticlePool(hit);
 
         _enemy.OnDeath += Die;
-        _enemy.OnHit += GetHit;
+        _enemy.OnHealthChanged += GetHit;
     }
 
     public void GetHit()

@@ -22,6 +22,18 @@ public class AudioButton : MonoBehaviour
         _button.onClick.AddListener(ToggleMusic);
     }
 
+    public void TurnOnAudio()
+    {
+        _audioOn.SetActive(true);
+        _audioOff.SetActive(false);
+    }
+
+    public void TurnOffAudio()
+    {
+        _audioOn.SetActive(false);
+        _audioOff.SetActive(true);
+    }
+
     private void ToggleMusic()
     {
         _gameAudio.ToggleMusic();

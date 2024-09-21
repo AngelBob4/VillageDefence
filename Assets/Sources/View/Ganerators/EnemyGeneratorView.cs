@@ -5,6 +5,7 @@ public class EnemyGeneratorView : Generator
 {
     private Player _player;
     private EnemyFactory _enemyFactory;
+    private EnemyGenerator _enemyGenerator;
     private Coroutine _currentCoroutine;
 
     private Vector3 _enemyOffset = new Vector3(0, 0.1f, 0);
@@ -12,8 +13,9 @@ public class EnemyGeneratorView : Generator
     private WaitForSeconds _spawnDelay;
     private float _delay = 1f;
 
-    public void Init(Player player, EnemyFactory enemyFactory)
+    public void Init(Player player, EnemyFactory enemyFactory, EnemyGenerator enemyGenerator)
     {
+        _enemyGenerator = enemyGenerator;
         _player = player;
         _spawnDelay = new WaitForSeconds(_delay);
         _enemyFactory = enemyFactory;
@@ -27,6 +29,12 @@ public class EnemyGeneratorView : Generator
 
     private IEnumerator GenerateWave(int amountOfEnemies)
     {
+        if (_enemyGenerator.WaveCounter % 3 == 0)
+            _enemyFactory.ResetEnemyParametrs(2, 0);
+
+        if (_enemyGenerator.WaveCounter % 5 == 0)
+            _enemyFactory.ResetEnemyParametrs(0, 2);
+
         for (int i = 0; i < amountOfEnemies; i++)
         {
             Enemy enemy = _enemyFactory.Create();

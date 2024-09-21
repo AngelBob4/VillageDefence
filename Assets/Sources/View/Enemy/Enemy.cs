@@ -14,7 +14,7 @@ public class Enemy : Unit, IPoolable
         OnDeath -= Destroy;
     }
 
-    public void Init(float maxHealth, Particle hit, ParticleSystem death, Transform target)
+    public void Init(float maxHealth, Particle hit, ParticleSystem death, Transform target, float extraDamage)
     {
         new EnemyParticles(this, death, hit);
         Animator animator = GetComponent<Animator>();
@@ -22,7 +22,7 @@ public class Enemy : Unit, IPoolable
 
         enemyAnimator.Init(animator);
         _movement.Init(target);
-        _attackZone.Init(enemyAnimator);
+        _attackZone.Init(enemyAnimator, extraDamage);
 
         OnDeath += Destroy;
         base.Init(maxHealth, _healthBar);

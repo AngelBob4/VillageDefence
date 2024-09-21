@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using LeaderboardDemo;
 
 public class GameCompositeRoot : CompositeRoot
 {
@@ -12,11 +11,12 @@ public class GameCompositeRoot : CompositeRoot
     [SerializeField] private EnemyFactory _enemyFactory;
     [SerializeField] private GameAudio _gameAudio;
     [SerializeField] private AddScore _addScore;
+    [SerializeField] private LeaderboardView _leaderboardView;
 
     public override void Compose()
     {
         _endGameScreen.Init(_endGameButton);
         _upgradeScreen.Init(_player);
-        _game.Init(_endGameScreen, _upgradeScreen, _enemyFactory, _gameAudio, _addScore);
+        _game.Init(_endGameScreen, _upgradeScreen, _enemyFactory, _gameAudio, _addScore, _leaderboardView);
     }
 }

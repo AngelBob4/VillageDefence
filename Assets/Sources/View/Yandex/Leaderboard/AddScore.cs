@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using LeaderboardDemo;
 
 public class AddScore : MonoBehaviour
 {
@@ -8,8 +7,10 @@ public class AddScore : MonoBehaviour
 
     private void Awake()
     {
+#if !UNITY_EDITOR
         Agava.YandexGames.PlayerAccount.AuthorizedInBackground += OnAuthorized;
         UpdateScoreView();
+#endif
     }
         
     private void OnDestroy()
