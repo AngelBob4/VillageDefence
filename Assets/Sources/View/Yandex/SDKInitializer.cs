@@ -22,6 +22,8 @@ public class SDKInitializer : MonoBehaviour
     private void OnInitialized()
     {
 #if !UNITY_EDITOR
+        Agava.YandexGames.Utility.PlayerPrefs.SetInt(Constants.FIRST_OPEN_KEY, Constants.TRUE_VALUE);
+        Agava.YandexGames.Utility.PlayerPrefs.Save();
         _localization.ChangeLanguage();
 #endif
         SceneManager.LoadScene(1);

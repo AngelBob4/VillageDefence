@@ -16,17 +16,29 @@ public class GameAudio : MonoBehaviour
 
     public bool MusicActive => _musicActive;
 
-    private void Awake()
-    {
-
-    }
-
     private void Start()
     {
 #if !UNITY_EDITOR
-        int active = Agava.YandexGames.Utility.PlayerPrefs.GetInt(Constants.AUDIO_ACTIVE_PREFS_KEY);
-        _musicActive = active == AUDIO_ACTIVE;
+        int firstOpen = Agava.YandexGames.Utility.PlayerPrefs.GetInt(Constants.AUDIO_ACTIVE_PREFS_KEY);
+
+        if (firstOpen == Constants.TRUE_VALUE)
+        {
+            _musicActive = true;
+            return;
+        }
+
+        int active = Agava.YandexGames.Utility.PlayerPrefs.GetInt(Constants.AUDIO_ACTIVE_PREFS_KEY, 0);
+
+        if (active == 0)
+        {
+            _musicActive = true;
+        }
+        else
+        {
+            _musicActive = active == AUDIO_ACTIVE;
+        }
 #endif
+
         ResumeAudio();
     }
 
@@ -34,12 +46,12 @@ public class GameAudio : MonoBehaviour
     {
         if (_musicActive)
         {
-            _audioMixer.audioMixer.SetFloat(Constants.MASTER_VOLUME, _minVolume);
+            _audioMixer.audioMixer.SetFloat(Constants.MASTER_VOLUME_KEY, _minVolume);
             _musicActive = false;
         }
         else
         {
-            _audioMixer.audioMixer.SetFloat(Constants.MASTER_VOLUME, _masterVolume);
+            _audioMixer.audioMixer.SetFloat(Constants.MASTER_VOLUME_KEY, _masterVolume);
             _musicActive = true;
         }
 
@@ -48,13 +60,13 @@ public class GameAudio : MonoBehaviour
 
     public void TurnOn()
     {
-        _audioMixer.audioMixer.SetFloat(Constants.MASTER_VOLUME, _masterVolume);
+        _audioMixer.audioMixer.SetFloat(Constants.MASTER_VOLUME_KEY, _masterVolume);
         _audioButton.TurnOnAudio();
     }
 
     public void TurnOff()
     {
-        _audioMixer.audioMixer.SetFloat(Constants.MASTER_VOLUME, _minVolume);
+        _audioMixer.audioMixer.SetFloat(Constants.MASTER_VOLUME_KEY, _minVolume);
         _audioButton.TurnOffAudio();
     }
 

@@ -15,6 +15,7 @@ public class Player : Unit
     [SerializeField] private Transform _body;
     [SerializeField] private AudioSource _shoot;
     [SerializeField] private Game _game;
+    [SerializeField] private Joystick _joystick;
 
     private Gun _gun;
     private PlayerMovement _playerMovement;
@@ -56,7 +57,7 @@ public class Player : Unit
         _attackZone = new AttackZone(_gun, _playerAnimator, _inventory);
 
         _playerMovement = new PlayerMovement(_movementSpeed, _attackZone, this);
-        _playerInputRouter = new PlayerInputRouter(_playerMovement);
+        _playerInputRouter = new PlayerInputRouter(_playerMovement, _joystick);
 
         _playerMovementView.Init(_playerMovement, _body);
         _attackZoneView.Init(_attackZone);

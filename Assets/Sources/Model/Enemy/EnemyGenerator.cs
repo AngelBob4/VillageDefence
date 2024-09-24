@@ -22,7 +22,6 @@ public class EnemyGenerator
         _timeToWave = timeToWave;
         _enemyFactory = enemyFactory;
         _enemyFactory.EnemyPool.WaveEnded += EndWave;
-        _waveCounter = Agava.YandexGames.Utility.PlayerPrefs.GetInt(Constants.WAVE_COUNTER_PREFS_KEY);
     }
 
     public void StartWithDelay()
@@ -44,7 +43,6 @@ public class EnemyGenerator
             _videoAdvertisement.ShowInterstitial();
         }
 
-        Agava.YandexGames.Utility.PlayerPrefs.SetInt(Constants.WAVE_COUNTER_PREFS_KEY, _waveCounter);
         StartWithDelay();
     }
 

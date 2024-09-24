@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Generator : MonoBehaviour
 {
-    private float _radiusOfMap = 37f;
+    private float _radiusOfMap = 36f;
     private float _raisedRadiusOfMap;
 
     private void Awake()
@@ -29,7 +29,6 @@ public class Generator : MonoBehaviour
         {
             Vector3 positionInCorrectArea = player.Position;
             positionInCorrectArea -= offset;
-            Debug.Log(newPosition);
             newPosition = positionInCorrectArea;
         }
 
