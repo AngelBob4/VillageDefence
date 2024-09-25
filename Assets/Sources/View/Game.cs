@@ -53,9 +53,11 @@ public class Game : MonoBehaviour
 
     public void OnGameOver()
     {
+#if !UNITY_EDITOR
         Agava.YandexGames.Utility.PlayerPrefs.SetInt(Constants.SCORE_PREFS_KEY, 0);
         Agava.YandexGames.Utility.PlayerPrefs.Save();
         _leaderboardView.SetPlayerScore(_gameScore);
+#endif
 
         Time.timeScale = 0;
         _endGameScreen.Open();

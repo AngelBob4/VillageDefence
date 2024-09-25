@@ -7,6 +7,7 @@ public class Unit : MonoBehaviour
 
     public event Action OnDeath;
     public event Action OnHealthChanged;
+    public event Action OnGetDamage;
 
     public float Health { get; protected set; }
 
@@ -31,6 +32,7 @@ public class Unit : MonoBehaviour
             }
             else
             {
+                OnGetDamage?.Invoke();
                 OnHealthChanged?.Invoke();
             }
         }

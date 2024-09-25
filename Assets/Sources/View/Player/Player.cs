@@ -16,6 +16,8 @@ public class Player : Unit
     [SerializeField] private AudioSource _shoot;
     [SerializeField] private Game _game;
     [SerializeField] private Joystick _joystick;
+    [SerializeField] private Particle _hitParticle;
+    [SerializeField] private AudioSource _hitAudio;
 
     private Gun _gun;
     private PlayerMovement _playerMovement;
@@ -50,6 +52,7 @@ public class Player : Unit
 
     public void Init()
     {
+        new PlayerParticles(this, _hitParticle, _hitAudio);
         _inventory = new Inventory();
         _playerAnimator = new PlayerAnimator();
         _gun = new Gun(_gunReloadTime, _gunDamage, this, _shoot);
