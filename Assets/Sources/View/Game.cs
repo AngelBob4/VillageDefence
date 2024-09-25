@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class Game : MonoBehaviour
 {
     private EndGameScreen _endGameScreen;
+    private PauseService _pauseService;
     private LeaderboardView _leaderboardView;
     private UpgradeScreen _upgradeScreen;
     private GameAudio _gameAudio;
@@ -18,6 +19,7 @@ public class Game : MonoBehaviour
         _endGameScreen = endGameScreen;
         _upgradeScreen = upgradeScreen;
         _gameAudio = gameAudio;
+        _pauseService = new PauseService();
 
         _endGameScreen.RestartButtonClicked += OnRestartButtonClick;
         enemyFactory.EnemyPool.WaveEnded += OpenUpgradeScreen;
@@ -37,14 +39,16 @@ public class Game : MonoBehaviour
         _endGameScreen.RestartButtonClicked -= OnRestartButtonClick;
     }
 
-    public void Pause()
+    public void Pause(GameObject gameObject)
     {
+        _pauseService.Pause(gameObject);
         Time.timeScale = 0;
     }
 
-    public void Resume()
+    public void Resume(GameObject gameObject)
     {
-        Time.timeScale = 1;
+        if (_pauseService.Unpause(gameObject))
+            Time.timeScale = 1;
     }
 
     public void OnGameOver()

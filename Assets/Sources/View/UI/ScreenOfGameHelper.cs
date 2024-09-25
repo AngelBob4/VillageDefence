@@ -36,14 +36,14 @@ public class ScreenOfGameHelper : MonoBehaviour
     {
         _windowGroup.alpha = 1f;
         _windowGroup.blocksRaycasts = true;
-        _game.Pause();
+        _game.Pause(gameObject);
     }
 
     private void Close()
     {
         _windowGroup.alpha = 0f;
         _windowGroup.blocksRaycasts = false;
-        _game.Resume();
+        _game.Resume(gameObject);
     }
 
     private void CloseFirstTime()

@@ -7,6 +7,7 @@ public class AuthorizationOfferView : MonoBehaviour
     [SerializeField] private Button _closeButton;
     [SerializeField] private Button _authorizeButton;
     [SerializeField] private AuthorizationChecker _authorizationChecker;
+    [SerializeField] private Game _game;
         
     private Action _onAuthorizeSuccess;
     private Action _onAuthorizeError;
@@ -33,7 +34,11 @@ public class AuthorizationOfferView : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    private void Hide() => gameObject.SetActive(false);
+    private void Hide()
+    {
+        gameObject.SetActive(false);
+        _game.Resume(gameObject);
+    }
 
     private void OnAuthorizeButtonClick()
     {

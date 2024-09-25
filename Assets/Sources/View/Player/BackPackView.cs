@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class BackPackView : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class BackPackView : MonoBehaviour
 
     private void SetPosition(Bullet bullet)
     {
+        bullet.transform.DOMove();
+
         bullet.transform.SetParent(transform);
         bullet.transform.localPosition = Vector3.zero;
 

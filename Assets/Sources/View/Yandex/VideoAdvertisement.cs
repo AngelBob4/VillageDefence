@@ -11,7 +11,7 @@ public class VideoAdvertisement : MonoBehaviour
     }
 
     public void ShowVideo() =>
-        Agava.YandexGames.VideoAd.Show(OnOpenCallback, OnRewardCallback, OnCloseCallback);
+        Agava.YandexGames.VideoAd.Show(OnOpenCallback, null, OnCloseCallback);
 
     public void ShowInterstitial() =>
         InterstitialAd.Show(OnOpenCallback, OnCloseCallback);
@@ -19,21 +19,16 @@ public class VideoAdvertisement : MonoBehaviour
 
     public void OnOpenCallback()
     {
-        _game.Pause();
+        _game.Pause(gameObject);
     }
 
     public void OnCloseCallback()
     {
-        _game.Resume();
+        _game.Resume(gameObject);
     }
 
     public void OnCloseCallback(bool onClose)
     {
-        _game.Resume();
-    }
-
-    private void OnRewardCallback()
-    {
-        //_addCoins
+        _game.Resume(gameObject);
     }
 }
