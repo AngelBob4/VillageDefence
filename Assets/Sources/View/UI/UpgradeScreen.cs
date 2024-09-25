@@ -9,6 +9,7 @@ public class UpgradeScreen : Window
     [SerializeField] private Sprite _upgradeDamage;
     [SerializeField] private Sprite _upgradeRegeneration;
     [SerializeField] private Sprite _upgradeLifesteal;
+    [SerializeField] private Game _game;
 
     private List<PlayerUpgrade> _playerUpgrades = new List<PlayerUpgrade>();
 
@@ -16,7 +17,7 @@ public class UpgradeScreen : Window
     {
         foreach (UpgradeButton button in _upgradeButtons)
         {
-            button.Init(player, this);
+            button.Init(_game, player, this);
         }
 
         CreateUpgrades();
@@ -25,6 +26,7 @@ public class UpgradeScreen : Window
 
     public override void Open()
     {
+        _game.Pause(gameObject); 
         var shuffledcards = _playerUpgrades.OrderBy(_ => Guid.NewGuid()).ToList();
 
         for (int i = 0; i < _upgradeButtons.Count; i++)

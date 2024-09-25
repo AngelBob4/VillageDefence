@@ -23,7 +23,7 @@ public class ScreenOfGameHelper : MonoBehaviour
         if (firstOpen == Constants.TRUE_VALUE)
             Open();
         else
-            _game.Resume(gameObject);
+            CloseFirstTime();
 #endif
 
 #if UNITY_EDITOR

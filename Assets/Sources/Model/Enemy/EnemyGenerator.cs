@@ -11,7 +11,7 @@ public class EnemyGenerator
     private bool _isWaveStarting = false;
     private int _waveCounter = 0;
     private int _startAmountOfEnemies = 1;
-    private int _timeBetweenWaves = 5;
+    private int _timeBetweenWaves = 3;
 
     public int WaveCounter => _waveCounter;
 

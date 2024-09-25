@@ -10,12 +10,14 @@ public class UpgradeButton : MonoBehaviour
     [SerializeField] private Image _image;
 
     private PlayerUpgrade _playerUpgrade;
+    private Game _game;
     private Button _button;
     private Player _player;
     private UpgradeScreen _upgradeScreen;
 
-    public void Init(Player player, UpgradeScreen upgradeScreen)
+    public void Init(Game game, Player player, UpgradeScreen upgradeScreen)
     {
+        _game = game;
         _player = player;
         _upgradeScreen = upgradeScreen;
     }
@@ -41,6 +43,7 @@ public class UpgradeButton : MonoBehaviour
 
     private void OnButtonClick()
     {
+        _game.Resume(_upgradeScreen.gameObject);
         _playerUpgrade.Upgrade(_player);
         _upgradeScreen.Close();
     }
