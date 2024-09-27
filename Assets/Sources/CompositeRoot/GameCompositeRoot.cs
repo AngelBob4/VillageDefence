@@ -8,7 +8,7 @@ public class GameCompositeRoot : CompositeRoot
     [SerializeField] private UpgradeScreen _upgradeScreen;
     [SerializeField] private Button _endGameButton;
     [SerializeField] private Player _player;
-    [SerializeField] private EnemyFactory _enemyFactory;
+    [SerializeField] private EnemyGeneratorView _enemyGeneratorView;
     [SerializeField] private GameAudio _gameAudio;
     [SerializeField] private AddScore _addScore;
     [SerializeField] private LeaderboardView _leaderboardView;
@@ -17,6 +17,6 @@ public class GameCompositeRoot : CompositeRoot
     {
         _endGameScreen.Init(_endGameButton);
         _upgradeScreen.Init(_player);
-        _game.Init(_endGameScreen, _upgradeScreen, _enemyFactory, _gameAudio, _addScore, _leaderboardView);
+        _game.Init(_endGameScreen, _upgradeScreen, _enemyGeneratorView, _gameAudio, _addScore, _leaderboardView);
     }
 }

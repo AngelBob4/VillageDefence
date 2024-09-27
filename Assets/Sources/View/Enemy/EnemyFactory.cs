@@ -31,9 +31,4 @@ public class EnemyFactory : MonoBehaviour
         enemy.Init(_enemyMaxHealth, _hit, _death, _player.transform, _extraDamage);
         return enemy;
     }
-
-    public void ResetPool(int amountOfEnemies)
-    {
-        _enemyPool.Reset(amountOfEnemies);
-    }
 }

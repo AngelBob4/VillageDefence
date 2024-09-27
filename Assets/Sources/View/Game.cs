@@ -12,7 +12,7 @@ public class Game : MonoBehaviour
     private int _rewardScoreForEnemy = 10;
     private AddScore _addScore;
 
-    public void Init(EndGameScreen endGameScreen, UpgradeScreen upgradeScreen, EnemyFactory enemyFactory, GameAudio gameAudio, AddScore addScore, LeaderboardView leaderboardView)
+    public void Init(EndGameScreen endGameScreen, UpgradeScreen upgradeScreen, EnemyGeneratorView enemyGeneratorView, GameAudio gameAudio, AddScore addScore, LeaderboardView leaderboardView)
     {
         _leaderboardView = leaderboardView;
         _addScore = addScore;
@@ -22,8 +22,6 @@ public class Game : MonoBehaviour
         _pauseService = new PauseService();
 
         _endGameScreen.RestartButtonClicked += OnRestartButtonClick;
-        enemyFactory.EnemyPool.WaveEnded += OpenUpgradeScreen;
-        enemyFactory.EnemyPool.EnemyReturned += AddScore;
 
         _endGameScreen.Close();
         _upgradeScreen.Close();
@@ -63,7 +61,7 @@ public class Game : MonoBehaviour
         _endGameScreen.Open();
     }
 
-    private void OpenUpgradeScreen()
+    public void OpenUpgradeScreen()
     {
         _upgradeScreen.Open();
     }
@@ -78,7 +76,7 @@ public class Game : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    private void AddScore()
+    public void AddScore()
     {
         _gameScore += _rewardScoreForEnemy;
         _addScore.UpdateScoreView(_gameScore);

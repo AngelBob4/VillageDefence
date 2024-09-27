@@ -14,15 +14,12 @@ public class EnemyGenerator
 
     public int WaveCounter => _waveCounter;
 
-    public EnemyGenerator(EnemyGeneratorView enemyGeneratorView, TimeToWave timeToWave, EnemyFactory enemyFactory, VideoAdvertisement videoAdvertisement, ProgressionSlider progressionSlider)
+    public EnemyGenerator(EnemyGeneratorView enemyGeneratorView, TimeToWave timeToWave, VideoAdvertisement videoAdvertisement, ProgressionSlider progressionSlider)
     {
         _progressionSlider = progressionSlider;
         _videoAdvertisement = videoAdvertisement;
         _enemyGeneratorView = enemyGeneratorView;
         _timeToWave = timeToWave;
-        _enemyFactory = enemyFactory;
-        _enemyFactory.EnemyPool.WaveEnded += EndWave;
-        _enemyFactory.EnemyPool.EnemyReturned += ResetProgressionSlider;
     }
 
     public void StartWithDelay()
@@ -65,8 +62,8 @@ public class EnemyGenerator
         }
     }
 
-    private void ResetProgressionSlider()
+    public void ResetProgressionSlider()
     {
-        _progressionSlider.ResetValues(_enemyFactory.EnemyPool.ReleasedEnemies, _startAmountOfEnemies + _waveCounter, _waveCounter);
+        _progressionSlider.ResetValues(_enemyGeneratorView.EnemyGeneratorPresenter.ReleasedEnemies, _startAmountOfEnemies + _waveCounter, _waveCounter);
     }
 }
