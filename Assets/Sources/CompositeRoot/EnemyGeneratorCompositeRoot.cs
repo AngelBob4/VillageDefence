@@ -11,6 +11,7 @@ public class EnemyGeneratorCompositeRoot : CompositeRoot
     [SerializeField] private EnemyFactory _enemyFactory;
     [SerializeField] private TimeToWave _timeToWave;
     [SerializeField] private VideoAdvertisement _videoAdvertisement;
+    [SerializeField] private ProgressionSlider _progressionSlider;
 
     private EnemyGenerator _enemyGenerator;
 
@@ -24,7 +25,7 @@ public class EnemyGeneratorCompositeRoot : CompositeRoot
     public override void Compose()
     {
         _enemyFactory.Init(_template, _player, _hit, _death);
-        _enemyGenerator = new EnemyGenerator(_enemyGeneratorView, _timeToWave, _enemyFactory, _videoAdvertisement);
+        _enemyGenerator = new EnemyGenerator(_enemyGeneratorView, _timeToWave, _enemyFactory, _videoAdvertisement, _progressionSlider);
         _enemyGeneratorView.Init(_player, _enemyFactory, _enemyGenerator);
     }
 }

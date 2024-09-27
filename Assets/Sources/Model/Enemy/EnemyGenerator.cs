@@ -1,11 +1,10 @@
-using Agava.YandexGames;
-
 public class EnemyGenerator
 {
     private TimeToWave _timeToWave;
     private EnemyGeneratorView _enemyGeneratorView;
     private EnemyFactory _enemyFactory;
     private VideoAdvertisement _videoAdvertisement;
+    private ProgressionSlider _progressionSlider;
 
     private float _currentTime = 0;
     private bool _isWaveStarting = false;
@@ -15,13 +14,15 @@ public class EnemyGenerator
 
     public int WaveCounter => _waveCounter;
 
-    public EnemyGenerator(EnemyGeneratorView enemyGeneratorView, TimeToWave timeToWave, EnemyFactory enemyFactory, VideoAdvertisement videoAdvertisement)
+    public EnemyGenerator(EnemyGeneratorView enemyGeneratorView, TimeToWave timeToWave, EnemyFactory enemyFactory, VideoAdvertisement videoAdvertisement, ProgressionSlider progressionSlider)
     {
+        _progressionSlider = progressionSlider;
         _videoAdvertisement = videoAdvertisement;
         _enemyGeneratorView = enemyGeneratorView;
         _timeToWave = timeToWave;
         _enemyFactory = enemyFactory;
         _enemyFactory.EnemyPool.WaveEnded += EndWave;
+        _enemyFactory.EnemyPool.EnemyReturned += ResetProgressionSlider;
     }
 
     public void StartWithDelay()
@@ -59,7 +60,13 @@ public class EnemyGenerator
                 _waveCounter++;
                 _enemyGeneratorView.StartNextWave(_startAmountOfEnemies + _waveCounter);
                 _isWaveStarting = false;
+                ResetProgressionSlider();
             }
         }
+    }
+
+    private void ResetProgressionSlider()
+    {
+        _progressionSlider.ResetValues(_enemyFactory.EnemyPool.ReleasedEnemies, _startAmountOfEnemies + _waveCounter, _waveCounter);
     }
 }

@@ -3,28 +3,31 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(Localization))]
 public class SDKInitializer : MonoBehaviour
 {
-    private Localization _localization;
-
     private void Awake()
     {
         YandexGamesSdk.CallbackLogging = true;
-        _localization = GetComponent<Localization>();
     }
 
     private IEnumerator Start()
     {
+#if !UNITY_EDITOR
         yield return YandexGamesSdk.Initialize(OnInitialized);
+#else
+        OnInitialized();
+        yield break;
+#endif
     }
 
     private void OnInitialized()
     {
 #if !UNITY_EDITOR
-        Agava.YandexGames.Utility.PlayerPrefs.SetInt(Constants.FIRST_OPEN_KEY, Constants.TRUE_VALUE);
-        Agava.YandexGames.Utility.PlayerPrefs.Save();
-        _localization.ChangeLanguage();
+        if (Agava.YandexGames.Utility.PlayerPrefs.HasKey(Constants.FIRST_OPEN_KEY) == false)
+        {
+            Agava.YandexGames.Utility.PlayerPrefs.SetInt(Constants.FIRST_OPEN_KEY, Constants.TRUE_VALUE);
+            Agava.YandexGames.Utility.PlayerPrefs.Save();
+        }
 #endif
         SceneManager.LoadScene(1);
     }

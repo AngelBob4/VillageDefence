@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using DG.Tweening;
 
 public class UpgradeScreen : Window
 {
@@ -10,6 +11,7 @@ public class UpgradeScreen : Window
     [SerializeField] private Sprite _upgradeRegeneration;
     [SerializeField] private Sprite _upgradeLifesteal;
     [SerializeField] private Game _game;
+    [SerializeField] private RectTransform _panel;
 
     private List<PlayerUpgrade> _playerUpgrades = new List<PlayerUpgrade>();
 
@@ -34,6 +36,8 @@ public class UpgradeScreen : Window
             _upgradeButtons[i].Reset(shuffledcards[i]);
         }
 
+        //_panel.localScale = Vector3.zero;
+        //_panel.DOScale(1, 1f).OnComplete();
         base.Open();
     }
 

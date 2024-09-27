@@ -1,5 +1,5 @@
 using UnityEngine;
-using System;
+using System.Collections.Generic;
 
 public class Player : Unit
 {
@@ -26,6 +26,7 @@ public class Player : Unit
     private AttackZone _attackZone;
     private PlayerAnimator _playerAnimator;
     private GunParticles _gunParticles;
+    private Dictionary<PlayerStats, int> _playerStats;
 
     private float _playerMaxHealth = 100f;
     private float _gunReloadTime = 1f;
@@ -58,6 +59,12 @@ public class Player : Unit
         _gun = new Gun(_gunReloadTime, _gunDamage, this, _shoot);
         _gunParticles = new GunParticles(_shootParticle, _gun, _gunParticleTransform, _shootingTrail);
         _attackZone = new AttackZone(_gun, _playerAnimator, _inventory);
+        _playerStats = new Dictionary<PlayerStats, int>()
+        {
+            {PlayerStats.Damage, 0 },
+            {PlayerStats.Heal, 0 },
+            {PlayerStats.Lifesteal, 0 },
+        };
 
         _playerMovement = new PlayerMovement(_movementSpeed, _attackZone, this);
         _playerInputRouter = new PlayerInputRouter(_playerMovement, _joystick);

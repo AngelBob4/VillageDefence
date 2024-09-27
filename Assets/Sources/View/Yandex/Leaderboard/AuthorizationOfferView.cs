@@ -31,7 +31,8 @@ public class AuthorizationOfferView : MonoBehaviour
         _onAuthorizeSuccess = onAuthorizeSuccess;
         _onAuthorizeError = onAuthorizeError;
             
-        gameObject.SetActive(true);
+        gameObject.SetActive(true); 
+        _game.Pause(gameObject);
     }
 
     private void Hide()

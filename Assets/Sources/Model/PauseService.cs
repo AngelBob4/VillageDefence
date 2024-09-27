@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PauseService
 {
-    private Dictionary<GameObject, bool> _pauseObjects = new Dictionary<GameObject, bool>();
+    [SerializeField] private Dictionary<GameObject, bool> _pauseObjects = new Dictionary<GameObject, bool>();
 
     public void Pause(GameObject gameObject)
     {
@@ -24,6 +24,6 @@ public class PauseService
         if (_pauseObjects.ContainsValue(true))
             return false;
         else
-            return true;
+            return true; 
     }
 }

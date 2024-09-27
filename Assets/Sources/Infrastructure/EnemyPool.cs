@@ -9,6 +9,8 @@ public class EnemyPool : ObjectPool<Enemy>
     private int _requiredQuantity = 0;
     private int _releasedEnemies = 0;
 
+    public int ReleasedEnemies => _releasedEnemies;
+
     public EnemyPool(Enemy template) : base(template)
     {
     }
