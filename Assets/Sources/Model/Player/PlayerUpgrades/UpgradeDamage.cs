@@ -4,6 +4,7 @@ public class UpgradeDamage : PlayerUpgrade
 {
     public UpgradeDamage(Sprite image)
     {
+        _stat = PlayerStats.Damage;
         _description = "Increase damage";
         _efficiency = 15;
         _sprite = image;

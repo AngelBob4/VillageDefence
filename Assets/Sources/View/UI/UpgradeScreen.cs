@@ -36,8 +36,6 @@ public class UpgradeScreen : Window
             _upgradeButtons[i].Reset(shuffledcards[i]);
         }
 
-        //_panel.localScale = Vector3.zero;
-        //_panel.DOScale(1, 1f).OnComplete();
         base.Open();
     }
 

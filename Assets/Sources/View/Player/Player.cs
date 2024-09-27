@@ -62,7 +62,7 @@ public class Player : Unit
         _playerStats = new Dictionary<PlayerStats, int>()
         {
             {PlayerStats.Damage, 0 },
-            {PlayerStats.Heal, 0 },
+            {PlayerStats.Regeneration, 0 },
             {PlayerStats.Lifesteal, 0 },
         };
 
@@ -80,6 +80,8 @@ public class Player : Unit
         base.Init(_playerMaxHealth, _healthBar);
     }
 
+    public int StatLevel(PlayerStats stat) => _playerStats[stat];
+
     public void Tick(float time)
     {
         Heal(_regeneration * time);
@@ -87,16 +89,19 @@ public class Player : Unit
 
     public void Upgrade(UpgradeDamage upgrade)
     {
+        _playerStats[upgrade.Stat]++;
         _gun.AppendDamage(upgrade.Efficiency);
     }
 
     public void Upgrade(UpgradeLifesteal upgrade)
     {
+        _playerStats[upgrade.Stat]++;
         _gun.AppendLifesteal(upgrade.Efficiency);
     }
 
     public void Upgrade(UpgradeRegeneration upgrade)
     {
+        _playerStats[upgrade.Stat]++;
         if (upgrade.Efficiency >= 0)
             _regeneration += upgrade.Efficiency;
     }

@@ -8,6 +8,7 @@ public class UpgradeButton : MonoBehaviour
     [SerializeField] private LeanLocalizedText _descriptionLocalization;
     [SerializeField] private Text _percentsOfEfficiencyLocalization;
     [SerializeField] private Image _image;
+    [SerializeField] private Text _levelOfUpgrade;
 
     private PlayerUpgrade _playerUpgrade;
     private Game _game;
@@ -28,6 +29,7 @@ public class UpgradeButton : MonoBehaviour
         _descriptionLocalization.TranslationName = _playerUpgrade.Description;
         _percentsOfEfficiencyLocalization.text = _playerUpgrade.Efficiency.ToString() + "%";
         _image.sprite = _playerUpgrade.Sprite;
+        _levelOfUpgrade.text = _player.StatLevel(_playerUpgrade.Stat).ToString();
     }
 
     private void OnEnable()

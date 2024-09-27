@@ -1,6 +1,6 @@
 public enum PlayerStats
 {
-    Heal,
+    Regeneration,
     Damage,
     Lifesteal
 }
