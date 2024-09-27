@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 using DG.Tweening;
+using Cysharp.Threading.Tasks;
 
 public class UpgradeScreen : Window
 {
@@ -26,9 +27,8 @@ public class UpgradeScreen : Window
         base.Init();
     }
 
-    public override void Open()
+    public void Open(float openingDelay)
     {
-        _game.Pause(gameObject); 
         var shuffledcards = _playerUpgrades.OrderBy(_ => Guid.NewGuid()).ToList();
 
         for (int i = 0; i < _upgradeButtons.Count; i++)
@@ -37,6 +37,9 @@ public class UpgradeScreen : Window
         }
 
         base.Open();
+
+        _panel.localScale = Vector3.zero;
+        _panel.DOScale(1, openingDelay);
     }
 
     private void CreateUpgrades()

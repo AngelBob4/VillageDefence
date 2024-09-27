@@ -1,5 +1,5 @@
-public abstract class IPresenter
+public interface IPresenter
 {
-    public abstract void OnEnable();
-    public abstract void OnDisable();
+    void Enable();
+    void Disable();
 }

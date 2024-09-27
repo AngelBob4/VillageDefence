@@ -2,11 +2,11 @@ using System;
 
 public class EnemyPool : ObjectPool<Enemy>
 {
-    public event Action EnemyReturned;
-
     public EnemyPool(Enemy template) : base(template)
     {
     }
+
+    public event Action EnemyReturned;
 
     public override Enemy GetObject()
     {
@@ -25,7 +25,6 @@ public class EnemyPool : ObjectPool<Enemy>
     public override void Release(IPoolable item)
     {
         EnemyReturned?.Invoke();
-
         base.Release(item);
     }
 }

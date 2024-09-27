@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cysharp.Threading.Tasks;
+using System;
 
 public class Game : MonoBehaviour
 {
@@ -61,9 +63,11 @@ public class Game : MonoBehaviour
         _endGameScreen.Open();
     }
 
-    public void OpenUpgradeScreen()
+    public async void OpenUpgradeScreen(float delay)
     {
-        _upgradeScreen.Open();
+        _upgradeScreen.Open(delay);
+        await UniTask.Delay(TimeSpan.FromSeconds(delay), ignoreTimeScale: false);
+        Pause(_upgradeScreen.gameObject);
     }
 
     private void OnRestartButtonClick()

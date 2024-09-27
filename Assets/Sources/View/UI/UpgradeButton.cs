@@ -1,4 +1,5 @@
 using Lean.Localization;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,8 @@ public class UpgradeButton : MonoBehaviour
     private Button _button;
     private Player _player;
     private UpgradeScreen _upgradeScreen;
+
+    public event Action Upgraded;
 
     public void Init(Game game, Player player, UpgradeScreen upgradeScreen)
     {
@@ -48,5 +51,6 @@ public class UpgradeButton : MonoBehaviour
         _game.Resume(_upgradeScreen.gameObject);
         _playerUpgrade.Upgrade(_player);
         _upgradeScreen.Close();
+        Upgraded?.Invoke();
     }
 }

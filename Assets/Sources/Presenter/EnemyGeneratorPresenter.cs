@@ -3,9 +3,6 @@ using System;
 
 public class EnemyGeneratorPresenter : IPresenter
 {
-    public event Action WaveEnded;
-    public event Action EnemyReturned;
-
     private EnemyPool _enemyPool;
     private EnemyGenerator _enemyGenerator;
     private Game _game;
@@ -19,38 +16,28 @@ public class EnemyGeneratorPresenter : IPresenter
         _enemyGenerator = enemyGenerator;
         _enemyPool = enemyPool;
         _game = game;
-        OnEnable();
+        Enable();
     }
 
-    public override void OnEnable()
+    public void Enable()
     {
         _enemyPool.EnemyReturned += Release;
-
-        EnemyReturned += _game.AddScore;
-        EnemyReturned += _enemyGenerator.ResetProgressionSlider;
-        WaveEnded += _game.OpenUpgradeScreen;
-        WaveEnded += _enemyGenerator.EndWave;
     }
 
-    public override void OnDisable()
+    public void Disable()
     {
         _enemyPool.EnemyReturned -= Release;
-
-        EnemyReturned -= _game.AddScore;
-        EnemyReturned -= _enemyGenerator.ResetProgressionSlider;
-        WaveEnded -= _game.OpenUpgradeScreen; 
-        WaveEnded -= _enemyGenerator.EndWave;
     }
 
     public void Release()
     {
         _releasedEnemies++;
-        EnemyReturned?.Invoke();
+        _game.AddScore();
+        _enemyGenerator.ResetProgressionSlider();
 
         if (_requiredQuantity == _releasedEnemies)
         {
-            UniTask.Delay(1000);
-            WaveEnded?.Invoke();
+            EndWave();
         }
     }
 
@@ -61,5 +48,12 @@ public class EnemyGeneratorPresenter : IPresenter
             _releasedEnemies = 0;
             _requiredQuantity = requiredQuantity;
         }
+    }
+
+    private async void EndWave()
+    {
+        _game.OpenUpgradeScreen(1f);
+        await UniTask.Delay(TimeSpan.FromSeconds(2), ignoreTimeScale: false);
+        _enemyGenerator.EndWave();
     }
 }

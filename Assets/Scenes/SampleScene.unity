@@ -5380,6 +5380,7 @@ MonoBehaviour:
   _timeToWave: {fileID: 1148460654}
   _videoAdvertisement: {fileID: 231934845}
   _progressionSlider: {fileID: 1527090333}
+  _game: {fileID: 231934843}
 --- !u!114 &1186472330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5397,7 +5398,7 @@ MonoBehaviour:
   _upgradeScreen: {fileID: 1309074384}
   _endGameButton: {fileID: 1483180123}
   _player: {fileID: 2622815598285528396}
-  _enemyFactory: {fileID: 28573755}
+  _enemyGeneratorView: {fileID: 28573754}
   _gameAudio: {fileID: 155647234}
   _addScore: {fileID: 8433119023929790164}
   _leaderboardView: {fileID: 1534645051}
