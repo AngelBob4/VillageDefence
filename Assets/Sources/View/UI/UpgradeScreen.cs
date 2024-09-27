@@ -36,10 +36,14 @@ public class UpgradeScreen : Window
             _upgradeButtons[i].Reset(shuffledcards[i]);
         }
 
-        base.Open();
-
+        WindowGroup.alpha = 1f;
         _panel.localScale = Vector3.zero;
-        _panel.DOScale(1, openingDelay);
+        _panel.DOScale(1, openingDelay).OnComplete(TurnOnRaycasts);
+    }
+
+    private void TurnOnRaycasts()
+    {
+        WindowGroup.blocksRaycasts = true;
     }
 
     private void CreateUpgrades()
