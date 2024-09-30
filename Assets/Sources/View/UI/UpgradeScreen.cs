@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using DG.Tweening;
+using Cysharp.Threading.Tasks;
 
 public class UpgradeScreen : Window
 {
@@ -9,6 +11,8 @@ public class UpgradeScreen : Window
     [SerializeField] private Sprite _upgradeDamage;
     [SerializeField] private Sprite _upgradeRegeneration;
     [SerializeField] private Sprite _upgradeLifesteal;
+    [SerializeField] private Game _game;
+    [SerializeField] private RectTransform _panel;
 
     private List<PlayerUpgrade> _playerUpgrades = new List<PlayerUpgrade>();
 
@@ -16,14 +20,14 @@ public class UpgradeScreen : Window
     {
         foreach (UpgradeButton button in _upgradeButtons)
         {
-            button.Init(player, this);
+            button.Init(_game, player, this);
         }
 
         CreateUpgrades();
         base.Init();
     }
 
-    public override void Open()
+    public void Open(float openingDelay)
     {
         var shuffledcards = _playerUpgrades.OrderBy(_ => Guid.NewGuid()).ToList();
 
@@ -32,7 +36,14 @@ public class UpgradeScreen : Window
             _upgradeButtons[i].Reset(shuffledcards[i]);
         }
 
-        base.Open();
+        WindowGroup.alpha = 1f;
+        _panel.localScale = Vector3.zero;
+        _panel.DOScale(1, openingDelay).OnComplete(TurnOnRaycasts);
+    }
+
+    private void TurnOnRaycasts()
+    {
+        WindowGroup.blocksRaycasts = true;
     }
 
     private void CreateUpgrades()

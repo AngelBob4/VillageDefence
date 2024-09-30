@@ -1,5 +1,5 @@
 using UnityEngine;
-using System;
+using System.Collections.Generic;
 
 public class Player : Unit
 {
@@ -15,6 +15,9 @@ public class Player : Unit
     [SerializeField] private Transform _body;
     [SerializeField] private AudioSource _shoot;
     [SerializeField] private Game _game;
+    [SerializeField] private Joystick _joystick;
+    [SerializeField] private Particle _hitParticle;
+    [SerializeField] private AudioSource _hitAudio;
 
     private Gun _gun;
     private PlayerMovement _playerMovement;
@@ -23,6 +26,7 @@ public class Player : Unit
     private AttackZone _attackZone;
     private PlayerAnimator _playerAnimator;
     private GunParticles _gunParticles;
+    private Dictionary<PlayerStats, int> _playerStats;
 
     private float _playerMaxHealth = 100f;
     private float _gunReloadTime = 1f;
@@ -49,14 +53,21 @@ public class Player : Unit
 
     public void Init()
     {
+        new PlayerParticles(this, _hitParticle, _hitAudio);
         _inventory = new Inventory();
         _playerAnimator = new PlayerAnimator();
         _gun = new Gun(_gunReloadTime, _gunDamage, this, _shoot);
         _gunParticles = new GunParticles(_shootParticle, _gun, _gunParticleTransform, _shootingTrail);
         _attackZone = new AttackZone(_gun, _playerAnimator, _inventory);
+        _playerStats = new Dictionary<PlayerStats, int>()
+        {
+            {PlayerStats.Damage, 0 },
+            {PlayerStats.Regeneration, 0 },
+            {PlayerStats.Lifesteal, 0 },
+        };
 
         _playerMovement = new PlayerMovement(_movementSpeed, _attackZone, this);
-        _playerInputRouter = new PlayerInputRouter(_playerMovement);
+        _playerInputRouter = new PlayerInputRouter(_playerMovement, _joystick);
 
         _playerMovementView.Init(_playerMovement, _body);
         _attackZoneView.Init(_attackZone);
@@ -69,36 +80,28 @@ public class Player : Unit
         base.Init(_playerMaxHealth, _healthBar);
     }
 
+    public int StatLevel(PlayerStats stat) => _playerStats[stat];
+
     public void Tick(float time)
     {
         Heal(_regeneration * time);
     }
 
-    public void Heal(float heal)
-    {
-        if (heal >= 0)
-        {
-            Health += heal;
-
-            if (Health > _playerMaxHealth)
-            {
-                Health = _playerMaxHealth;
-            }
-        }
-    }
-
     public void Upgrade(UpgradeDamage upgrade)
     {
+        _playerStats[upgrade.Stat]++;
         _gun.AppendDamage(upgrade.Efficiency);
     }
 
     public void Upgrade(UpgradeLifesteal upgrade)
     {
+        _playerStats[upgrade.Stat]++;
         _gun.AppendLifesteal(upgrade.Efficiency);
     }
 
     public void Upgrade(UpgradeRegeneration upgrade)
     {
+        _playerStats[upgrade.Stat]++;
         if (upgrade.Efficiency >= 0)
             _regeneration += upgrade.Efficiency;
     }

@@ -4,7 +4,8 @@ using System;
 
 public class CheckingFocus : MonoBehaviour
 {
-#if !UNITY_EDITOR
+    [SerializeField] private Game _game;
+
     private void OnEnable()
     {
         Application.focusChanged += OnInBackgroundChangeApp;
@@ -29,7 +30,9 @@ public class CheckingFocus : MonoBehaviour
 
     private void PauseGame(bool value) 
     {
-        Time.timeScale = value ? 0 : 1; 
+        if (value)
+            _game.Pause(gameObject);
+        else
+            _game.Resume(gameObject);
     }
-#endif
 }

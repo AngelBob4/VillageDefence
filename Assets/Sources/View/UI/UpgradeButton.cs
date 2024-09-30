@@ -1,4 +1,5 @@
 using Lean.Localization;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,14 +9,19 @@ public class UpgradeButton : MonoBehaviour
     [SerializeField] private LeanLocalizedText _descriptionLocalization;
     [SerializeField] private Text _percentsOfEfficiencyLocalization;
     [SerializeField] private Image _image;
+    [SerializeField] private Text _levelOfUpgrade;
 
     private PlayerUpgrade _playerUpgrade;
+    private Game _game;
     private Button _button;
     private Player _player;
     private UpgradeScreen _upgradeScreen;
 
-    public void Init(Player player, UpgradeScreen upgradeScreen)
+    public event Action Upgraded;
+
+    public void Init(Game game, Player player, UpgradeScreen upgradeScreen)
     {
+        _game = game;
         _player = player;
         _upgradeScreen = upgradeScreen;
     }
@@ -26,6 +32,7 @@ public class UpgradeButton : MonoBehaviour
         _descriptionLocalization.TranslationName = _playerUpgrade.Description;
         _percentsOfEfficiencyLocalization.text = _playerUpgrade.Efficiency.ToString() + "%";
         _image.sprite = _playerUpgrade.Sprite;
+        _levelOfUpgrade.text = _player.StatLevel(_playerUpgrade.Stat).ToString();
     }
 
     private void OnEnable()
@@ -41,7 +48,9 @@ public class UpgradeButton : MonoBehaviour
 
     private void OnButtonClick()
     {
+        _game.Resume(_upgradeScreen.gameObject);
         _playerUpgrade.Upgrade(_player);
         _upgradeScreen.Close();
+        Upgraded?.Invoke();
     }
 }

@@ -11,10 +11,13 @@ public class Localization : MonoBehaviour
     private const string Russian = "ru";
     private const string Turkish = "tr";
 
-    public void ChangeLanguage()
+    public void Start()
     {
+#if !UNITY_EDITOR
         string languageCode = YandexGamesSdk.Environment.i18n.lang;
-
+#else
+        string languageCode = Turkish;
+#endif
         switch (languageCode)
         {
             case Russian:

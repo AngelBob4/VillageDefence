@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class EndGameScreen : Window
 {
     private Button _actionButton;
+
     public event Action RestartButtonClicked;
 
     public void Init(Button button)

@@ -1,27 +1,37 @@
-using LeaderboardDemo;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cysharp.Threading.Tasks;
+using System;
 
 public class Game : MonoBehaviour
 {
     private EndGameScreen _endGameScreen;
+    private PauseService _pauseService;
+    private LeaderboardView _leaderboardView;
     private UpgradeScreen _upgradeScreen;
     private GameAudio _gameAudio;
     private int _gameScore = 0;
     private int _rewardScoreForEnemy = 10;
+    private AddScore _addScore;
 
-    public void Init(EndGameScreen endGameScreen, UpgradeScreen upgradeScreen, EnemyFactory enemyFactory, GameAudio gameAudio)
+    public void Init(EndGameScreen endGameScreen, UpgradeScreen upgradeScreen, EnemyGeneratorView enemyGeneratorView, GameAudio gameAudio, AddScore addScore, LeaderboardView leaderboardView)
     {
+        _leaderboardView = leaderboardView;
+        _addScore = addScore;
         _endGameScreen = endGameScreen;
         _upgradeScreen = upgradeScreen;
         _gameAudio = gameAudio;
+        _pauseService = new PauseService();
 
         _endGameScreen.RestartButtonClicked += OnRestartButtonClick;
 
         _endGameScreen.Close();
         _upgradeScreen.Close();
-        enemyFactory.EnemyPool.WaveEnded += OpenUpgradeScreen;
-        enemyFactory.EnemyPool.EnemyReturned += AddScore;
+#if !UNITY_EDITOR
+        Agava.YandexGames.Utility.PlayerPrefs.SetInt(Constants.SCORE_PREFS_KEY, _gameScore); 
+        Agava.YandexGames.Utility.PlayerPrefs.Save();
+        _gameScore = Agava.YandexGames.Utility.PlayerPrefs.GetInt(Constants.SCORE_PREFS_KEY);
+#endif
     }
 
     private void OnDisable()
@@ -29,33 +39,39 @@ public class Game : MonoBehaviour
         _endGameScreen.RestartButtonClicked -= OnRestartButtonClick;
     }
 
-    public void Pause()
+    public void Pause(GameObject gameObject)
     {
+        _pauseService.Pause(gameObject);
         Time.timeScale = 0;
-        _gameAudio.ToggleMusic();
     }
 
-    public void Resume()
+    public void Resume(GameObject gameObject)
     {
-        Time.timeScale = 1;
-        _gameAudio.ToggleMusic();
+        if (_pauseService.Unpause(gameObject))
+            Time.timeScale = 1;
     }
 
     public void OnGameOver()
     {
+#if !UNITY_EDITOR
+        Agava.YandexGames.Utility.PlayerPrefs.SetInt(Constants.SCORE_PREFS_KEY, 0);
+        Agava.YandexGames.Utility.PlayerPrefs.Save();
+        _leaderboardView.SetPlayerScore(_gameScore);
+#endif
+
         Time.timeScale = 0;
         _endGameScreen.Open();
     }
 
-    private void OpenUpgradeScreen()
+    public async void OpenUpgradeScreen(float delay)
     {
-        _upgradeScreen.Open();
+        _upgradeScreen.Open(delay);
+        await UniTask.Delay(TimeSpan.FromSeconds(delay), ignoreTimeScale: false);
+        Pause(_upgradeScreen.gameObject);
     }
 
     private void OnRestartButtonClick()
     {
-        Agava.YandexGames.Utility.PlayerPrefs.SetInt(Constants.SCORE_PREFS_KEY, _gameScore); 
-        Agava.YandexGames.Utility.PlayerPrefs.Save();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -64,8 +80,14 @@ public class Game : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    private void AddScore()
+    public void AddScore()
     {
         _gameScore += _rewardScoreForEnemy;
+        _addScore.UpdateScoreView(_gameScore);
+#if !UNITY_EDITOR
+        Agava.YandexGames.Utility.PlayerPrefs.SetInt(Constants.SCORE_PREFS_KEY, _gameScore);
+        Agava.YandexGames.Utility.PlayerPrefs.Save();
+        _leaderboardView.SetPlayerScore(_gameScore);
+#endif
     }
 }

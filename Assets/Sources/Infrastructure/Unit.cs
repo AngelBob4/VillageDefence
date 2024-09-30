@@ -6,7 +6,8 @@ public class Unit : MonoBehaviour
     private float _maxHealth;
 
     public event Action OnDeath;
-    public event Action OnHit;
+    public event Action OnHealthChanged;
+    public event Action OnGetDamage;
 
     public float Health { get; protected set; }
 
@@ -31,8 +32,24 @@ public class Unit : MonoBehaviour
             }
             else
             {
-                OnHit?.Invoke();
+                OnGetDamage?.Invoke();
+                OnHealthChanged?.Invoke();
             }
+        }
+    }
+
+    public void Heal(float heal)
+    {
+        if (heal >= 0)
+        {
+            Health += heal;
+
+            if (Health > _maxHealth)
+            {
+                Health = _maxHealth;
+            }
+
+            OnHealthChanged?.Invoke();
         }
     }
 }

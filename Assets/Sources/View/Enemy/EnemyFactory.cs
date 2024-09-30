@@ -7,6 +7,7 @@ public class EnemyFactory : MonoBehaviour
     private Particle _hit;
     private ParticleSystem _death;
     private float _enemyMaxHealth = 20f;
+    private float _extraDamage = 0f;
 
     public EnemyPool EnemyPool => _enemyPool;
 
@@ -18,15 +19,16 @@ public class EnemyFactory : MonoBehaviour
         _death = death;
     }
 
+    public void ResetEnemyParametrs(float extraMaxHealth, float extraDamage)
+    {
+        _enemyMaxHealth += extraMaxHealth;
+        _extraDamage += extraDamage;
+    }
+
     public Enemy Create()
     {
         Enemy enemy = _enemyPool.GetObject();
-        enemy.Init(_enemyMaxHealth, _hit, _death, _player.transform);
+        enemy.Init(_enemyMaxHealth, _hit, _death, _player.transform, _extraDamage);
         return enemy;
-    }
-
-    public void ResetPool(int amountOfEnemies)
-    {
-        _enemyPool.Reset(amountOfEnemies);
     }
 }
