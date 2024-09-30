@@ -1,17 +1,33 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndGamePresenter : IPresenter
 {
-    private Game _game;
     private EndGameScreen _endGameScreen;
 
-    public void Disable()
+    public EndGamePresenter(EndGameScreen endGameScreen)
     {
-        throw new System.NotImplementedException();
+        _endGameScreen = endGameScreen;
     }
 
     public void Enable()
     {
-        throw new System.NotImplementedException();
+        _endGameScreen.Close();
+        _endGameScreen.RestartButtonClicked += Restart;
+    }
+
+    public void Disable()
+    {
+        _endGameScreen.RestartButtonClicked -= Restart;
+    }
+
+    public void Open()
+    {
+        _endGameScreen.Open();
+    }
+
+    private void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

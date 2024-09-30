@@ -23,8 +23,6 @@ public class Game : MonoBehaviour
         _gameAudio = gameAudio;
         _pauseService = new PauseService();
 
-        _endGameScreen.RestartButtonClicked += OnRestartButtonClick;
-
         _endGameScreen.Close();
         _upgradeScreen.Close();
 #if !UNITY_EDITOR
@@ -34,50 +32,29 @@ public class Game : MonoBehaviour
 #endif
     }
 
-    private void OnDisable()
-    {
-        _endGameScreen.RestartButtonClicked -= OnRestartButtonClick;
-    }
-
     public void Pause(GameObject gameObject)
     {
         _pauseService.Pause(gameObject);
-        Time.timeScale = 0;
     }
 
     public void Resume(GameObject gameObject)
     {
-        if (_pauseService.Unpause(gameObject))
-            Time.timeScale = 1;
+        _pauseService.Unpause(gameObject);
     }
 
-    public void OnGameOver()
+    public void HandlePlayerDeath()
     {
 #if !UNITY_EDITOR
         Agava.YandexGames.Utility.PlayerPrefs.SetInt(Constants.SCORE_PREFS_KEY, 0);
         Agava.YandexGames.Utility.PlayerPrefs.Save();
         _leaderboardView.SetPlayerScore(_gameScore);
 #endif
-
-        Time.timeScale = 0;
         _endGameScreen.Open();
     }
 
-    public async void OpenUpgradeScreen(float delay)
+    public void OpenUpgradeScreen(float delay)
     {
         _upgradeScreen.Open(delay);
-        await UniTask.Delay(TimeSpan.FromSeconds(delay), ignoreTimeScale: false);
-        Pause(_upgradeScreen.gameObject);
-    }
-
-    private void OnRestartButtonClick()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    private void StartGame()
-    {
-        Time.timeScale = 1;
     }
 
     public void AddScore()

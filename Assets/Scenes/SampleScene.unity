@@ -379,17 +379,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3441898844423976824, guid: 6aaae4e1395d45d478b8035320f1645e, type: 3}
   m_PrefabInstance: {fileID: 7195880339157259439}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &26046145 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5030100986503016072, guid: 6aaae4e1395d45d478b8035320f1645e, type: 3}
-  m_PrefabInstance: {fileID: 7195880339157259439}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2bbe07984e63484f8be979f44bc9767, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &28573751
 GameObject:
   m_ObjectHideFlags: 0
@@ -1229,6 +1218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _openButton: {fileID: 1406255158430227942}
+  _game: {fileID: 0}
   _leaderboardView: {fileID: 1534645051}
   _authorizationOfferView: {fileID: 498617325}
   _authorizationErrorView: {fileID: 831472966}
@@ -3047,6 +3037,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c3ff626913ec145a410a351e7c78c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _windowGroup: {fileID: 619632340}
+  _actionButton: {fileID: 1483180123}
 --- !u!114 &619632345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5218,17 +5210,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3441898844423976824, guid: 6aaae4e1395d45d478b8035320f1645e, type: 3}
   m_PrefabInstance: {fileID: 1968161154}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1101694042 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5030100986503016072, guid: 6aaae4e1395d45d478b8035320f1645e, type: 3}
-  m_PrefabInstance: {fileID: 1968161154}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2bbe07984e63484f8be979f44bc9767, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1124261952
 GameObject:
   m_ObjectHideFlags: 0
@@ -5600,13 +5581,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _game: {fileID: 231934843}
   _endGameScreen: {fileID: 619632344}
-  _upgradeScreen: {fileID: 1309074384}
+  _upgradeScreenView: {fileID: 1309074384}
   _endGameButton: {fileID: 1483180123}
   _player: {fileID: 2622815598285528396}
   _enemyGeneratorView: {fileID: 28573754}
   _gameAudio: {fileID: 155647234}
   _addScore: {fileID: 8433119023929790164}
   _leaderboardView: {fileID: 1534645051}
+  _upgradeDamage: {fileID: 21300000, guid: 125bb49b217257347be09ede099b888d, type: 3}
+  _upgradeRegeneration: {fileID: 21300000, guid: bb67b03c2969d104caba950c446f8c8d, type: 3}
+  _upgradeLifesteal: {fileID: 21300000, guid: 2a5c892bdd014164da633b8c6fd0f246, type: 3}
+  _upgradeButtons: []
 --- !u!114 &1186472331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5896,15 +5881,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d4a5874b069b6f4f8df189cf1137120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _upgradeButtons:
-  - {fileID: 26046145}
-  - {fileID: 1101694042}
-  - {fileID: 1713352945}
-  _upgradeDamage: {fileID: 21300000, guid: 125bb49b217257347be09ede099b888d, type: 3}
-  _upgradeRegeneration: {fileID: 21300000, guid: bb67b03c2969d104caba950c446f8c8d, type: 3}
-  _upgradeLifesteal: {fileID: 21300000, guid: 2a5c892bdd014164da633b8c6fd0f246, type: 3}
-  _game: {fileID: 231934843}
   _panel: {fileID: 890855035}
+  _windowGroup: {fileID: 1309074382}
 --- !u!114 &1309074385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6845,17 +6823,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3441898844423976824, guid: 6aaae4e1395d45d478b8035320f1645e, type: 3}
   m_PrefabInstance: {fileID: 912601394}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1713352945 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5030100986503016072, guid: 6aaae4e1395d45d478b8035320f1645e, type: 3}
-  m_PrefabInstance: {fileID: 912601394}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2bbe07984e63484f8be979f44bc9767, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1714113220
 GameObject:
   m_ObjectHideFlags: 0

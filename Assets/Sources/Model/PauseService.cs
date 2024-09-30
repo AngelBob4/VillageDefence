@@ -15,15 +15,14 @@ public class PauseService
         {
             _pauseObjects.Add(gameObject, true);
         }
+
+        Time.timeScale = 0;
     }
 
-    public bool Unpause(GameObject gameObject)
+    public void Unpause(GameObject gameObject)
     {
         _pauseObjects[gameObject] = false;
 
-        if (_pauseObjects.ContainsValue(true))
-            return false;
-        else
-            return true; 
+        Time.timeScale = _pauseObjects.ContainsValue(true) ? 0 : 1;
     }
 }

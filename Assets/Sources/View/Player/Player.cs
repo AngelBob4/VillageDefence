@@ -108,6 +108,6 @@ public class Player : Unit
 
     private void Death()
     {
-        _game.OnGameOver();
+        _game.HandlePlayerDeath();
     }
 }

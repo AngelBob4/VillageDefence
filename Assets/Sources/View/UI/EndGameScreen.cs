@@ -1,21 +1,31 @@
 using System;
 using UnityEngine.UI;
+using UnityEngine;
 
 public class EndGameScreen : Window
 {
-    private Button _actionButton;
+    [SerializeField] private Button _actionButton;
+
+    private IPresenter _presenter;
 
     public event Action RestartButtonClicked;
 
-    public void Init(Button button)
+    public void Init(IPresenter presenter)
     {
-        _actionButton = button;
+        gameObject.SetActive(false);
+        _presenter = presenter;
+        gameObject.SetActive(true);
         _actionButton.onClick.AddListener(OnButtonClick);
-        base.Init();
+    }
+
+    private void OnEnable()
+    {
+        _presenter?.Enable();
     }
 
     private void OnDisable()
     {
+        _presenter?.Disable();
         _actionButton.onClick.RemoveListener(OnButtonClick);
     }
 
