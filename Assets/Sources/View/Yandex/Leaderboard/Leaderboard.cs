@@ -9,6 +9,7 @@ public class Leaderboard : MonoBehaviour
 {
     [SerializeField] private Button _openButton;
 
+    [SerializeField] private Game _game;
     [SerializeField] private LeaderboardView _leaderboardView;
     [SerializeField] private AuthorizationOfferView _authorizationOfferView;
     [SerializeField] private AuthorizationErrorView _authorizationErrorView;
@@ -39,6 +40,8 @@ public class Leaderboard : MonoBehaviour
 
     private void OnOpenButtonClick()
     {
+        _game.Pause(_leaderboardView.gameObject);
+
         if (Agava.YandexGames.PlayerAccount.IsAuthorized)
         {
             OpenLeaderboard();
@@ -52,5 +55,11 @@ public class Leaderboard : MonoBehaviour
         void onAuthorizeError() => _authorizationErrorView.Show();
 
         _authorizationOfferView.Show(onAuthorizeSuccess, onAuthorizeError);
+    }
+
+    private void OnAuthorizeError()
+    {
+        _game.Resume(_leaderboardView.gameObject);
+        _authorizationErrorView.Show();
     }
 }

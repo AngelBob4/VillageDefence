@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class EnemyGeneratorView : Generator
 {
@@ -16,13 +17,13 @@ public class EnemyGeneratorView : Generator
 
     public EnemyGeneratorPresenter EnemyGeneratorPresenter => _enemyGeneratorPresenter;
 
-    public void Init(Player player, EnemyFactory enemyFactory, EnemyGenerator enemyGenerator, Game game)
+    public void Init(Player player, EnemyFactory enemyFactory, EnemyGenerator enemyGenerator, Game game, Text waveCompleted)
     {
         _enemyGenerator = enemyGenerator;
         _player = player;
         _spawnDelay = new WaitForSeconds(_delay);
         _enemyFactory = enemyFactory;
-        _enemyGeneratorPresenter = new EnemyGeneratorPresenter(_enemyFactory.EnemyPool, game, _enemyGenerator);
+        _enemyGeneratorPresenter = new EnemyGeneratorPresenter(_enemyFactory.EnemyPool, game, _enemyGenerator, waveCompleted);
     }
 
     public void StartNextWave(int amountOfEnemies)

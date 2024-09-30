@@ -11,7 +11,12 @@ public class AuthorizationErrorView : MonoBehaviour
 
     private void OnEnable() => _game.Pause(gameObject);
 
-    public void Show() => gameObject.SetActive(true);
+    public void Show()
+    {
+        _game.Pause(gameObject);
+        gameObject.SetActive(true);
+    }
+
     private void Hide() 
     {
         gameObject.SetActive(false);
