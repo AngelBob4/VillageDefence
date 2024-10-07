@@ -1,6 +1,7 @@
-using Agava.YandexGames;
+using YG;
 using UnityEngine;
 using UnityEngine.UI;
+using YG.Utils.LB;
 
 public class AuthorizationChecker : MonoBehaviour
 {
@@ -9,26 +10,26 @@ public class AuthorizationChecker : MonoBehaviour
 
     private void Awake()
     {
-        Check();
+        YandexGame.onGetLeaderboard += Check;
     }
 
-    public void Check()
+    private void OnDestroy()
     {
-#if !UNITY_EDITOR
-        if (PlayerAccount.IsAuthorized)
+        YandexGame.onGetLeaderboard -= Check;
+    }
+
+    public void Check(LBData data)
+    {
+        if (YandexGame.auth)
         {
             _AuthorizationButton.SetActive(false);
 
-            PlayerAccount.GetProfileData((result) =>
-            {
-                string name = result.publicName;
+            string name = YandexGame.playerName;
 
-                if (string.IsNullOrEmpty(name))
-                    name = "Anonymous";
+            if (string.IsNullOrEmpty(name))
+                name = Constants.ANONYMOUS_NAME;
 
-                _name.text = name;
-            });
+            _name.text = name;
         }
-#endif
     }
 }

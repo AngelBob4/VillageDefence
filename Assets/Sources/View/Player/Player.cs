@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class Player : Unit
 {
@@ -14,7 +15,6 @@ public class Player : Unit
     [SerializeField] private UnitHelathBar _healthBar;
     [SerializeField] private Transform _body;
     [SerializeField] private AudioSource _shoot;
-    [SerializeField] private Game _game;
     [SerializeField] private Joystick _joystick;
     [SerializeField] private Particle _hitParticle;
     [SerializeField] private AudioSource _hitAudio;
@@ -27,6 +27,7 @@ public class Player : Unit
     private PlayerAnimator _playerAnimator;
     private GunParticles _gunParticles;
     private Dictionary<PlayerStats, int> _playerStats;
+    private IPresenter _presenter;
 
     private float _playerMaxHealth = 100f;
     private float _gunReloadTime = 1f;
@@ -41,18 +42,25 @@ public class Player : Unit
     public AttackZone AttackZone => _attackZone;
     public PlayerAnimator PlayerAnimator => _playerAnimator;
 
+    public event Action Die;
+
     private void OnEnable()
     {
+        _presenter?.Enable();
         _playerInputRouter.OnEnable();
     }
 
     private void OnDisable()
     {
+        _presenter?.Disable();
         _playerInputRouter.OnDisable();
     }
 
-    public void Init()
+    public void Init(IPresenter presenter)
     {
+        _presenter = presenter; 
+        _presenter?.Enable();
+
         new PlayerParticles(this, _hitParticle, _hitAudio);
         _inventory = new Inventory();
         _playerAnimator = new PlayerAnimator();
@@ -108,6 +116,6 @@ public class Player : Unit
 
     private void Death()
     {
-        _game.HandlePlayerDeath();
+        Die?.Invoke();
     }
 }

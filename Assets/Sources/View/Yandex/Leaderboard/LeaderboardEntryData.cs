@@ -1,9 +1,13 @@
+using UnityEngine;
+using YG;
+using YG.Utils.LB;
+
 public struct LeaderboardEntryData
 {
-    public LeaderboardEntryData(Agava.YandexGames.LeaderboardEntryResponse entry)
+    public LeaderboardEntryData(LBPlayerData entry)
     {
         Rank = entry.rank;
-        Name = entry.player.publicName;
+        Name = entry.name;
         Score = entry.score;
             
         if (string.IsNullOrEmpty(Name))

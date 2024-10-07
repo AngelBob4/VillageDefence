@@ -1,4 +1,4 @@
-using Agava.YandexGames;
+using YG;
 using Lean.Localization;
 using UnityEngine;
 
@@ -14,9 +14,9 @@ public class Localization : MonoBehaviour
     public void Start()
     {
 #if !UNITY_EDITOR
-        string languageCode = YandexGamesSdk.Environment.i18n.lang;
+        string languageCode = YandexGame.lang;
 #else
-        string languageCode = Turkish;
+        string languageCode = Russian;
 #endif
         switch (languageCode)
         {

@@ -1,34 +1,32 @@
 using UnityEngine;
-using Agava.YandexGames;
+using YG;
 
 public class VideoAdvertisement : MonoBehaviour
 {
-    private Game _game;
+    private PauseService _pauseService;
 
-    public void Init(Game game)
+    public void Init(PauseService pauseService)
     {
-        _game = game;
+        _pauseService = pauseService;
     }
 
-    public void ShowVideo() =>
-        Agava.YandexGames.VideoAd.Show(OnOpenCallback, null, OnCloseCallback);
+    public void ShowVideo() => YandexGame.RewVideoShow(0);
 
-    public void ShowInterstitial() =>
-        InterstitialAd.Show(OnOpenCallback, OnCloseCallback);
+    public void ShowInterstitial() => YandexGame.RewVideoShow(0);
 
 
     public void OnOpenCallback()
     {
-        _game.Pause(gameObject);
+        _pauseService.Pause(gameObject);
     }
 
     public void OnCloseCallback()
     {
-        _game.Resume(gameObject);
+        _pauseService.Unpause(gameObject);
     }
 
     public void OnCloseCallback(bool onClose)
     {
-        _game.Resume(gameObject);
+        _pauseService.Unpause(gameObject);
     }
 }

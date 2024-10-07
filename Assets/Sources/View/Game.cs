@@ -1,55 +1,32 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using Cysharp.Threading.Tasks;
-using System;
+using YG;
 
-public class Game : MonoBehaviour
+public class Game
 {
-    private EndGameScreen _endGameScreen;
-    private PauseService _pauseService;
+    private EndGame _endGame;
     private LeaderboardView _leaderboardView;
     private UpgradeScreen _upgradeScreen;
-    private GameAudio _gameAudio;
     private int _gameScore = 0;
     private int _rewardScoreForEnemy = 10;
     private AddScore _addScore;
+    private EnemyGenerator _enemyGenerator;
 
-    public void Init(EndGameScreen endGameScreen, UpgradeScreen upgradeScreen, EnemyGeneratorView enemyGeneratorView, GameAudio gameAudio, AddScore addScore, LeaderboardView leaderboardView)
+    public Game(EndGame endGame, UpgradeScreen upgradeScreen, EnemyGenerator enemyGenerator, AddScore addScore, LeaderboardView leaderboardView)
     {
+        _enemyGenerator = enemyGenerator;
         _leaderboardView = leaderboardView;
         _addScore = addScore;
-        _endGameScreen = endGameScreen;
+        _endGame = endGame;
         _upgradeScreen = upgradeScreen;
-        _gameAudio = gameAudio;
-        _pauseService = new PauseService();
-
-        _endGameScreen.Close();
-        _upgradeScreen.Close();
-#if !UNITY_EDITOR
-        Agava.YandexGames.Utility.PlayerPrefs.SetInt(Constants.SCORE_PREFS_KEY, _gameScore); 
-        Agava.YandexGames.Utility.PlayerPrefs.Save();
-        _gameScore = Agava.YandexGames.Utility.PlayerPrefs.GetInt(Constants.SCORE_PREFS_KEY);
-#endif
-    }
-
-    public void Pause(GameObject gameObject)
-    {
-        _pauseService.Pause(gameObject);
-    }
-
-    public void Resume(GameObject gameObject)
-    {
-        _pauseService.Unpause(gameObject);
+        _gameScore = 0;
     }
 
     public void HandlePlayerDeath()
     {
-#if !UNITY_EDITOR
-        Agava.YandexGames.Utility.PlayerPrefs.SetInt(Constants.SCORE_PREFS_KEY, 0);
-        Agava.YandexGames.Utility.PlayerPrefs.Save();
+        float openingDelay = 1f;
+        YandexGame.savesData.score = _gameScore;
+        YandexGame.SaveProgress();
         _leaderboardView.SetPlayerScore(_gameScore);
-#endif
-        _endGameScreen.Open();
+        _endGame.Open(openingDelay, _gameScore, _enemyGenerator.WaveCounter);
     }
 
     public void OpenUpgradeScreen(float delay)
@@ -61,10 +38,8 @@ public class Game : MonoBehaviour
     {
         _gameScore += _rewardScoreForEnemy;
         _addScore.UpdateScoreView(_gameScore);
-#if !UNITY_EDITOR
-        Agava.YandexGames.Utility.PlayerPrefs.SetInt(Constants.SCORE_PREFS_KEY, _gameScore);
-        Agava.YandexGames.Utility.PlayerPrefs.Save();
+        YandexGame.savesData.score = _gameScore;
+        YandexGame.SaveProgress();
         _leaderboardView.SetPlayerScore(_gameScore);
-#endif
     }
 }

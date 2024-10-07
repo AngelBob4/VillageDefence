@@ -1,59 +1,109 @@
-using Agava.YandexGames;
+using YG;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using YG.Utils.LB;
 
 public class LeaderboardView : MonoBehaviour
 {
-    [SerializeField] private Transform _mainContainer;
-    [SerializeField] private Transform _playerEntryContainer;
+    [SerializeField] private Button _openButton;
     [SerializeField] private Button _closeButton;
+
+    [SerializeField] private Transform _mainContainer;
+    [SerializeField] private Transform _resultsContainer;
+    [SerializeField] private Transform _playerEntryContainer;
     [SerializeField] private LeaderboardEntryView _leaderboardEntryViewPrefab;
 
     private List<LeaderboardEntryView> _leaderboardEntryViewInstances = new();
     private LeaderboardEntryView _leaderboardPlayerViewInstance;
+    private LBThisPlayerData _lBThisPlayerData;
+    private IPresenter _presenter;
 
-    private void Awake() => _closeButton.onClick.AddListener(Hide);
-    private void OnDestroy() => _closeButton.onClick.RemoveListener(Hide);
+    public event Action OpenButtonClicked;
+    public event Action ExitButtonClicked;
+    public event Action AuthorizationOfferOpen;
 
-    public void ConstructEntries(List<LeaderboardEntryData> entryDatas)
+    public void Init(IPresenter presenter)
+    {
+        gameObject.SetActive(false);
+        _presenter = presenter;
+        gameObject.SetActive(true);
+    }
+
+    private void OnEnable()
+    {
+        _closeButton.onClick.AddListener(Hide);
+        _openButton.onClick.AddListener(Show);
+        _presenter.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _closeButton.onClick.RemoveListener(Hide);
+        _openButton.onClick.RemoveListener(Show);
+        _presenter.Disable();
+    }
+
+    public void ConstructEntries(List<LBPlayerData> entryDatas)
     {
         ClearEntries();
             
-        foreach (LeaderboardEntryData entryData in entryDatas)
-            _leaderboardEntryViewInstances.Add(CreateEntryView(entryData, _mainContainer));
+        foreach (LBPlayerData entryData in entryDatas)
+            _leaderboardEntryViewInstances.Add(CreateEntryView(entryData, _resultsContainer));
     }
 
-    public void ConstructPlayerInfo(LeaderboardEntryData entryData)
+    public void ConstructPlayerInfo(LBThisPlayerData entryData)
     {
         ClearPlayerEntry();
         _leaderboardPlayerViewInstance = CreateEntryView(entryData, _playerEntryContainer);
+        _lBThisPlayerData = entryData;
     }
 
     public void SetPlayerScore(int score)
     {
-        if (PlayerAccount.IsAuthorized == false)
+        if (YandexGame.auth == false)
             return;
 
-        Agava.YandexGames.Leaderboard.GetEntries(Constants.LEADERBOARD_NAME, (result) =>
-        {
-            if (result == null || result.userRank < score)
-                Agava.YandexGames.Leaderboard.SetScore(Constants.LEADERBOARD_NAME, score);
-        });
+        if (_lBThisPlayerData.rank < score)
+            YandexGame.NewLeaderboardScores(Constants.LEADERBOARD_NAME, score);
     }
 
-    public void Show() => gameObject.SetActive(true);
-    private void Hide() => gameObject.SetActive(false);
+    private void Show()
+    {
+        if (YandexGame.auth)
+        {
+            _mainContainer.gameObject.SetActive(true);
+            OpenButtonClicked?.Invoke();
+        }
+        else
+        {
+            AuthorizationOfferOpen?.Invoke();
+        }
+    }
 
-    private LeaderboardEntryView CreateEntryView(LeaderboardEntryData entryData, Transform container)
+    private void Hide()
+    {
+        _mainContainer.gameObject.SetActive(false);
+        ExitButtonClicked?.Invoke();
+    }
+
+    private LeaderboardEntryView CreateEntryView(LBPlayerData entryData, Transform container)
     {
         LeaderboardEntryView entryView = Instantiate(_leaderboardEntryViewPrefab, container);
         entryView.Initialize(entryData);
             
         return entryView;
     }
-        
+
+    private LeaderboardEntryView CreateEntryView(LBThisPlayerData entryData, Transform container)
+    {
+        LeaderboardEntryView entryView = Instantiate(_leaderboardEntryViewPrefab, container);
+        entryView.Initialize(entryData);
+
+        return entryView;
+    }
+
     private void ClearEntries()
     {
         foreach (LeaderboardEntryView leaderboardEntryView in _leaderboardEntryViewInstances)

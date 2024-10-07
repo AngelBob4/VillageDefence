@@ -1,21 +1,25 @@
 using UnityEngine;
-using Agava.WebUtility;
-using System;
+using YG;
 
 public class CheckingFocus : MonoBehaviour
 {
-    [SerializeField] private Game _game;
+    private PauseService _pauseService;
+
+    public void Init(PauseService pauseService)
+    {
+        _pauseService = pauseService;
+    }
 
     private void OnEnable()
     {
         Application.focusChanged += OnInBackgroundChangeApp;
-        WebApplication.InBackgroundChangeEvent += OnInBackgroundChangeWeb;
+        YandexGame.onVisibilityWindowGame += OnInBackgroundChangeWeb;
     }
 
     private void OnDisable()
     {
         Application.focusChanged -= OnInBackgroundChangeApp;
-        WebApplication.InBackgroundChangeEvent -= OnInBackgroundChangeWeb;
+        YandexGame.onVisibilityWindowGame -= OnInBackgroundChangeWeb;
     }
 
     private void OnInBackgroundChangeApp(bool inApp)
@@ -31,8 +35,8 @@ public class CheckingFocus : MonoBehaviour
     private void PauseGame(bool value) 
     {
         if (value)
-            _game.Pause(gameObject);
+            _pauseService.Pause(gameObject);
         else
-            _game.Resume(gameObject);
+            _pauseService.Unpause(gameObject);
     }
 }
