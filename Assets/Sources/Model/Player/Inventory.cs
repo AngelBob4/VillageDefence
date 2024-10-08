@@ -1,4 +1,6 @@
-public class Inventory 
+using System;
+
+public class Inventory
 {
     public bool HasBullets => _bullets > 0;
     
@@ -9,6 +11,8 @@ public class Inventory
 
     private int _maxBullets;
     private int _bullets = 0;
+
+    public event Action BulletPickedUp;
 
     public void Init(BackPackView backPackView, Gun gun, int maxBullets)
     {
@@ -25,6 +29,7 @@ public class Inventory
         {
             _bullets++;
             _backPackView.AddBullet(bullet);
+            BulletPickedUp?.Invoke();
         }
     }
 

@@ -15,9 +15,11 @@ public class Player : Unit
     [SerializeField] private UnitHelathBar _healthBar;
     [SerializeField] private Transform _body;
     [SerializeField] private AudioSource _shoot;
+    [SerializeField] private AudioSource _bulletPickUp;
     [SerializeField] private Joystick _joystick;
     [SerializeField] private Particle _hitParticle;
     [SerializeField] private AudioSource _hitAudio;
+    [SerializeField] private GunView _gunView;
 
     private Gun _gun;
     private PlayerMovement _playerMovement;
@@ -64,7 +66,7 @@ public class Player : Unit
         new PlayerParticles(this, _hitParticle, _hitAudio);
         _inventory = new Inventory();
         _playerAnimator = new PlayerAnimator();
-        _gun = new Gun(_gunReloadTime, _gunDamage, this, _shoot);
+        _gun = new Gun(_gunReloadTime, _gunDamage, this, _shoot, _bulletPickUp);
         _gunParticles = new GunParticles(_shootParticle, _gun, _gunParticleTransform, _shootingTrail);
         _attackZone = new AttackZone(_gun, _playerAnimator, _inventory);
         _playerStats = new Dictionary<PlayerStats, int>()
@@ -76,7 +78,9 @@ public class Player : Unit
 
         _playerMovement = new PlayerMovement(_movementSpeed, _attackZone, this);
         _playerInputRouter = new PlayerInputRouter(_playerMovement, _joystick);
+        GunPresenter gunPresenter = new GunPresenter(_inventory, _gun);
 
+        _gunView.Init(gunPresenter);
         _playerMovementView.Init(_playerMovement, _body);
         _attackZoneView.Init(_attackZone);
         _inventory.Init(_backPackView, _gun, _inventoryMaxBullets);

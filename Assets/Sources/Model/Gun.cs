@@ -10,16 +10,23 @@ public class Gun
     private float _damage;
     private float _percentOfLifesteal = 0;
     private Player _player;
-    private AudioSource _shoot;
+    private readonly AudioSource _shoot;
+    private readonly AudioSource _bulletPickUp;
 
     private float Lifesteal => _damage * _percentOfLifesteal / 100;
 
-    public Gun(float reloadTime, float damage, Player player, AudioSource shoot)
+    public Gun(float reloadTime, float damage, Player player, AudioSource shoot, AudioSource bulletPickUp)
     {
         _reloadTime = reloadTime;
         _damage = damage;
         _player = player;
         _shoot = shoot;
+        _bulletPickUp = bulletPickUp;
+    }
+
+    public void BulletPickUpSound()
+    {
+        _bulletPickUp.Play();
     }
 
     public void Shoot(Enemy enemy)

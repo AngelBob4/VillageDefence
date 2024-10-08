@@ -33,7 +33,7 @@ public class AuthorizationOffer
 
     public void OnAuthorizeOpen()
     {
-        YandexGame.RequestAuth();
+        YandexGame.AuthDialog();
     }
 
     public void OnAuthorizeSuccess()

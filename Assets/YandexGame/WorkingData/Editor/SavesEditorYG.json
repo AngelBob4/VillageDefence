@@ -1,5 +1,5 @@
 {
-    "idSave": 277,
+    "idSave": 329,
     "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
@@ -9,7 +9,7 @@
         false,
         false
     ],
-    "score": 0,
+    "score": 20,
     "money": 0,
     "isAudioActive": false
 }
