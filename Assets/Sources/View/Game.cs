@@ -18,6 +18,7 @@ public class Game
         _endGame = endGame;
         _upgradeScreen = upgradeScreen;
         _gameScore = 0;
+        _addScore.UpdateScoreView(_gameScore);
     }
 
     public void HandlePlayerDeath()

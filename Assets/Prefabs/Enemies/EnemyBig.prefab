@@ -3370,6 +3370,9 @@ MonoBehaviour:
   _movement: {fileID: 5920980038317035866}
   _attackZone: {fileID: 7151194812590924797}
   _healthBar: {fileID: 6556648857676668805}
+  _speed: 1
+  _maxHealthPoints: 40
+  _damage: 20
 --- !u!114 &5920980038317035866
 MonoBehaviour:
   m_ObjectHideFlags: 0

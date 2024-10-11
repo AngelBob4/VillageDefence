@@ -1,30 +1,47 @@
 using System;
+using System.Collections.Generic;
 
-public class EnemyPool : ObjectPool<Enemy>
+public class EnemyPool
 {
-    public EnemyPool(Enemy template) : base(template)
+    private Dictionary<int, ObjectPool<Enemy>> _poolByTemplateId = new Dictionary<int, ObjectPool<Enemy>>();
+    private List<Enemy> _templates = new List<Enemy>();
+    private Random _random = new Random();
+
+    public EnemyPool(List<Enemy> templates)
     {
+        _templates = templates;
+
+        foreach (Enemy enemy in _templates)
+        {
+            ObjectPool<Enemy> objectPool = new ObjectPool<Enemy>(enemy);
+            _poolByTemplateId.Add(enemy.GetInstanceID(), objectPool);
+            objectPool.ObjectReturned += OnObjectReturned;
+        }
+    }
+
+    ~EnemyPool()
+    {
+        foreach (ObjectPool<Enemy> objectPool in _poolByTemplateId.Values)
+        {
+            objectPool.ObjectReturned -= OnObjectReturned;
+        }
     }
 
     public event Action EnemyReturned;
 
-    public override Enemy GetObject()
+    public Enemy GetObject()
     {
-        if (_pool.TryDequeue(out Enemy item) == false)
-        {
-            Enemy newItem = UnityEngine.Object.Instantiate(_template);
-            newItem.gameObject.SetActive(false);
-            newItem.SetPool(this);
+        int randomNumber = _random.Next(0, _templates.Count);
+        int templateId = _templates[randomNumber].GetInstanceID();
 
-            return newItem;
-        }
+        Enemy newItem = _poolByTemplateId[templateId].GetObject();
+        newItem.gameObject.SetActive(false);
 
-        return item;
+        return newItem;
     }
 
-    public override void Release(IPoolable item)
+    private void OnObjectReturned()
     {
         EnemyReturned?.Invoke();
-        base.Release(item);
     }
 }

@@ -6,7 +6,7 @@ public class GameCompositeRoot : CompositeRoot
 {
     [Header("Enemy generator")]
     [SerializeField] private Transform _enemyContainer;
-    [SerializeField] private Enemy _template;
+    [SerializeField] private List<Enemy> _templates;
     [SerializeField] private EnemyGeneratorView _enemyGeneratorView;
     [SerializeField] private Particle _hit;
     [SerializeField] private ParticleSystem _death;
@@ -96,7 +96,7 @@ public class GameCompositeRoot : CompositeRoot
         _playerAnimator = _player.PlayerAnimator;
         _gun = _player.Gun;
 
-        _enemyFactory.Init(_template, _player, _hit, _death);
+        _enemyFactory.Init(_templates, _player, _hit, _death);
         _enemyGeneratorView.Init(_player, _enemyFactory, _enemyGenerator, _game, _waveCompleted);
     }
 }

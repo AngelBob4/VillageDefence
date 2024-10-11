@@ -10,22 +10,28 @@ public class VideoAdvertisement : MonoBehaviour
         _pauseService = pauseService;
     }
 
+    private void OnEnable()
+    {
+        YandexGame.OpenFullAdEvent += OnOpenFullAdEvent;
+        YandexGame.CloseFullAdEvent += OnCloseFullAdEvent;
+    }
+
+    private void OnDisable()
+    {
+        YandexGame.OpenFullAdEvent -= OnOpenFullAdEvent;
+        YandexGame.CloseFullAdEvent -= OnCloseFullAdEvent;
+    }
+
     public void ShowVideo() => YandexGame.RewVideoShow(0);
 
-    public void ShowInterstitial() => YandexGame.RewVideoShow(0);
+    public void ShowInterstitial() => YandexGame.FullscreenShow();
 
-
-    public void OnOpenCallback()
+    public void OnOpenFullAdEvent()
     {
         _pauseService.Pause(gameObject);
     }
 
-    public void OnCloseCallback()
-    {
-        _pauseService.Unpause(gameObject);
-    }
-
-    public void OnCloseCallback(bool onClose)
+    public void OnCloseFullAdEvent()
     {
         _pauseService.Unpause(gameObject);
     }

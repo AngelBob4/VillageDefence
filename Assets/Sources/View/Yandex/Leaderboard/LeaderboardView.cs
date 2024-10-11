@@ -65,7 +65,7 @@ public class LeaderboardView : MonoBehaviour
         if (YandexGame.auth == false)
             return;
 
-        if (_lBThisPlayerData.rank < score)
+        if (_lBThisPlayerData.score < score)
             YandexGame.NewLeaderboardScores(Constants.LEADERBOARD_NAME, score);
     }
 
