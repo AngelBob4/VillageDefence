@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class GameCompositeRoot : CompositeRoot
 {
+    [SerializeField] private GameObject _advertisementLoadingPanel;
+
     [Header("Enemy generator")]
     [SerializeField] private Transform _enemyContainer;
     [SerializeField] private List<Enemy> _templates;
@@ -63,7 +65,7 @@ public class GameCompositeRoot : CompositeRoot
     public override void Compose()
     {
         _pauseService = new PauseService();
-        _enemyGenerator = new EnemyGenerator(_enemyGeneratorView, _timeToWave, _videoAdvertisement, _progressionSlider);
+        _enemyGenerator = new EnemyGenerator(_enemyGeneratorView, _timeToWave, _progressionSlider);
         
         EndGame endGame = new EndGame();
         UpgradeScreen upgradeScreen = new UpgradeScreen(_pauseService, _player, _upgradeDamage, _upgradeRegeneration, _upgradeLifesteal, _upgradeScreenView, _upgradeButtons);
@@ -76,8 +78,8 @@ public class GameCompositeRoot : CompositeRoot
         AuthorizationErrorPresenter authorizationErrorPresenter = new AuthorizationErrorPresenter(_authorizationErrorView, authorizationError);
         EndGamePresenter endGamePresenter = new EndGamePresenter(_endGameScreen, _pauseService, endGame);
         ScreenOfGameHelperPresentor screenOfGameHelperPresentor = new ScreenOfGameHelperPresentor(screenOfGameHelper, _screenOfGameHelperView);
-        UpgradeScreenPresenter upgradeScreenPresenter = new UpgradeScreenPresenter(_upgradeScreenView, upgradeScreen, _upgradeButtons);
-        
+        UpgradeScreenPresenter upgradeScreenPresenter = new UpgradeScreenPresenter(_upgradeScreenView, upgradeScreen, _upgradeButtons, _advertisementLoadingPanel, _videoAdvertisement, _enemyGenerator);
+
         _leaderboardView.Init(leaderboardPresenter);
         _authorizationOfferView.Init(authorizationOfferPresenter);
         _authorizationErrorView.Init(authorizationErrorPresenter);

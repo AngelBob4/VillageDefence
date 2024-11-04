@@ -1,5 +1,3 @@
-using Cysharp.Threading.Tasks;
-using System;
 using UnityEngine.SceneManagement;
 
 public class EndGamePresenter : IPresenter
@@ -18,21 +16,23 @@ public class EndGamePresenter : IPresenter
     public void Enable()
     {
         _view.RestartButtonClicked += Restart;
+        _view.ScreenOpened += OnScreenOpened;
         _endGame.ScreenOpenedWithDelay += Open;
     }
 
     public void Disable()
     {
         _view.RestartButtonClicked -= Restart;
+        _view.ScreenOpened -= OnScreenOpened;
         _endGame.ScreenOpenedWithDelay -= Open;
     }
 
-    public async void Open(float delay, int score, int waves)
+    public void Open(float delay, int score, int waves)
     {
         _view.Open(delay, score, waves);
-        await UniTask.Delay(TimeSpan.FromSeconds(delay), ignoreTimeScale: true);
-        _pauseService.Pause(_view.gameObject);
     }
+
+    private void OnScreenOpened() => _pauseService.Pause(_view.gameObject);
 
     private void Restart()
     {

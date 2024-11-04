@@ -1,2 +1,2 @@
-Build path: D:/IJunior/DevBuild
-Build number: 6
+Build path: D:/IJunior/DevBuild/VillageDefence
+Build number: 23

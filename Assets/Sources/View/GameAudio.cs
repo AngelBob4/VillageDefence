@@ -4,9 +4,6 @@ using UnityEngine.Audio;
 
 public class GameAudio : MonoBehaviour
 {
-    private const int AUDIO_ACTIVE = 1;
-    private const int AUDIO_MUTED = -1;
-
     [SerializeField] private AudioMixerGroup _audioMixer;
     [SerializeField] private AudioSource _musicAudioSource;
     [SerializeField] private AudioButton _audioButton;

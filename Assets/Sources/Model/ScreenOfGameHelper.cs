@@ -1,4 +1,3 @@
-using UnityEngine;
 using YG;
 
 public class ScreenOfGameHelper
@@ -16,9 +15,14 @@ public class ScreenOfGameHelper
         firstOpen = YandexGame.savesData.isFirstSession;
 
         if (firstOpen == true)
+        {
+            YandexGame.GameReadyAPI();
             Open();
+        }
         else
+        {
             CloseFirstTime();
+        }
     }
 
     public void Open()

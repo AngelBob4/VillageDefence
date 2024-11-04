@@ -2,8 +2,6 @@ public class EnemyGenerator
 {
     private TimeToWave _timeToWave;
     private EnemyGeneratorView _enemyGeneratorView;
-    private EnemyFactory _enemyFactory;
-    private VideoAdvertisement _videoAdvertisement;
     private ProgressionSlider _progressionSlider;
 
     private float _currentTime = 0;
@@ -14,10 +12,9 @@ public class EnemyGenerator
 
     public int WaveCounter => _waveCounter;
 
-    public EnemyGenerator(EnemyGeneratorView enemyGeneratorView, TimeToWave timeToWave, VideoAdvertisement videoAdvertisement, ProgressionSlider progressionSlider)
+    public EnemyGenerator(EnemyGeneratorView enemyGeneratorView, TimeToWave timeToWave, ProgressionSlider progressionSlider)
     {
         _progressionSlider = progressionSlider;
-        _videoAdvertisement = videoAdvertisement;
         _enemyGeneratorView = enemyGeneratorView;
         _timeToWave = timeToWave;
     }
@@ -36,11 +33,6 @@ public class EnemyGenerator
 
     public void EndWave()
     {
-        if (_waveCounter % 10 == 0)
-        {
-            _videoAdvertisement.ShowInterstitial();
-        }
-
         StartWithDelay();
     }
 

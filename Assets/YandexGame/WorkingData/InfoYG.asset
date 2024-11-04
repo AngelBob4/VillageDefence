@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scopes: 1
   playerPhotoSize: 0
-  autoGameReadyAPI: 1
+  autoGameReadyAPI: 0
   playerInfoSimulation:
-    authorized: 0
+    authorized: 1
     isMobile: 0
     language: ru
-    name: Player this
+    name: 
     uniqueID: 000
     photo: https://justplaygames.ru/public/icon_player.png
     payingStatus: paying
@@ -27,10 +27,10 @@ MonoBehaviour:
   AdWhenLoadingScene: 0
   showFirstAd: 1
   rewardedAfterClosing: 1
-  adDisplayCalls: 0
-  fullscreenAdInterval: 60
-  durationOfAdSimulation: 0.5
-  loadAdWithDelaySimulation: 0
+  adDisplayCalls: 1
+  fullscreenAdInterval: 10
+  durationOfAdSimulation: 2
+  loadAdWithDelaySimulation: 2
   testErrorOfRewardedAdsInEditor: 0
   saveCloud: 1
   flush: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
       photo: https://justplaygames.ru/public/icon_player.png
       uniqueID: 321
     - rank: 2
-      name: playerThis
+      name: 
       score: 40
       photo: https://justplaygames.ru/public/icon_player.png
       uniqueID: 000

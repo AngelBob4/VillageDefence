@@ -2,11 +2,13 @@ using YG;
 using UnityEngine;
 using UnityEngine.UI;
 using YG.Utils.LB;
+using Lean.Localization;
 
 public class AuthorizationChecker : MonoBehaviour
 {
     [SerializeField] private GameObject _AuthorizationButton;
     [SerializeField] private Text _name;
+    [SerializeField] private LeanLocalizedText _leanLocalizedText;
 
     private void Awake()
     {
@@ -27,9 +29,14 @@ public class AuthorizationChecker : MonoBehaviour
             string name = YandexGame.playerName;
 
             if (string.IsNullOrEmpty(name))
-                name = Constants.ANONYMOUS_NAME;
-
-            _name.text = name;
+            {
+                _leanLocalizedText.enabled = true;
+            }
+            else
+            {
+                _leanLocalizedText.enabled = false;
+                _name.text = name;
+            }
         }
     }
 }

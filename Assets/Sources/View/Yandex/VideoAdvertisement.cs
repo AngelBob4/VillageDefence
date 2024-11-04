@@ -1,5 +1,6 @@
 using UnityEngine;
 using YG;
+using Cysharp.Threading.Tasks;
 
 public class VideoAdvertisement : MonoBehaviour
 {
@@ -12,23 +13,20 @@ public class VideoAdvertisement : MonoBehaviour
 
     private void OnEnable()
     {
-        YandexGame.OpenFullAdEvent += OnOpenFullAdEvent;
         YandexGame.CloseFullAdEvent += OnCloseFullAdEvent;
     }
 
     private void OnDisable()
     {
-        YandexGame.OpenFullAdEvent -= OnOpenFullAdEvent;
         YandexGame.CloseFullAdEvent -= OnCloseFullAdEvent;
     }
 
     public void ShowVideo() => YandexGame.RewVideoShow(0);
 
-    public void ShowInterstitial() => YandexGame.FullscreenShow();
-
-    public void OnOpenFullAdEvent()
+    public void ShowInterstitial()
     {
         _pauseService.Pause(gameObject);
+        YandexGame.FullscreenShow();
     }
 
     public void OnCloseFullAdEvent()

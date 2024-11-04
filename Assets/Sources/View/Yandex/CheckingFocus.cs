@@ -13,13 +13,11 @@ public class CheckingFocus : MonoBehaviour
     private void OnEnable()
     {
         Application.focusChanged += OnInBackgroundChangeApp;
-        YandexGame.onVisibilityWindowGame += OnInBackgroundChangeWeb;
     }
 
     private void OnDisable()
     {
         Application.focusChanged -= OnInBackgroundChangeApp;
-        YandexGame.onVisibilityWindowGame -= OnInBackgroundChangeWeb;
     }
 
     private void OnInBackgroundChangeApp(bool inApp)

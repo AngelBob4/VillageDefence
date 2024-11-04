@@ -14,6 +14,7 @@ public class EndGameScreen : MonoBehaviour
     private IPresenter _presenter;
 
     public event Action RestartButtonClicked;
+    public event Action ScreenOpened;
 
     public void Init(IPresenter presenter)
     {
@@ -46,12 +47,13 @@ public class EndGameScreen : MonoBehaviour
 
         _windowGroup.alpha = 1f;
         _panel.localScale = Vector3.zero;
-        _panel.DOScale(1, delay).OnComplete(TurnOnRaycasts);
+        _panel.DOScale(1, delay).SetLink(_panel.gameObject).OnComplete(CompleteScreenOpening);
     }
 
-    private void TurnOnRaycasts()
+    private void CompleteScreenOpening()
     {
         _windowGroup.blocksRaycasts = true;
+        ScreenOpened?.Invoke();
     }
 
     public void Close()

@@ -48,7 +48,7 @@ public class LeaderboardView : MonoBehaviour
     public void ConstructEntries(List<LBPlayerData> entryDatas)
     {
         ClearEntries();
-            
+
         foreach (LBPlayerData entryData in entryDatas)
             _leaderboardEntryViewInstances.Add(CreateEntryView(entryData, _resultsContainer));
     }
