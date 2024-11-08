@@ -36,11 +36,12 @@ public class Leaderboard : MonoBehaviour
 
     private void OnGetLeaderboard(LBData lb)
     {
-        if (lb.technoName == Constants.LEADERBOARD_NAME) 
+        if (lb.technoName != Constants.LEADERBOARD_NAME) 
         {
-            ConstructPlayerInfo?.Invoke(lb.thisPlayer);
+            return;
         }
 
+        ConstructPlayerInfo?.Invoke(lb.thisPlayer);
         List<LBPlayerData> entries = new();
 
         foreach (LBPlayerData entry in lb.players)

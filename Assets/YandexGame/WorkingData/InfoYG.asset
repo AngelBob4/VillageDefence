@@ -92,7 +92,7 @@ MonoBehaviour:
     thisPlayer:
       rank: 2
       score: 10
-  - technoName: Leaderboard
+  - technoName: Leaderboardd
     entries: "Test LeaderBoard\nName: simple\n1. \u0441\u043A\u0440\u044B\u0442:
       10\n2. Max: 15\n3. Maria: 23"
     isDefault: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
     type: numeric
     players:
     - rank: 6
-      name: anonymous
+      name: 
       score: 10
       photo: https://games-sdk.yandex.ru/games/api/sdk/v1/player/avatar/0/islands-retina-small
       uniqueID: 123

@@ -14,6 +14,9 @@ public class LeaderboardEntryView : MonoBehaviour
         
     public void Initialize(LBPlayerData entryData)
     {
+        if (entryData == null)
+            return;
+
         _rank.text = entryData.rank.ToString();
         _score.text = entryData.score.ToString();
 
@@ -30,6 +33,9 @@ public class LeaderboardEntryView : MonoBehaviour
 
     public void Initialize(LBThisPlayerData entryData)
     {
+        if (entryData == null)
+            return;
+
         _rank.text = entryData.rank.ToString();
         _score.text = entryData.score.ToString();
 

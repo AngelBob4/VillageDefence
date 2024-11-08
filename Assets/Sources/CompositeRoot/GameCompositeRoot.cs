@@ -91,7 +91,7 @@ public class GameCompositeRoot : CompositeRoot
         _leaderboard.Init(authorizationOffer, authorizationError);
         _game = new Game(endGame, upgradeScreen, _enemyGenerator, _addScore, _leaderboardView);
 
-        PlayerPresenter playerPresenter = new PlayerPresenter(_player, _game);
+        PlayerPresenter playerPresenter = new PlayerPresenter(_player, _game, _pauseService);
         _player.Init(playerPresenter);
         _playerInputRouter = _player.PlayerInputRouter;
         _attackZone = _player.AttackZone;

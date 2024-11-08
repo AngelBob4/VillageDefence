@@ -35,14 +35,14 @@ public class LeaderboardView : MonoBehaviour
     {
         _closeButton.onClick.AddListener(Hide);
         _openButton.onClick.AddListener(Show);
-        _presenter.Enable();
+        _presenter?.Enable();
     }
 
     private void OnDisable()
     {
         _closeButton.onClick.RemoveListener(Hide);
         _openButton.onClick.RemoveListener(Show);
-        _presenter.Disable();
+        _presenter?.Disable();
     }
 
     public void ConstructEntries(List<LBPlayerData> entryDatas)
@@ -55,6 +55,9 @@ public class LeaderboardView : MonoBehaviour
 
     public void ConstructPlayerInfo(LBThisPlayerData entryData)
     {
+        if (entryData == null)
+            return;
+
         ClearPlayerEntry();
         _leaderboardPlayerViewInstance = CreateEntryView(entryData, _playerEntryContainer);
         _lBThisPlayerData = entryData;
@@ -65,7 +68,7 @@ public class LeaderboardView : MonoBehaviour
         if (YandexGame.auth == false)
             return;
 
-        if (_lBThisPlayerData.score < score)
+        if (_lBThisPlayerData == null || _lBThisPlayerData.score < score)
             YandexGame.NewLeaderboardScores(Constants.LEADERBOARD_NAME, score);
     }
 

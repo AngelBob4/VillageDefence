@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 public class UpgradeScreen
 {
@@ -12,6 +13,8 @@ public class UpgradeScreen
     private Sprite _upgradeDamage;
     private Sprite _upgradeRegeneration;
     private Sprite _upgradeLifesteal;
+
+    private CancellationToken _cancellationToken;
 
     private UpgradeScreenView _upgradeScreenView;
     private List<UpgradeButton> _upgradeButtons;
@@ -28,23 +31,29 @@ public class UpgradeScreen
         _upgradeLifesteal = upgradeLifesteal;
         _upgradeScreenView = upgradeScreenView;
         _upgradeButtons = upgradeButtons;
-        
+        _cancellationToken = _upgradeScreenView.gameObject.GetCancellationTokenOnDestroy();
+
         CreateUpgrades();
     }
 
     public async void Open(float openingDelay)
     {
-        var shuffledcards = _playerUpgrades.OrderBy(_ => Guid.NewGuid()).ToList();
-
-        for (int i = 0; i < _upgradeButtons.Count; i++)
+        try
         {
-            _upgradeButtons[i].Reset(shuffledcards[i], _player);
+            var shuffledcards = _playerUpgrades.OrderBy(_ => Guid.NewGuid()).ToList();
+
+            for (int i = 0; i < _upgradeButtons.Count; i++)
+            {
+                _upgradeButtons[i].Reset(shuffledcards[i], _player);
+            }
+
+            _upgradeScreenView.Open(openingDelay);
+            await UniTask.Delay(TimeSpan.FromSeconds(openingDelay), ignoreTimeScale: false, cancellationToken: _cancellationToken);
+            _pauseService.Pause(_upgradeScreenView.gameObject);
         }
-
-        _upgradeScreenView.Open(openingDelay);
-
-        await UniTask.Delay(TimeSpan.FromSeconds(openingDelay), ignoreTimeScale: false);
-        _pauseService.Pause(_upgradeScreenView.gameObject);
+        catch (OperationCanceledException _)
+        {
+        }
     }
 
     public void Close()

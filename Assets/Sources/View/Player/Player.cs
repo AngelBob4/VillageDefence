@@ -44,7 +44,8 @@ public class Player : Unit
     public AttackZone AttackZone => _attackZone;
     public PlayerAnimator PlayerAnimator => _playerAnimator;
 
-    public event Action Die;
+    public event Action Died;
+    public event Action Revived;
 
     private void OnEnable()
     {
@@ -88,7 +89,7 @@ public class Player : Unit
         _backPackView.Init(_backpackBulletsOffset);
         _playerAnimator.Init(_animator, _playerMovement);
 
-        OnDeath += Death;
+        OnDeath += Die;
         base.Init(_playerMaxHealth, _healthBar);
     }
 
@@ -118,8 +119,14 @@ public class Player : Unit
             _regeneration += upgrade.Efficiency;
     }
 
-    private void Death()
+    private void Die()
     {
-        Die?.Invoke();
+        Died?.Invoke();
+    }
+
+    public void Revive()
+    {
+        base.Init(_playerMaxHealth, _healthBar);
+        Revived?.Invoke();
     }
 }
