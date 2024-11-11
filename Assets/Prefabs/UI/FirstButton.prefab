@@ -383,6 +383,7 @@ MonoBehaviour:
   _percentsOfEfficiencyLocalization: {fileID: 9045111743347502856}
   _image: {fileID: 5046176946018202666}
   _levelOfUpgrade: {fileID: 6499420225638687414}
+  _button: {fileID: 2388910608381389564}
 --- !u!1 &5550724835611904579
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class Player : Unit
 {
@@ -14,10 +15,11 @@ public class Player : Unit
     [SerializeField] private UnitHelathBar _healthBar;
     [SerializeField] private Transform _body;
     [SerializeField] private AudioSource _shoot;
-    [SerializeField] private Game _game;
+    [SerializeField] private AudioSource _bulletPickUp;
     [SerializeField] private Joystick _joystick;
     [SerializeField] private Particle _hitParticle;
     [SerializeField] private AudioSource _hitAudio;
+    [SerializeField] private GunView _gunView;
 
     private Gun _gun;
     private PlayerMovement _playerMovement;
@@ -27,6 +29,7 @@ public class Player : Unit
     private PlayerAnimator _playerAnimator;
     private GunParticles _gunParticles;
     private Dictionary<PlayerStats, int> _playerStats;
+    private IPresenter _presenter;
 
     private float _playerMaxHealth = 100f;
     private float _gunReloadTime = 1f;
@@ -41,22 +44,30 @@ public class Player : Unit
     public AttackZone AttackZone => _attackZone;
     public PlayerAnimator PlayerAnimator => _playerAnimator;
 
+    public event Action Died;
+    public event Action Revived;
+
     private void OnEnable()
     {
+        _presenter?.Enable();
         _playerInputRouter.OnEnable();
     }
 
     private void OnDisable()
     {
+        _presenter?.Disable();
         _playerInputRouter.OnDisable();
     }
 
-    public void Init()
+    public void Init(IPresenter presenter)
     {
+        _presenter = presenter; 
+        _presenter?.Enable();
+
         new PlayerParticles(this, _hitParticle, _hitAudio);
         _inventory = new Inventory();
         _playerAnimator = new PlayerAnimator();
-        _gun = new Gun(_gunReloadTime, _gunDamage, this, _shoot);
+        _gun = new Gun(_gunReloadTime, _gunDamage, this, _shoot, _bulletPickUp);
         _gunParticles = new GunParticles(_shootParticle, _gun, _gunParticleTransform, _shootingTrail);
         _attackZone = new AttackZone(_gun, _playerAnimator, _inventory);
         _playerStats = new Dictionary<PlayerStats, int>()
@@ -68,7 +79,9 @@ public class Player : Unit
 
         _playerMovement = new PlayerMovement(_movementSpeed, _attackZone, this);
         _playerInputRouter = new PlayerInputRouter(_playerMovement, _joystick);
+        GunPresenter gunPresenter = new GunPresenter(_inventory, _gun);
 
+        _gunView.Init(gunPresenter);
         _playerMovementView.Init(_playerMovement, _body);
         _attackZoneView.Init(_attackZone);
         _inventory.Init(_backPackView, _gun, _inventoryMaxBullets);
@@ -76,7 +89,7 @@ public class Player : Unit
         _backPackView.Init(_backpackBulletsOffset);
         _playerAnimator.Init(_animator, _playerMovement);
 
-        OnDeath += Death;
+        OnDeath += Die;
         base.Init(_playerMaxHealth, _healthBar);
     }
 
@@ -106,8 +119,14 @@ public class Player : Unit
             _regeneration += upgrade.Efficiency;
     }
 
-    private void Death()
+    private void Die()
     {
-        _game.OnGameOver();
+        Died?.Invoke();
+    }
+
+    public void Revive()
+    {
+        base.Init(_playerMaxHealth, _healthBar);
+        Revived?.Invoke();
     }
 }

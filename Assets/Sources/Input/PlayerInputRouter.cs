@@ -1,4 +1,4 @@
-using Agava.WebUtility;
+using YG;
 using UnityEngine;
 
 public class PlayerInputRouter
@@ -13,7 +13,7 @@ public class PlayerInputRouter
         _playerInput = new PlayerInput();
         _playerMovement = playerMovement;
         
-        if (Device.IsMobile)
+        if (YandexGame.EnvironmentData.isMobile)
             joystick.gameObject.SetActive(true);
     }
 
@@ -21,7 +21,7 @@ public class PlayerInputRouter
     {
         Vector2 moveDirection;
 
-        if (Device.IsMobile)
+        if (YandexGame.EnvironmentData.isMobile)
             moveDirection = _joystick.Direction;
         else
             moveDirection = _playerInput.Player.Move.ReadValue<Vector2>();

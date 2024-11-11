@@ -5,10 +5,11 @@ public class EnemyMovement : MonoBehaviour
 {
     private CharacterController _characterController;
     private Transform _target;
-    private float _speed = 1f;
+    private float _speed;
 
-    public void Init(Transform target)
+    public void Init(Transform target, float speed)
     {
+        _speed = speed;
         _target = target;
         _characterController = GetComponent<CharacterController>();
     }

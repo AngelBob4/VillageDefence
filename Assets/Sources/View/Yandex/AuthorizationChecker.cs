@@ -1,34 +1,42 @@
-using Agava.YandexGames;
+using YG;
 using UnityEngine;
 using UnityEngine.UI;
+using YG.Utils.LB;
+using Lean.Localization;
 
 public class AuthorizationChecker : MonoBehaviour
 {
     [SerializeField] private GameObject _AuthorizationButton;
     [SerializeField] private Text _name;
+    [SerializeField] private LeanLocalizedText _leanLocalizedText;
 
     private void Awake()
     {
-        Check();
+        YandexGame.onGetLeaderboard += Check;
     }
 
-    public void Check()
+    private void OnDestroy()
     {
-#if !UNITY_EDITOR
-        if (PlayerAccount.IsAuthorized)
+        YandexGame.onGetLeaderboard -= Check;
+    }
+
+    public void Check(LBData data)
+    {
+        if (YandexGame.auth)
         {
             _AuthorizationButton.SetActive(false);
 
-            PlayerAccount.GetProfileData((result) =>
+            string name = YandexGame.playerName;
+
+            if (string.IsNullOrEmpty(name))
             {
-                string name = result.publicName;
-
-                if (string.IsNullOrEmpty(name))
-                    name = "Anonymous";
-
+                _leanLocalizedText.enabled = true;
+            }
+            else
+            {
+                _leanLocalizedText.enabled = false;
                 _name.text = name;
-            });
+            }
         }
-#endif
     }
 }

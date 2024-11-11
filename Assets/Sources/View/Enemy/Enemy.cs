@@ -7,6 +7,10 @@ public class Enemy : Unit, IPoolable
     [SerializeField] private EnemyAttackZone _attackZone;
     [SerializeField] private UnitHelathBar _healthBar;
 
+    [SerializeField] private float _speed = 1;
+    [SerializeField] private float _maxHealthPoints = 10;
+    [SerializeField] private float _damage = 10;
+
     private IPool _pool;
 
     private void OnDisable()
@@ -14,18 +18,18 @@ public class Enemy : Unit, IPoolable
         OnDeath -= Destroy;
     }
 
-    public void Init(float maxHealth, Particle hit, ParticleSystem death, Transform target, float extraDamage)
+    public void Init(float extraHealth, Particle hit, ParticleSystem death, Transform target, float extraDamage)
     {
         new EnemyParticles(this, death, hit);
         Animator animator = GetComponent<Animator>();
         EnemyAnimator enemyAnimator = new EnemyAnimator();
 
         enemyAnimator.Init(animator);
-        _movement.Init(target);
-        _attackZone.Init(enemyAnimator, extraDamage);
+        _movement.Init(target, _speed);
+        _attackZone.Init(enemyAnimator, _damage + extraDamage);
 
         OnDeath += Destroy;
-        base.Init(maxHealth, _healthBar);
+        base.Init(_maxHealthPoints + extraHealth, _healthBar);
         _healthBar.HealthChanged();
     }
 
@@ -48,6 +52,7 @@ public class Enemy : Unit, IPoolable
             return;
         }
 
+        OnDeath -= Destroy;
         Destroy(gameObject);
     }
 

@@ -10,34 +10,14 @@ public class UpgradeButton : MonoBehaviour
     [SerializeField] private Text _percentsOfEfficiencyLocalization;
     [SerializeField] private Image _image;
     [SerializeField] private Text _levelOfUpgrade;
+    [SerializeField] private Button _button;
 
     private PlayerUpgrade _playerUpgrade;
-    private Game _game;
-    private Button _button;
-    private Player _player;
-    private UpgradeScreen _upgradeScreen;
 
-    public event Action Upgraded;
-
-    public void Init(Game game, Player player, UpgradeScreen upgradeScreen)
-    {
-        _game = game;
-        _player = player;
-        _upgradeScreen = upgradeScreen;
-    }
-
-    public void Reset(PlayerUpgrade playerUpgrade)
-    {
-        _playerUpgrade = playerUpgrade;
-        _descriptionLocalization.TranslationName = _playerUpgrade.Description;
-        _percentsOfEfficiencyLocalization.text = _playerUpgrade.Efficiency.ToString() + "%";
-        _image.sprite = _playerUpgrade.Sprite;
-        _levelOfUpgrade.text = _player.StatLevel(_playerUpgrade.Stat).ToString();
-    }
+    public event Action<PlayerUpgrade> OnUpgrade;
 
     private void OnEnable()
     {
-        _button = GetComponent<Button>();
         _button.onClick.AddListener(OnButtonClick);
     }
 
@@ -46,11 +26,17 @@ public class UpgradeButton : MonoBehaviour
         _button.onClick.RemoveListener(OnButtonClick);
     }
 
+    public void Reset(PlayerUpgrade playerUpgrade, Player player)
+    {
+        _playerUpgrade = playerUpgrade;
+        _descriptionLocalization.TranslationName = _playerUpgrade.Description;
+        _percentsOfEfficiencyLocalization.text = _playerUpgrade.Efficiency.ToString() + "%";
+        _image.sprite = _playerUpgrade.Sprite;
+        _levelOfUpgrade.text = player.StatLevel(_playerUpgrade.Stat).ToString();
+    }
+
     private void OnButtonClick()
     {
-        _game.Resume(_upgradeScreen.gameObject);
-        _playerUpgrade.Upgrade(_player);
-        _upgradeScreen.Close();
-        Upgraded?.Invoke();
+        OnUpgrade?.Invoke(_playerUpgrade);
     }
 }

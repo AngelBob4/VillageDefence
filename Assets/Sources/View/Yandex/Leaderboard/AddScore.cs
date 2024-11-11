@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
+using YG.Utils.LB;
 
 public class AddScore : MonoBehaviour
 {
@@ -7,22 +9,19 @@ public class AddScore : MonoBehaviour
 
     private void Awake()
     {
-#if !UNITY_EDITOR
-        Agava.YandexGames.PlayerAccount.AuthorizedInBackground += OnAuthorized;
-        UpdateScoreView();
-#endif
+        YandexGame.onGetLeaderboard += OnAuthorized;
     }
-        
+
     private void OnDestroy()
     {
-        Agava.YandexGames.PlayerAccount.AuthorizedInBackground -= OnAuthorized;
+        YandexGame.onGetLeaderboard -= OnAuthorized;
     }
 
     public void UpdateScoreView() => 
-        _score.text = Agava.YandexGames.Utility.PlayerPrefs.GetInt(Constants.SCORE_PREFS_KEY, 0).ToString();
+        _score.text = YandexGame.savesData.score.ToString();
 
     public void UpdateScoreView(int score) =>
         _score.text = score.ToString();
 
-    private void OnAuthorized() => UpdateScoreView();
+    private void OnAuthorized(LBData data) => UpdateScoreView();
 }

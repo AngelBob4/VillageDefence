@@ -1,11 +1,9 @@
 using UnityEngine;
+using YG;
 using UnityEngine.Audio;
 
 public class GameAudio : MonoBehaviour
 {
-    private const int AUDIO_ACTIVE = 1;
-    private const int AUDIO_MUTED = -1;
-
     [SerializeField] private AudioMixerGroup _audioMixer;
     [SerializeField] private AudioSource _musicAudioSource;
     [SerializeField] private AudioButton _audioButton;
@@ -18,26 +16,13 @@ public class GameAudio : MonoBehaviour
 
     private void Start()
     {
-#if !UNITY_EDITOR
-        int firstOpen = Agava.YandexGames.Utility.PlayerPrefs.GetInt(Constants.AUDIO_ACTIVE_PREFS_KEY);
-
-        if (firstOpen == Constants.TRUE_VALUE)
+        if (YandexGame.savesData.isFirstSession)
         {
             _musicActive = true;
             return;
         }
 
-        int active = Agava.YandexGames.Utility.PlayerPrefs.GetInt(Constants.AUDIO_ACTIVE_PREFS_KEY, 0);
-
-        if (active == 0)
-        {
-            _musicActive = true;
-        }
-        else
-        {
-            _musicActive = active == AUDIO_ACTIVE;
-        }
-#endif
+        _musicActive = YandexGame.savesData.isAudioActive;
 
         ResumeAudio();
     }
@@ -80,10 +65,7 @@ public class GameAudio : MonoBehaviour
 
     private void ResetPrefs()
     {
-#if !UNITY_EDITOR
-        int audioActive = _musicActive ? AUDIO_ACTIVE : AUDIO_MUTED;
-        Agava.YandexGames.Utility.PlayerPrefs.SetInt(Constants.AUDIO_ACTIVE_PREFS_KEY, audioActive);
-        Agava.YandexGames.Utility.PlayerPrefs.Save();
-#endif
+        YandexGame.savesData.isAudioActive = _musicActive;
+        YandexGame.SaveProgress();
     }
 }

@@ -28,6 +28,11 @@ public class EnemyParticles : Object
 
     public void Die()
     {
+        Particle particle = _hitPool.GetObject();
+        particle.gameObject.SetActive(true);
+        particle.gameObject.transform.position = _enemy.Position + _particleOffset;
+        particle.Play();
+
         ParticleSystem deathParticle = Object.Instantiate(_death);
         deathParticle.gameObject.transform.position = _enemy.Position + _particleOffset;
         deathParticle.Play();

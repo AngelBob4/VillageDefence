@@ -1,0 +1,15 @@
+{
+    "idSave": 1374,
+    "isFirstSession": false,
+    "language": "ru",
+    "promptDone": false,
+    "newPlayerName": "Hello!",
+    "openLevels": [
+        false,
+        false,
+        false
+    ],
+    "score": 20,
+    "money": 0,
+    "isAudioActive": false
+}

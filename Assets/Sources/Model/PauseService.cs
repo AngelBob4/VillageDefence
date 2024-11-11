@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PauseService
 {
-    [SerializeField] private Dictionary<GameObject, bool> _pauseObjects = new Dictionary<GameObject, bool>();
+    private Dictionary<GameObject, bool> _pauseObjects = new Dictionary<GameObject, bool>();
 
     public void Pause(GameObject gameObject)
     {
@@ -15,15 +15,14 @@ public class PauseService
         {
             _pauseObjects.Add(gameObject, true);
         }
+
+        Time.timeScale = 0;
     }
 
-    public bool Unpause(GameObject gameObject)
+    public void Unpause(GameObject gameObject)
     {
         _pauseObjects[gameObject] = false;
 
-        if (_pauseObjects.ContainsValue(true))
-            return false;
-        else
-            return true; 
+        Time.timeScale = _pauseObjects.ContainsValue(true) ? 0 : 1; 
     }
 }

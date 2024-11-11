@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class EnemyFactory : MonoBehaviour
@@ -6,14 +8,14 @@ public class EnemyFactory : MonoBehaviour
     private Player _player;
     private Particle _hit;
     private ParticleSystem _death;
-    private float _enemyMaxHealth = 20f;
     private float _extraDamage = 0f;
+    private float _extraHealth = 0f;
 
     public EnemyPool EnemyPool => _enemyPool;
 
-    public void Init(Enemy template, Player player, Particle hit, ParticleSystem death)
+    public void Init(List<Enemy> templates, Player player, Particle hit, ParticleSystem death)
     {
-        _enemyPool = new EnemyPool(template);
+        _enemyPool = new EnemyPool(templates);
         _player = player;
         _hit = hit;
         _death = death;
@@ -21,14 +23,14 @@ public class EnemyFactory : MonoBehaviour
 
     public void ResetEnemyParametrs(float extraMaxHealth, float extraDamage)
     {
-        _enemyMaxHealth += extraMaxHealth;
+        _extraHealth += extraMaxHealth;
         _extraDamage += extraDamage;
     }
 
     public Enemy Create()
     {
         Enemy enemy = _enemyPool.GetObject();
-        enemy.Init(_enemyMaxHealth, _hit, _death, _player.transform, _extraDamage);
+        enemy.Init(_extraHealth, _hit, _death, _player.transform, _extraDamage);
         return enemy;
     }
 }

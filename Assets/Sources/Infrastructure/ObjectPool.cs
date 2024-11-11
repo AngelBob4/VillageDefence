@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ObjectPool<T> : IPool
-    where T : Object, IPoolable
+public class ObjectPool<T> : IPool
+    where T : UnityEngine.Object, IPoolable
 {
     protected T _template;
     protected Queue<T> _pool;
@@ -13,11 +14,13 @@ public abstract class ObjectPool<T> : IPool
         _pool = new Queue<T>();
     }
 
+    public event Action ObjectReturned;
+
     public virtual T GetObject()
     {
         if (_pool.TryDequeue(out T item) == false)
         {
-            T newItem = Object.Instantiate(_template);
+            T newItem = UnityEngine.Object.Instantiate(_template);
             newItem.SetPool(this);
 
             return newItem;
@@ -29,5 +32,6 @@ public abstract class ObjectPool<T> : IPool
     public virtual void Release(IPoolable item)
     {
         _pool.Enqueue(item as T);
+        ObjectReturned?.Invoke();
     }
 }

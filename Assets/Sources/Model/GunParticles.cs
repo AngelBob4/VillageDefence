@@ -12,6 +12,7 @@ public class GunParticles : Object
     public GunParticles(Particle particle, Gun gun, Transform particlePosition, TrailRenderer trail)
     {
         _particlePool = new ParticlePool(particle);
+        _particlePool.GetObject();
         _gun = gun;
         _particlePosition = particlePosition;
         _trail = Object.Instantiate(trail);

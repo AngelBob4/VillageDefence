@@ -1,0 +1,2 @@
+Build path: D:/IJunior/DevBuild/VillageDefence
+Build number: 36

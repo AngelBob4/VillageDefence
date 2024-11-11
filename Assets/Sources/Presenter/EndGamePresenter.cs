@@ -1,17 +1,37 @@
-using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndGamePresenter : IPresenter
 {
-    private Game _game;
-    private EndGameScreen _endGameScreen;
+    private EndGameScreen _view;
+    private PauseService _pauseService;
+    private EndGame _endGame;
 
-    public void Disable()
+    public EndGamePresenter(EndGameScreen endGameScreen, PauseService pauseService, EndGame endGame)
     {
-        throw new System.NotImplementedException();
+        _pauseService = pauseService;
+        _view = endGameScreen;
+        _endGame = endGame;
     }
 
     public void Enable()
     {
-        throw new System.NotImplementedException();
+        _view.RestartButtonClicked += Restart;
+        _endGame.ScreenOpenedWithDelay += Open;
+    }
+
+    public void Disable()
+    {
+        _view.RestartButtonClicked -= Restart;
+        _endGame.ScreenOpenedWithDelay -= Open;
+    }
+
+    public void Open(float delay, int score, int waves)
+    {
+        _view.Open(delay, score, waves);
+    }
+
+    private void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

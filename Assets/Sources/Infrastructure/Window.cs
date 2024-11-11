@@ -3,15 +3,9 @@ using UnityEngine;
 [RequireComponent(typeof(CanvasGroup))]
 public abstract class Window : MonoBehaviour
 {
-    private CanvasGroup _windowGroup;
+    [SerializeField] private CanvasGroup _windowGroup;
 
     protected CanvasGroup WindowGroup => _windowGroup;
-
-    public virtual void Init()
-    {
-        _windowGroup = GetComponent<CanvasGroup>();
-        Close();
-    }
 
     public virtual void Open()
     {
