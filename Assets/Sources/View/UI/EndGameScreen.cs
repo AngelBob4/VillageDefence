@@ -37,6 +37,7 @@ public class EndGameScreen : MonoBehaviour
     private void OnEnable()
     {
         YandexGame.RewardVideoEvent += Rewarded;
+        YandexGame.CloseVideoEvent += CloseRewardVideo;
         _presenter?.Enable();
         _restartGameButton.onClick.AddListener(OnButtonClick);
         _rewardAdvertisementButton.onClick.AddListener(OpenRewardConfirmation);
@@ -47,6 +48,7 @@ public class EndGameScreen : MonoBehaviour
     private void OnDisable()
     {
         YandexGame.RewardVideoEvent -= Rewarded;
+        YandexGame.CloseVideoEvent -= CloseRewardVideo;
         _presenter?.Disable();
         _restartGameButton.onClick.RemoveListener(OnButtonClick);
         _rewardAdvertisementButton.onClick.RemoveListener(OpenRewardConfirmation);
@@ -101,8 +103,9 @@ public class EndGameScreen : MonoBehaviour
 
     private void Rewarded(int id)
     {
-        _player.Revive();
         _rewardReceived = true;
+        _player.Revive(); 
+        Close();
         _advertisementLoadingPanel.SetActive(false);
         _rewardConfirmation.SetActive(false);
     }
@@ -111,5 +114,16 @@ public class EndGameScreen : MonoBehaviour
     {
         _windowGroup.alpha = 0f;
         _windowGroup.blocksRaycasts = false;
+    }
+
+    private void CloseRewardVideo()
+    {
+        if (_rewardReceived)
+            return;
+
+        _windowGroup.blocksRaycasts = true;
+        _windowGroup.alpha = 1f;
+        _advertisementLoadingPanel.SetActive(false);
+        _rewardConfirmation.SetActive(false);
     }
 }
