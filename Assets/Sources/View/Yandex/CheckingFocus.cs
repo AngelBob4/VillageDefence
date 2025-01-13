@@ -1,40 +1,38 @@
+using Model;
 using UnityEngine;
-using YG;
 
-public class CheckingFocus : MonoBehaviour
+namespace View.Yandex
 {
-    private PauseService _pauseService;
-
-    public void Init(PauseService pauseService)
+    public class CheckingFocus : MonoBehaviour
     {
-        _pauseService = pauseService;
-    }
+        private PauseService _pauseService;
 
-    private void OnEnable()
-    {
-        Application.focusChanged += OnInBackgroundChangeApp;
-    }
+        public void Init(PauseService pauseService)
+        {
+            _pauseService = pauseService;
+        }
 
-    private void OnDisable()
-    {
-        Application.focusChanged -= OnInBackgroundChangeApp;
-    }
+        private void OnEnable()
+        {
+            Application.focusChanged += OnInBackgroundChangeApp;
+        }
 
-    private void OnInBackgroundChangeApp(bool inApp)
-    {
-        PauseGame(!inApp); 
-    }
+        private void OnDisable()
+        {
+            Application.focusChanged -= OnInBackgroundChangeApp;
+        }
 
-    private void OnInBackgroundChangeWeb(bool isBackground) 
-    {
-        PauseGame(isBackground);
-    }
+        private void OnInBackgroundChangeApp(bool inApp)
+        {
+            PauseGame(!inApp);
+        }
 
-    private void PauseGame(bool value) 
-    {
-        if (value)
-            _pauseService.Pause(gameObject);
-        else
-            _pauseService.Unpause(gameObject);
+        private void PauseGame(bool value)
+        {
+            if (value)
+                _pauseService.Pause(gameObject);
+            else
+                _pauseService.Unpause(gameObject);
+        }
     }
 }

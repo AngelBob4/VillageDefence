@@ -1,36 +1,40 @@
+using Infrastructure;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
-[RequireComponent(typeof(Rigidbody))]
-public class Bullet : MonoBehaviour, IPoolable
+namespace View
 {
-    private IPool _objectPool;
-
-    public void SetPool(IPool objectPool)
+    [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(Rigidbody))]
+    public class Bullet : MonoBehaviour, IPoolable
     {
-        _objectPool = objectPool;
-    }
+        private IPool _objectPool;
 
-    public void Reset()
-    {
-        gameObject.transform.parent = null;
-        gameObject.SetActive(true);
-    }
-
-    public void Destroy()
-    {
-        if (_objectPool != null)
+        public void SetPool(IPool objectPool)
         {
-            BackToPool();
-            return;
+            _objectPool = objectPool;
         }
 
-        Destroy(gameObject);
-    }
+        public void Reset()
+        {
+            gameObject.transform.parent = null;
+            gameObject.SetActive(true);
+        }
 
-    public void BackToPool()
-    {
-        gameObject.SetActive(false);
-        _objectPool.Release(this);
+        public void Destroy()
+        {
+            if (_objectPool != null)
+            {
+                BackToPool();
+                return;
+            }
+
+            Destroy(gameObject);
+        }
+
+        public void BackToPool()
+        {
+            gameObject.SetActive(false);
+            _objectPool.Release(this);
+        }
     }
 }

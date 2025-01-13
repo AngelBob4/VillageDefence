@@ -1,5 +1,8 @@
-public interface IPoolable
+namespace Infrastructure
 {
-    public void SetPool(IPool pool);
-    public void BackToPool();
+    public interface IPoolable
+    {
+        public void SetPool(IPool pool);
+        public void BackToPool();
+    }
 }

@@ -1,61 +1,77 @@
+using Infrastructure;
+using Model;
 using System.Collections.Generic;
+using View.Yandex;
+using View.Yandex.Leaderboard;
 using YG;
 using YG.Utils.LB;
 
-public class LeaderboardPresenter : IPresenter
+namespace Presenter
 {
-    private PauseService _pauseService;
-    private LeaderboardView _view;
-    private Leaderboard _model;
-
-    public LeaderboardPresenter(PauseService pauseService, LeaderboardView leaderboardView, Leaderboard leaderboard)
+    public class LeaderboardPresenter : IPresenter
     {
-        _pauseService = pauseService;
-        _view = leaderboardView;
-        _model = leaderboard;
-    }
+        private PauseService _pauseService;
+        private LeaderboardView _view;
+        private Leaderboard _model;
 
-    public void Enable()
-    {
-        _view.OpenButtonClicked += OnOpenButtonClicked;
-        _view.ExitButtonClicked += OnExitButtonClicked;
-        _view.AuthorizationOfferOpen += OnAuthorizationOfferOpen;
-        _model.ConstructEntries += OnConstructEntries;
-        _model.ConstructPlayerInfo += OnConstructPlayerInfo;
-    }
+        public LeaderboardPresenter(PauseService pauseService, LeaderboardView leaderboardView,
+            Leaderboard leaderboard)
+        {
+            _pauseService = pauseService;
+            _view = leaderboardView;
+            _model = leaderboard;
+        }
 
-    public void Disable()
-    {
-        _view.OpenButtonClicked -= OnOpenButtonClicked;
-        _view.ExitButtonClicked -= OnExitButtonClicked;
-        _view.AuthorizationOfferOpen -= OnAuthorizationOfferOpen;
-        _model.ConstructEntries -= OnConstructEntries;
-        _model.ConstructPlayerInfo -= OnConstructPlayerInfo;
-    }
+        public void Enable()
+        {
+            _view.OpenButtonClicked += OnOpenButtonClicked;
+            _view.ExitButtonClicked += OnExitButtonClicked;
+            _view.AuthorizationOfferOpen += OnAuthorizationOfferOpen;
+            _model.ConstructEntries += OnConstructEntries;
+            _model.ConstructPlayerInfo += OnConstructPlayerInfo;
+        }
 
-    private void OnOpenButtonClicked()
-    {
-        _pauseService.Pause(_view.gameObject);
-        YandexGame.GetLeaderboard(Constants.LEADERBOARD_NAME, 5, 5, 5, "nonePhoto");
-    }
+        public void Disable()
+        {
+            _view.OpenButtonClicked -= OnOpenButtonClicked;
+            _view.ExitButtonClicked -= OnExitButtonClicked;
+            _view.AuthorizationOfferOpen -= OnAuthorizationOfferOpen;
+            _model.ConstructEntries -= OnConstructEntries;
+            _model.ConstructPlayerInfo -= OnConstructPlayerInfo;
+        }
 
-    private void OnExitButtonClicked()
-    {
-        _pauseService.Unpause(_view.gameObject);
-    }
+        private void OnOpenButtonClicked()
+        {
+            int maxQuantityPlayers = 5;
+            int quantityTop = 5;
+            int quantityAround = 5;
 
-    private void OnAuthorizationOfferOpen()
-    {
-        _model.AuthorizationOfferOpen();
-    }
+            _pauseService.Pause(_view.gameObject);
+            YandexGame.GetLeaderboard(Constants.LeaderboardName,
+                maxQuantityPlayers,
+                quantityTop,
+                quantityAround,
+                "nonePhoto");
+        }
 
-    private void OnConstructPlayerInfo(LBThisPlayerData entryData)
-    {
-        _view.ConstructPlayerInfo(entryData);
-    }
+        private void OnExitButtonClicked()
+        {
+            _pauseService.Unpause(_view.gameObject);
+        }
 
-    private void OnConstructEntries(List<LBPlayerData> entryDatas)
-    {
-        _view.ConstructEntries(entryDatas);
+        private void OnAuthorizationOfferOpen()
+        {
+            _model.AuthorizationOfferOpen();
+        }
+
+        private void OnConstructPlayerInfo(LBThisPlayerData entryData)
+        {
+            _view.ConstructPlayerInfo(entryData);
+        }
+
+        private void OnConstructEntries(List<LBPlayerData> entryDatas)
+        {
+            _view.ConstructEntries(entryDatas);
+        }
     }
 }

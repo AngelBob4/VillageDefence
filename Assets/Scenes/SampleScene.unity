@@ -7275,6 +7275,7 @@ MonoBehaviour:
   _addScore: {fileID: 8433119023929790164}
   _leaderboardView: {fileID: 2129364986}
   _checkingFocus: {fileID: 1877421316}
+  _updateManager: {fileID: 1843282880}
   _authorizationErrorView: {fileID: 831472966}
   _authorizationOfferView: {fileID: 498617325}
   _leaderboard: {fileID: 201242929}
@@ -10577,6 +10578,50 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!1 &1843282879
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1843282881}
+  - component: {fileID: 1843282880}
+  m_Layer: 0
+  m_Name: UpdateManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1843282880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843282879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d0c511a1f17634a8c1340868216289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1843282881
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843282879}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 51.78833, y: 464.35834, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1853468686
 GameObject:
   m_ObjectHideFlags: 0
@@ -18964,7 +19009,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8433119023929790162}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e5996c07575b0e48852ab6b4c490457, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bd9c8e3b94895344aff8865bc3d0b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _score: {fileID: 8433119023929790163}
@@ -19408,3 +19453,4 @@ SceneRoots:
   - {fileID: 7829273885746611321}
   - {fileID: 155647233}
   - {fileID: 231934842}
+  - {fileID: 1843282881}

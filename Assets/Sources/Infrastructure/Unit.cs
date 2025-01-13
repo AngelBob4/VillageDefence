@@ -1,55 +1,61 @@
 using System;
 using UnityEngine;
+using View;
 
-public class Unit : MonoBehaviour
+namespace Infrastructure
 {
-    private float _maxHealth;
-
-    public event Action OnDeath;
-    public event Action OnHealthChanged;
-    public event Action OnGetDamage;
-
-    public float Health { get; protected set; }
-
-    public Vector3 Position => transform.position;
-
-    public void Init(float maxHealth, UnitHelathBar healthBar)
+    public class Unit : MonoBehaviour
     {
-        _maxHealth = maxHealth;
-        Health = _maxHealth;
-        healthBar.Init(_maxHealth, this);
-    }
+        private float _maxHealth;
 
-    public void GetDamage(float damage)
-    {
-        if (damage > 0)
+        public event Action Dying;
+        public event Action HealthChanged;
+        public event Action GotDamage;
+
+        public float Health { get; protected set; }
+
+        public Vector3 Position => transform.position;
+
+        public void Init(float maxHealth, UnitHelathBar healthBar)
         {
+            _maxHealth = maxHealth;
+            Health = _maxHealth;
+            healthBar.Init(_maxHealth, this);
+        }
+
+        public void GetDamage(float damage)
+        {
+            if (damage <= 0)
+            {
+                return;
+            }
+
             Health -= damage;
 
             if (Health <= 0)
             {
-                OnDeath?.Invoke();
+                Dying?.Invoke();
             }
             else
             {
-                OnGetDamage?.Invoke();
-                OnHealthChanged?.Invoke();
+                GotDamage?.Invoke();
+                HealthChanged?.Invoke();
             }
         }
-    }
 
-    public void Heal(float heal)
-    {
-        if (heal >= 0)
+        public void Heal(float heal)
         {
-            Health += heal;
-
-            if (Health > _maxHealth)
+            if (heal >= 0)
             {
-                Health = _maxHealth;
-            }
+                Health += heal;
 
-            OnHealthChanged?.Invoke();
+                if (Health > _maxHealth)
+                {
+                    Health = _maxHealth;
+                }
+
+                HealthChanged?.Invoke();
+            }
         }
     }
 }

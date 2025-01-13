@@ -1,44 +1,48 @@
-using YG;
+using Model.PlayerComponents;
 using UnityEngine;
+using YG;
 
-public class PlayerInputRouter
+namespace InputSystem
 {
-    private PlayerInput _playerInput;
-    private PlayerMovement _playerMovement;
-    private Joystick _joystick;
-
-    public PlayerInputRouter(PlayerMovement playerMovement, Joystick joystick) 
+    public class PlayerInputRouter
     {
-        _joystick = joystick;
-        _playerInput = new PlayerInput();
-        _playerMovement = playerMovement;
-        
-        if (YandexGame.EnvironmentData.isMobile)
-            joystick.gameObject.SetActive(true);
-    }
+        private PlayerInput _playerInput;
+        private PlayerMovement _playerMovement;
+        private Joystick _joystick;
 
-    public void Update()
-    {
-        Vector2 moveDirection;
+        public PlayerInputRouter(PlayerMovement playerMovement, Joystick joystick)
+        {
+            _joystick = joystick;
+            _playerInput = new PlayerInput();
+            _playerMovement = playerMovement;
 
-        if (YandexGame.EnvironmentData.isMobile)
-            moveDirection = _joystick.Direction;
-        else
-            moveDirection = _playerInput.Player.Move.ReadValue<Vector2>();
+            if (YandexGame.EnvironmentData.isMobile)
+                joystick.gameObject.SetActive(true);
+        }
 
-        moveDirection.Normalize();
+        public void Update()
+        {
+            Vector2 moveDirection;
 
-        _playerMovement.ResetMoveDirection(moveDirection);
-        _playerMovement.Rotate();
-    }
+            if (YandexGame.EnvironmentData.isMobile)
+                moveDirection = _joystick.Direction;
+            else
+                moveDirection = _playerInput.Player.Move.ReadValue<Vector2>();
 
-    public void OnEnable()
-    {
-        _playerInput.Enable();
-    }
+            moveDirection.Normalize();
 
-    public void OnDisable()
-    {
-        _playerInput.Disable();
+            _playerMovement.ResetMoveDirection(moveDirection);
+            _playerMovement.Rotate();
+        }
+
+        public void OnEnable()
+        {
+            _playerInput.Enable();
+        }
+
+        public void OnDisable()
+        {
+            _playerInput.Disable();
+        }
     }
 }

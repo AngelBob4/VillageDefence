@@ -1,11 +1,14 @@
 using System;
 
-public class EndGame
+namespace Model
 {
-    public event Action<float, int, int> ScreenOpenedWithDelay;
-
-    public void Open(float openingDelay, int score, int wavesComplited)
+    public class EndGame
     {
-        ScreenOpenedWithDelay?.Invoke(openingDelay, score, wavesComplited);
+        public event Action<float, int, int> ScreenOpenedWithDelay;
+
+        public void Open(float openingDelay, int score, int wavesComplited)
+        {
+            ScreenOpenedWithDelay?.Invoke(openingDelay, score, wavesComplited);
+        }
     }
 }

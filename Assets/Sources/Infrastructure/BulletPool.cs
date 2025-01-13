@@ -1,29 +1,33 @@
 ﻿using UnityEngine;
+using View;
 
-public class BulletPool : ObjectPool<Bullet>
+namespace Infrastructure
 {
-    private int _maxBulletsAmount;
-    private int _currentBulletsAmount = 0;
-
-    public BulletPool(Bullet template, int maxBulletsAmount) : base(template)
+    public class BulletPool : ObjectPool<Bullet>
     {
-        _maxBulletsAmount = maxBulletsAmount;
-    }
+        private int _maxBulletsAmount;
+        private int _currentBulletsAmount = 0;
 
-    public override Bullet GetObject()
-    {
-        if (_pool.TryDequeue(out Bullet item) == false)
+        public BulletPool(Bullet template, int maxBulletsAmount) : base(template)
         {
-            if (_currentBulletsAmount < _maxBulletsAmount)
-            {
-                Bullet newItem = Object.Instantiate(_template);
-                _currentBulletsAmount++;
-                newItem.SetPool(this);
-
-                return newItem;
-            }
+            _maxBulletsAmount = maxBulletsAmount;
         }
 
-        return item;
+        public override Bullet GetObject()
+        {
+            if (Pool.TryDequeue(out Bullet item) == false)
+            {
+                if (_currentBulletsAmount < _maxBulletsAmount)
+                {
+                    Bullet newItem = Object.Instantiate(Template);
+                    _currentBulletsAmount++;
+                    newItem.SetPool(this);
+
+                    return newItem;
+                }
+            }
+
+            return item;
+        }
     }
 }

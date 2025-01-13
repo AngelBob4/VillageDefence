@@ -1,52 +1,64 @@
+using Model;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using YG;
 using YG.Utils.LB;
 
-public class Leaderboard : MonoBehaviour
+namespace View.Yandex.Leaderboard
 {
-    private AuthorizationOffer _authorizationOffer;
-    private AuthorizationError _authorizationError;
-
-    public event Action<LBThisPlayerData> ConstructPlayerInfo;
-    public event Action<List<LBPlayerData>> ConstructEntries;
-
-    public void Init(AuthorizationOffer authorizationOffer, AuthorizationError authorizationError)
+    public class Leaderboard : MonoBehaviour
     {
-        _authorizationError = authorizationError;
-        _authorizationOffer = authorizationOffer;
-        YandexGame.GetLeaderboard(Constants.LEADERBOARD_NAME, 5, 5, 5, "nonePhoto");
-    }
+        private AuthorizationOffer _authorizationOffer;
+        private AuthorizationError _authorizationError;
 
-    private void OnEnable()
-    {
-        YandexGame.onGetLeaderboard += OnGetLeaderboard;
-    }
+        public event Action<LBThisPlayerData> ConstructPlayerInfo;
+        public event Action<List<LBPlayerData>> ConstructEntries;
 
-    private void OnDisable()
-    {
-        YandexGame.onGetLeaderboard -= OnGetLeaderboard;
-    }
-
-    public void AuthorizationOfferOpen()
-    {
-        _authorizationOffer.Open();
-    }
-
-    private void OnGetLeaderboard(LBData lb)
-    {
-        if (lb.technoName != Constants.LEADERBOARD_NAME) 
+        public void Init(AuthorizationOffer authorizationOffer, AuthorizationError authorizationError)
         {
-            return;
+            int maxQuantityPlayers = 5;
+            int quantityTop = 5;
+            int quantityAround = 5;
+
+            _authorizationError = authorizationError;
+            _authorizationOffer = authorizationOffer;
+            YandexGame.GetLeaderboard(Constants.LeaderboardName,
+                maxQuantityPlayers,
+                quantityTop,
+                quantityAround,
+                "nonePhoto");
         }
 
-        ConstructPlayerInfo?.Invoke(lb.thisPlayer);
-        List<LBPlayerData> entries = new();
+        private void OnEnable()
+        {
+            YandexGame.onGetLeaderboard += OnGetLeaderboard;
+        }
 
-        foreach (LBPlayerData entry in lb.players)
-            entries.Add(entry);
+        private void OnDisable()
+        {
+            YandexGame.onGetLeaderboard -= OnGetLeaderboard;
+        }
 
-        ConstructEntries?.Invoke(entries);
+        public void AuthorizationOfferOpen()
+        {
+            _authorizationOffer.Open();
+        }
+
+        private void OnGetLeaderboard(LBData lb)
+        {
+            if (lb.technoName != Constants.LeaderboardName)
+            {
+                return;
+            }
+
+            ConstructPlayerInfo?.Invoke(lb.thisPlayer);
+            List<LBPlayerData> entries = new();
+
+            foreach (LBPlayerData entry in lb.players)
+                entries.Add(entry);
+
+            ConstructEntries?.Invoke(entries);
+        }
     }
 }

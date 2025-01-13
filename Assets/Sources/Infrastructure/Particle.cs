@@ -1,38 +1,41 @@
 using UnityEngine;
 
-[RequireComponent(typeof(ParticleSystem))]
-public class Particle : MonoBehaviour, IPoolable
+namespace Infrastructure
 {
-    private IPool _objectPool;
-    private ParticleSystem _particleSystem;
-
-    private void OnDisable()
+    [RequireComponent(typeof(ParticleSystem))]
+    public class Particle : MonoBehaviour, IPoolable
     {
-        if (_objectPool != null)
+        private IPool _objectPool;
+        private ParticleSystem _particleSystem;
+
+        private void OnDisable()
         {
-            BackToPool();
-            return;
+            if (_objectPool != null)
+            {
+                BackToPool();
+                return;
+            }
+
+            Destroy(gameObject);
         }
 
-        Destroy(gameObject);
-    }
+        public void Play()
+        {
+            if (_particleSystem == null)
+                _particleSystem = GetComponent<ParticleSystem>();
 
-    public void Play()
-    {
-        if (_particleSystem == null)
-            _particleSystem = GetComponent<ParticleSystem>();
+            _particleSystem.Play();
+        }
 
-        _particleSystem.Play();
-    }
+        public void SetPool(IPool objectPool)
+        {
+            _objectPool = objectPool;
+        }
 
-    public void SetPool(IPool objectPool)
-    {
-        _objectPool = objectPool;
-    }
-
-    public void BackToPool()
-    {
-        gameObject.SetActive(false);
-        _objectPool.Release(this);
+        public void BackToPool()
+        {
+            gameObject.SetActive(false);
+            _objectPool.Release(this);
+        }
     }
 }

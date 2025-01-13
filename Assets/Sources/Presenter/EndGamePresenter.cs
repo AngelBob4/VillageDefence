@@ -1,37 +1,43 @@
+using Infrastructure;
+using Model;
 using UnityEngine.SceneManagement;
+using View.UI;
 
-public class EndGamePresenter : IPresenter
+namespace Presenter
 {
-    private EndGameScreen _view;
-    private PauseService _pauseService;
-    private EndGame _endGame;
-
-    public EndGamePresenter(EndGameScreen endGameScreen, PauseService pauseService, EndGame endGame)
+    public class EndGamePresenter : IPresenter
     {
-        _pauseService = pauseService;
-        _view = endGameScreen;
-        _endGame = endGame;
-    }
+        private EndGameScreen _view;
+        private PauseService _pauseService;
+        private EndGame _endGame;
 
-    public void Enable()
-    {
-        _view.RestartButtonClicked += Restart;
-        _endGame.ScreenOpenedWithDelay += Open;
-    }
+        public EndGamePresenter(EndGameScreen endGameScreen, PauseService pauseService, EndGame endGame)
+        {
+            _pauseService = pauseService;
+            _view = endGameScreen;
+            _endGame = endGame;
+        }
 
-    public void Disable()
-    {
-        _view.RestartButtonClicked -= Restart;
-        _endGame.ScreenOpenedWithDelay -= Open;
-    }
+        public void Enable()
+        {
+            _view.RestartButtonClicked += Restart;
+            _endGame.ScreenOpenedWithDelay += Open;
+        }
 
-    public void Open(float delay, int score, int waves)
-    {
-        _view.Open(delay, score, waves);
-    }
+        public void Disable()
+        {
+            _view.RestartButtonClicked -= Restart;
+            _endGame.ScreenOpenedWithDelay -= Open;
+        }
 
-    private void Restart()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        private void Open(float delay, int score, int waves)
+        {
+            _view.Open(delay, score, waves);
+        }
+
+        private void Restart()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }

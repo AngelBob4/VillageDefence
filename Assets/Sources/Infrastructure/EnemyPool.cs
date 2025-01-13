@@ -1,47 +1,51 @@
 using System;
 using System.Collections.Generic;
+using View.EnemyComponents;
 
-public class EnemyPool
+namespace Infrastructure
 {
-    private Dictionary<int, ObjectPool<Enemy>> _poolByTemplateId = new Dictionary<int, ObjectPool<Enemy>>();
-    private List<Enemy> _templates = new List<Enemy>();
-    private Random _random = new Random();
-
-    public EnemyPool(List<Enemy> templates)
+    public class EnemyPool
     {
-        _templates = templates;
+        private Dictionary<int, ObjectPool<Enemy>> _poolByTemplateId = new Dictionary<int, ObjectPool<Enemy>>();
+        private List<Enemy> _templates = new List<Enemy>();
+        private Random _random = new Random();
 
-        foreach (Enemy enemy in _templates)
+        public EnemyPool(List<Enemy> templates)
         {
-            ObjectPool<Enemy> objectPool = new ObjectPool<Enemy>(enemy);
-            _poolByTemplateId.Add(enemy.GetInstanceID(), objectPool);
-            objectPool.ObjectReturned += OnObjectReturned;
-        }
-    }
+            _templates = templates;
 
-    ~EnemyPool()
-    {
-        foreach (ObjectPool<Enemy> objectPool in _poolByTemplateId.Values)
+            foreach (Enemy enemy in _templates)
+            {
+                ObjectPool<Enemy> objectPool = new ObjectPool<Enemy>(enemy);
+                _poolByTemplateId.Add(enemy.GetInstanceID(), objectPool);
+                objectPool.ObjectReturned += OnObjectReturned;
+            }
+        }
+
+        ~EnemyPool()
         {
-            objectPool.ObjectReturned -= OnObjectReturned;
+            foreach (ObjectPool<Enemy> objectPool in _poolByTemplateId.Values)
+            {
+                objectPool.ObjectReturned -= OnObjectReturned;
+            }
         }
-    }
 
-    public event Action EnemyReturned;
+        public event Action EnemyReturned;
 
-    public Enemy GetObject()
-    {
-        int randomNumber = _random.Next(0, _templates.Count);
-        int templateId = _templates[randomNumber].GetInstanceID();
+        public Enemy GetObject()
+        {
+            int randomNumber = _random.Next(0, _templates.Count);
+            int templateId = _templates[randomNumber].GetInstanceID();
 
-        Enemy newItem = _poolByTemplateId[templateId].GetObject();
-        newItem.gameObject.SetActive(false);
+            Enemy newItem = _poolByTemplateId[templateId].GetObject();
+            newItem.gameObject.SetActive(false);
 
-        return newItem;
-    }
+            return newItem;
+        }
 
-    private void OnObjectReturned()
-    {
-        EnemyReturned?.Invoke();
+        private void OnObjectReturned()
+        {
+            EnemyReturned?.Invoke();
+        }
     }
 }

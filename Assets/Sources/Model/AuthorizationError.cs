@@ -1,22 +1,27 @@
-public class AuthorizationError
+using View.Yandex.Leaderboard;
+
+namespace Model
 {
-    private PauseService _pauseService;
-    private AuthorizationErrorView _authorizationErrorView;
-
-    public AuthorizationError(PauseService pauseService, AuthorizationErrorView authorizationErrorView)
+    public class AuthorizationError
     {
-        _pauseService = pauseService;
-        _authorizationErrorView = authorizationErrorView;
-    }
+        private PauseService _pauseService;
+        private AuthorizationErrorView _authorizationErrorView;
 
-    public void Open()
-    {
-        _pauseService.Pause(_authorizationErrorView.gameObject);
-        _authorizationErrorView.Show();
-    }
+        public AuthorizationError(PauseService pauseService, AuthorizationErrorView authorizationErrorView)
+        {
+            _pauseService = pauseService;
+            _authorizationErrorView = authorizationErrorView;
+        }
 
-    public void Close()
-    {
-        _pauseService.Unpause(_authorizationErrorView.gameObject);
+        public void Open()
+        {
+            _pauseService.Pause(_authorizationErrorView.gameObject);
+            _authorizationErrorView.Show();
+        }
+
+        public void Close()
+        {
+            _pauseService.Unpause(_authorizationErrorView.gameObject);
+        }
     }
 }

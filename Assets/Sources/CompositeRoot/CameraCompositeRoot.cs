@@ -1,12 +1,18 @@
+using Infrastructure;
 using UnityEngine;
+using View;
+using View.PlayerComponents;
 
-public class CameraCompositeRoot : CompositeRoot
+namespace Root
 {
-    [SerializeField] private Player _player;
-    [SerializeField] private CameraFollowingView _cameraFollowingView;
-
-    public override void Compose()
+    public class CameraCompositeRoot : CompositeRoot
     {
-        _cameraFollowingView.Init(_player);
+        [SerializeField] private Player _player;
+        [SerializeField] private CameraFollowingView _cameraFollowingView;
+
+        public override void Compose()
+        {
+            _cameraFollowingView.Init(_player);
+        }
     }
 }

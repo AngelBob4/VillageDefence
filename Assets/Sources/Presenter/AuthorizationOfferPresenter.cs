@@ -1,40 +1,49 @@
-public class AuthorizationOfferPresenter : IPresenter
+using Infrastructure;
+using Model;
+using View.Yandex.Leaderboard;
+
+namespace Presenter
 {
-    private AuthorizationOffer _authorizationOffer;
-    private AuthorizationOfferView _authorizationOfferView;
-
-    public AuthorizationOfferPresenter(AuthorizationOffer authorizationOffer, AuthorizationOfferView authorizationOfferView)
+    public class AuthorizationOfferPresenter : IPresenter
     {
-        _authorizationOffer = authorizationOffer;
-        _authorizationOfferView = authorizationOfferView;
-    }
+        private AuthorizationOffer _authorizationOffer;
+        private AuthorizationOfferView _authorizationOfferView;
 
-    public void Enable()
-    {
-        _authorizationOfferView.OpenButtonClicked += OnOpenButtonClicked;
-        _authorizationOfferView.AuthorizeButtonClicked += OnAuthorizeButtonClicked;
-        _authorizationOfferView.CloseButtonClicked += Close;
-    }
+        public AuthorizationOfferPresenter(
+            AuthorizationOffer authorizationOffer,
+            AuthorizationOfferView authorizationOfferView)
+        {
+            _authorizationOffer = authorizationOffer;
+            _authorizationOfferView = authorizationOfferView;
+        }
 
-    public void Disable()
-    {
-        _authorizationOfferView.OpenButtonClicked -= OnOpenButtonClicked;
-        _authorizationOfferView.AuthorizeButtonClicked -= OnAuthorizeButtonClicked;
-        _authorizationOfferView.CloseButtonClicked -= Close;
-    }
+        public void Enable()
+        {
+            _authorizationOfferView.OpenButtonClicked += OnOpenButtonClicked;
+            _authorizationOfferView.AuthorizeButtonClicked += OnAuthorizeButtonClicked;
+            _authorizationOfferView.CloseButtonClicked += Close;
+        }
 
-    private void OnAuthorizeButtonClicked()
-    {
-        _authorizationOffer.OnAuthorizeOpen();
-    } 
+        public void Disable()
+        {
+            _authorizationOfferView.OpenButtonClicked -= OnOpenButtonClicked;
+            _authorizationOfferView.AuthorizeButtonClicked -= OnAuthorizeButtonClicked;
+            _authorizationOfferView.CloseButtonClicked -= Close;
+        }
 
-    public void OnOpenButtonClicked()
-    {
-        _authorizationOffer.Open();
-    }
+        private void OnAuthorizeButtonClicked()
+        {
+            _authorizationOffer.OnAuthorizeOpen();
+        }
 
-    public void Close()
-    {
-        _authorizationOffer.Close();
+        private void OnOpenButtonClicked()
+        {
+            _authorizationOffer.Open();
+        }
+
+        private void Close()
+        {
+            _authorizationOffer.Close();
+        }
     }
 }

@@ -1,18 +1,28 @@
-using YG;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using YG;
 
-public class SDKInitializer : MonoBehaviour
+namespace View.Yandex
 {
-    private void Awake()
+    public class SDKInitializer : MonoBehaviour
     {
-        YandexGame.GetDataEvent += OnInitialized;
-    }
+        private void Awake()
+        {
+            YandexGame.GetDataEvent += OnInitialized;
+        }
 
-    private void OnInitialized()
-    {
-        YandexGame.savesData.isFirstSession = true;
-        YandexGame.SaveProgress();
-        SceneManager.LoadScene(1);
+        private void OnDestroy()
+        {
+            YandexGame.GetDataEvent -= OnInitialized;
+        }
+
+        private void OnInitialized()
+        {
+            int firstSceneIndex = 1;
+            
+            YandexGame.savesData.isFirstSession = true;
+            YandexGame.SaveProgress();
+            SceneManager.LoadScene(firstSceneIndex);
+        }
     }
 }

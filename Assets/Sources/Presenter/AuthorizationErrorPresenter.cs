@@ -1,33 +1,40 @@
-public class AuthorizationErrorPresenter : IPresenter
+using Infrastructure;
+using Model;
+using View.Yandex.Leaderboard;
+
+namespace Presenter
 {
-    private AuthorizationErrorView _authorizationErrorView;
-    private AuthorizationError _authorizationError;
-
-    public AuthorizationErrorPresenter(AuthorizationErrorView authorizationErrorView, AuthorizationError authorizationError)
+    public class AuthorizationErrorPresenter : IPresenter
     {
-        _authorizationErrorView = authorizationErrorView;
-        _authorizationError = authorizationError;
-    }
+        private AuthorizationErrorView _authorizationErrorView;
+        private AuthorizationError _authorizationError;
 
-    public void Enable()
-    {
-        _authorizationErrorView.OnOpen += OnOpen;
-        _authorizationErrorView.OnCloseButtonClicked += OnClose;
-    }
+        public AuthorizationErrorPresenter(AuthorizationErrorView authorizationErrorView, AuthorizationError authorizationError)
+        {
+            _authorizationErrorView = authorizationErrorView;
+            _authorizationError = authorizationError;
+        }
 
-    public void Disable()
-    {
-        _authorizationErrorView.OnOpen -= OnOpen;
-        _authorizationErrorView.OnCloseButtonClicked -= OnClose;
-    }
+        public void Enable()
+        {
+            _authorizationErrorView.Opening += OnOpen;
+            _authorizationErrorView.CloseButtonClicked += OnClose;
+        }
 
-    private void OnOpen()
-    {
-        _authorizationError.Open();
-    }
+        public void Disable()
+        {
+            _authorizationErrorView.Opening -= OnOpen;
+            _authorizationErrorView.CloseButtonClicked -= OnClose;
+        }
 
-    private void OnClose()
-    {
-        _authorizationError.Close();
+        private void OnOpen()
+        {
+            _authorizationError.Open();
+        }
+
+        private void OnClose()
+        {
+            _authorizationError.Close();
+        }
     }
 }

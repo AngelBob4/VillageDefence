@@ -1,26 +1,33 @@
-public class GunPresenter : IPresenter
+using Infrastructure;
+using Model;
+using Model.PlayerComponents;
+
+namespace Presenter
 {
-    private Inventory _inventory;
-    private Gun _model;
-
-    public GunPresenter(Inventory inventory, Gun model)
+    public class GunPresenter : IPresenter
     {
-        _inventory = inventory;
-        _model = model;
-    }
+        private Inventory _inventory;
+        private Gun _model;
 
-    public void Enable()
-    {
-        _inventory.BulletPickedUp += OnBulletPickedUp;
-    }
+        public GunPresenter(Inventory inventory, Gun model)
+        {
+            _inventory = inventory;
+            _model = model;
+        }
 
-    public void Disable()
-    {
-        _inventory.BulletPickedUp -= OnBulletPickedUp;
-    }
+        public void Enable()
+        {
+            _inventory.BulletPickedUp += OnBulletPickedUp;
+        }
 
-    private void OnBulletPickedUp()
-    {
-        _model.BulletPickUpSound();
+        public void Disable()
+        {
+            _inventory.BulletPickedUp -= OnBulletPickedUp;
+        }
+
+        private void OnBulletPickedUp()
+        {
+            _model.BulletPickUpSound();
+        }
     }
 }

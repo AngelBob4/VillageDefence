@@ -1,45 +1,49 @@
-using UnityEngine;
 using DG.Tweening;
+using Infrastructure;
+using UnityEngine;
 
-public class UpgradeScreenView : MonoBehaviour
+namespace View.UI
 {
-    [SerializeField] private RectTransform _panel;
-    [SerializeField] private CanvasGroup _windowGroup;
-
-    private IPresenter _presenter;
-
-    public void Init(IPresenter presenter)
+    public class UpgradeScreenView : MonoBehaviour
     {
-        gameObject.SetActive(false);
-        _presenter = presenter;
-        gameObject.SetActive(true);
-    }
+        [SerializeField] private RectTransform _panel;
+        [SerializeField] private CanvasGroup _windowGroup;
 
-    private void OnEnable()
-    {
-        _presenter.Enable();
-    }
+        private IPresenter _presenter;
 
-    private void OnDisable()
-    {
-        _presenter.Disable();
-    }
+        public void Init(IPresenter presenter)
+        {
+            gameObject.SetActive(false);
+            _presenter = presenter;
+            gameObject.SetActive(true);
+        }
 
-    public void Open(float openingDelay)
-    {
-        _windowGroup.alpha = 1f;
-        _panel.localScale = Vector3.zero;
-        _panel.DOScale(1, openingDelay).OnComplete(TurnOnRaycasts);
-    }
+        private void OnEnable()
+        {
+            _presenter.Enable();
+        }
 
-    private void TurnOnRaycasts()
-    {
-        _windowGroup.blocksRaycasts = true;
-    }
+        private void OnDisable()
+        {
+            _presenter.Disable();
+        }
 
-    public void Close()
-    {
-        _windowGroup.alpha = 0f;
-        _windowGroup.blocksRaycasts = false;
+        public void Open(float openingDelay)
+        {
+            _windowGroup.alpha = 1f;
+            _panel.localScale = Vector3.zero;
+            _panel.DOScale(1, openingDelay).OnComplete(TurnOnRaycasts);
+        }
+
+        public void Close()
+        {
+            _windowGroup.alpha = 0f;
+            _windowGroup.blocksRaycasts = false;
+        }
+
+        private void TurnOnRaycasts()
+        {
+            _windowGroup.blocksRaycasts = true;
+        }
     }
 }

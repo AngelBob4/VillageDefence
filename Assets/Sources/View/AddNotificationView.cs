@@ -1,49 +1,53 @@
-using Cysharp.Threading.Tasks;
 using System;
-using System.Collections;
+using Infrastructure;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using View.Yandex;
 using YG;
 
-public class AddNotificationView : MonoBehaviour
+namespace View
 {
-    [SerializeField] private Text _timeToStartAdd;
-
-    private IPresenter _presenter;
-    private WaitForSeconds _delay = new WaitForSeconds(1f);
-
-    public void Init(IPresenter presenter)
+    public class AddNotificationView : MonoBehaviour
     {
-        _presenter = presenter;
-    }
+        [SerializeField] private Text _timeToStartAdd;
 
-    private void OnEnable()
-    {
-        YandexGame.CloseFullAdEvent += OnCloseFullAdEvent;
-        _presenter.Enable();
-        StartNotification();
-    }
+        private IPresenter _presenter;
+        private float _delay = 1f;
 
-    private void OnDisable()
-    {
-        YandexGame.CloseFullAdEvent -= OnCloseFullAdEvent;
-        _presenter.Disable();
-    }
-
-    private void OnCloseFullAdEvent()
-    {
-        gameObject.SetActive(false);
-    }
-
-    private async void StartNotification()
-    {
-        float timeToAdd = Constants.ADD_NOTIFICATION_DELAY;
-
-        while (timeToAdd > 0)
+        public void Init(IPresenter presenter)
         {
-            _timeToStartAdd.text = timeToAdd.ToString();
-            await UniTask.Delay(TimeSpan.FromSeconds(1f), ignoreTimeScale: true);
-            timeToAdd--;
+            _presenter = presenter;
+        }
+
+        private void OnEnable()
+        {
+            YandexGame.CloseFullAdEvent += OnCloseFullAdEvent;
+            _presenter.Enable();
+            StartNotification();
+        }
+
+        private void OnDisable()
+        {
+            YandexGame.CloseFullAdEvent -= OnCloseFullAdEvent;
+            _presenter.Disable();
+        }
+
+        private void OnCloseFullAdEvent()
+        {
+            gameObject.SetActive(false);
+        }
+
+        private async void StartNotification()
+        {
+            float timeToAdd = Constants.AddNotificationDelay;
+
+            while (timeToAdd > 0)
+            {
+                _timeToStartAdd.text = timeToAdd.ToString();
+                await UniTask.Delay(TimeSpan.FromSeconds(_delay), ignoreTimeScale: true);
+                timeToAdd--;
+            }
         }
     }
 }

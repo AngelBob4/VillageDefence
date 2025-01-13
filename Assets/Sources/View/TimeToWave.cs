@@ -1,21 +1,24 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Text))]
-public class TimeToWave : MonoBehaviour
+namespace View
 {
-    private Text _text;
-
-    private void Awake()
+    [RequireComponent(typeof(Text))]
+    public class TimeToWave : MonoBehaviour
     {
-        _text = GetComponent<Text>();
-    }
+        private Text _text;
 
-    public void ResetTime(float time)
-    {
-        if (time <= 0)
-            _text.text = "";
-        else
-            _text.text = ((int)time).ToString();
+        private void Awake()
+        {
+            _text = GetComponent<Text>();
+        }
+
+        public void ResetTime(float time)
+        {
+            if (time <= 0)
+                _text.text = string.Empty;
+            else
+                _text.text = ((int)time).ToString();
+        }
     }
 }

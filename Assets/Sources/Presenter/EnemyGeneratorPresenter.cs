@@ -1,73 +1,79 @@
-using Cysharp.Threading.Tasks;
 using System;
-using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Infrastructure;
+using Model.EnemyComponents;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class EnemyGeneratorPresenter : IPresenter
+namespace Presenter
 {
-    private EnemyPool _enemyPool;
-    private EnemyGenerator _enemyGenerator;
-    private Game _game;
-    private Text _waveCompleted;
-    private int _requiredQuantity = 0;
-    private int _releasedEnemies = 0;
-
-    public int ReleasedEnemies => _releasedEnemies;
-
-    public EnemyGeneratorPresenter(EnemyPool enemyPool, Game game, EnemyGenerator enemyGenerator, Text waveCompleted)
+    public class EnemyGeneratorPresenter : IPresenter
     {
-        _waveCompleted = waveCompleted;
-        _enemyGenerator = enemyGenerator;
-        _enemyPool = enemyPool;
-        _game = game;
-        Enable();
-    }
+        private EnemyPool _enemyPool;
+        private EnemyGenerator _enemyGenerator;
+        private Game _game;
+        private Text _waveCompleted;
+        private int _requiredQuantity = 0;
+        private int _releasedEnemies = 0;
 
-    public void Enable()
-    {
-        _enemyPool.EnemyReturned += Release;
-    }
-
-    public void Disable()
-    {
-        _enemyPool.EnemyReturned -= Release;
-    }
-
-    public void Release()
-    {
-        _releasedEnemies++;
-        _game.AddScore();
-        _enemyGenerator.ResetProgressionSlider();
-
-        if (_requiredQuantity == _releasedEnemies)
+        public EnemyGeneratorPresenter(EnemyPool enemyPool, Game game, EnemyGenerator enemyGenerator, Text waveCompleted)
         {
-            EndWave();
+            _waveCompleted = waveCompleted;
+            _enemyGenerator = enemyGenerator;
+            _enemyPool = enemyPool;
+            _game = game;
+            Enable();
         }
-    }
 
-    public void Reset(int requiredQuantity)
-    {
-        if (requiredQuantity >= 0)
+        public int ReleasedEnemies => _releasedEnemies;
+
+        public void Enable()
         {
-            _releasedEnemies = 0;
-            _requiredQuantity = requiredQuantity;
+            _enemyPool.EnemyReturned += Release;
         }
-    }
 
-    private async void EndWave()
-    {
-        float textDelay = 1f;
+        public void Disable()
+        {
+            _enemyPool.EnemyReturned -= Release;
+        }
 
-        _waveCompleted.gameObject.SetActive(true);
-        _waveCompleted.rectTransform.localScale = Vector3.zero;
-        _waveCompleted.rectTransform.DOScale(1f, textDelay);
-        await UniTask.Delay(TimeSpan.FromSeconds(textDelay), ignoreTimeScale: false);
-        _waveCompleted.rectTransform.DOScale(0f, textDelay);
-        await UniTask.Delay(TimeSpan.FromSeconds(textDelay/2), ignoreTimeScale: false);
+        public void Reset(int requiredQuantity)
+        {
+            if (requiredQuantity >= 0)
+            {
+                _releasedEnemies = 0;
+                _requiredQuantity = requiredQuantity;
+            }
+        }
 
-        _game.OpenUpgradeScreen(1f);
-        await UniTask.Delay(TimeSpan.FromSeconds(2), ignoreTimeScale: false);
-        _enemyGenerator.EndWave();
+        private void Release()
+        {
+            _releasedEnemies++;
+            _game.AddScore();
+            _enemyGenerator.ResetProgressionSlider();
+
+            if (_requiredQuantity == _releasedEnemies)
+            {
+                EndWave();
+            }
+        }
+
+        private async void EndWave()
+        {
+            float textDelay = 1f;
+            float closingTimeScale = 2f;
+
+            _waveCompleted.gameObject.SetActive(true);
+            _waveCompleted.rectTransform.localScale = Vector3.zero;
+            _waveCompleted.rectTransform.DOScale(1f, textDelay);
+            await UniTask.Delay(TimeSpan.FromSeconds(textDelay), ignoreTimeScale: false);
+            _waveCompleted.rectTransform.DOScale(0f, textDelay);
+            await UniTask.Delay(TimeSpan.FromSeconds(textDelay / closingTimeScale), ignoreTimeScale: false);
+
+            _game.OpenUpgradeScreen(textDelay);
+            await UniTask.Delay(TimeSpan.FromSeconds(2), ignoreTimeScale: false);
+            _enemyGenerator.EndWave();
+        }
     }
 }

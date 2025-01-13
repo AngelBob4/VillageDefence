@@ -1,5 +1,8 @@
-public interface IPresenter
+namespace Infrastructure
 {
-    void Enable();
-    void Disable();
+    public interface IPresenter
+    {
+        void Enable();
+        void Disable();
+    }
 }

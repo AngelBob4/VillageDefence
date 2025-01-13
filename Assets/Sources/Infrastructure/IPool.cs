@@ -1,4 +1,7 @@
-public interface IPool
+namespace Infrastructure
 {
-    public void Release(IPoolable item);
+    public interface IPool
+    {
+        public void Release(IPoolable item);
+    }
 }

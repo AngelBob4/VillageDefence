@@ -1,48 +1,52 @@
-using System;
-using UnityEngine.SceneManagement;
+using View.Yandex.Leaderboard;
 using YG;
 
-public class AuthorizationOffer
+namespace Model
 {
-    private AuthorizationOfferView _authorizationOfferView;
-    private AuthorizationError _authorizationError;
-    private PauseService _pauseService;
-
-    public AuthorizationOffer(AuthorizationOfferView authorizationOfferView, PauseService pauseService, AuthorizationError authorizationError)
+    public class AuthorizationOffer
     {
-        _authorizationOfferView = authorizationOfferView;
-        _pauseService = pauseService;
-        _authorizationError = authorizationError;
-    }
+        private AuthorizationOfferView _authorizationOfferView;
+        private AuthorizationError _authorizationError;
+        private PauseService _pauseService;
 
-    public void Open()
-    {
-        _pauseService.Pause(_authorizationOfferView.gameObject);
-        _authorizationOfferView.Show();
-        YandexGame.Instance.ResolvedAuthorization.AddListener(OnAuthorizeSuccess);
-        YandexGame.Instance.RejectedAuthorization.AddListener(OnAuthorizeError);
-    }
+        public AuthorizationOffer(AuthorizationOfferView authorizationOfferView,
+            PauseService pauseService,
+            AuthorizationError authorizationError)
+        {
+            _authorizationOfferView = authorizationOfferView;
+            _pauseService = pauseService;
+            _authorizationError = authorizationError;
+        }
 
-    public void Close()
-    {
-        _pauseService.Unpause(_authorizationOfferView.gameObject);
-        _authorizationOfferView.Hide();
-        YandexGame.Instance.ResolvedAuthorization.RemoveListener(OnAuthorizeSuccess);
-        YandexGame.Instance.RejectedAuthorization.RemoveListener(OnAuthorizeError);
-    }
+        public void Open()
+        {
+            _pauseService.Pause(_authorizationOfferView.gameObject);
+            _authorizationOfferView.Show();
+            YandexGame.Instance.ResolvedAuthorization.AddListener(OnAuthorizeSuccess);
+            YandexGame.Instance.RejectedAuthorization.AddListener(OnAuthorizeError);
+        }
 
-    public void OnAuthorizeOpen()
-    {
-        YandexGame.AuthDialog();
-    }
+        public void Close()
+        {
+            _pauseService.Unpause(_authorizationOfferView.gameObject);
+            _authorizationOfferView.Hide();
+            YandexGame.Instance.ResolvedAuthorization.RemoveListener(OnAuthorizeSuccess);
+            YandexGame.Instance.RejectedAuthorization.RemoveListener(OnAuthorizeError);
+        }
 
-    public void OnAuthorizeSuccess()
-    {
-        Close();
-    }
+        public void OnAuthorizeOpen()
+        {
+            YandexGame.AuthDialog();
+        }
 
-    public void OnAuthorizeError()
-    {
-        Close();
+        public void OnAuthorizeSuccess()
+        {
+            Close();
+        }
+
+        public void OnAuthorizeError()
+        {
+            Close();
+        }
     }
 }

@@ -1,54 +1,65 @@
+using Infrastructure;
 using System.Collections;
 using UnityEngine;
+using View.PlayerComponents;
 
-public class BulletGeneratorView : Generator
+namespace View.Generators
 {
-    private Bullet _template;
-    private Player _player;
-
-    private int _maxBulletsAmount = 15;
-    private float _delay = 1f;
-    private float _spawnRadius = 7f;
-
-    private BulletPool _bulletPool;
-    private WaitForSeconds _spawnDelay;
-    private Coroutine _currentCoroutine;
-
-    public void Init(Bullet template, Player player)
+    public class BulletGeneratorView : Generator
     {
-        _template = template;
-        _player = player;
-        _bulletPool = new BulletPool(_template, _maxBulletsAmount);
-        _spawnDelay = new WaitForSeconds(_delay);
-        StartGeneration();
-    }
+        private Bullet _template;
+        private Player _player;
 
-    public void StartGeneration()
-    {
-        if (_currentCoroutine == null)
-            _currentCoroutine = StartCoroutine(GenerateBullets());
-    }
+        private int _maxBulletsAmount = 15;
+        private float _delay = 1f;
+        private float _spawnRadius = 7f;
 
-    public void EndGeneration()
-    {
-        StopCoroutine(_currentCoroutine);
-    }
+        private BulletPool _bulletPool;
+        private WaitForSeconds _spawnDelay;
+        private Coroutine _currentCoroutine;
 
-    private IEnumerator GenerateBullets()
-    {
-        while (_player.Health > 0)
+        public void Init(Bullet template, Player player)
         {
-            Bullet newBullet = _bulletPool.GetObject();
+            _template = template;
+            _player = player;
+            _bulletPool = new BulletPool(_template, _maxBulletsAmount);
+            _spawnDelay = new WaitForSeconds(_delay);
+            StartGeneration();
+        }
 
-            if (newBullet != null)
+        public void StartGeneration()
+        {
+            if (_currentCoroutine == null)
+                _currentCoroutine = StartCoroutine(GenerateBullets());
+        }
+
+        public void EndGeneration()
+        {
+            StopCoroutine(_currentCoroutine);
+        }
+
+        private IEnumerator GenerateBullets()
+        {
+            int minRotationAngle = 0;
+            int maxRotationAngle = 360;
+
+            while (_player.Health > 0)
             {
-                SetPositionOnRadius(newBullet.gameObject, _spawnRadius, _player);
-                Quaternion randomRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
-                newBullet.transform.rotation = randomRotation;
-                newBullet.Reset();
-            }
+                Bullet newBullet = _bulletPool.GetObject();
 
-            yield return _spawnDelay;
+                if (newBullet != null)
+                {
+                    SetPositionOnRadius(newBullet.gameObject, _spawnRadius, _player);
+                    Quaternion randomRotation = Quaternion.Euler(
+                        0,
+                        Random.Range(minRotationAngle, maxRotationAngle),
+                        0);
+                    newBullet.transform.rotation = randomRotation;
+                    newBullet.Reset();
+                }
+
+                yield return _spawnDelay;
+            }
         }
     }
 }

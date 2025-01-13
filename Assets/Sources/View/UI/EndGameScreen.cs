@@ -1,129 +1,137 @@
-using System;
-using UnityEngine.UI;
-using UnityEngine;
 using DG.Tweening;
+using Infrastructure;
+using System;
+using UnityEngine;
+using UnityEngine.UI;
+using View.PlayerComponents;
 using YG;
 
-public class EndGameScreen : MonoBehaviour
+namespace View.UI
 {
-    [SerializeField] private Button _rewardConfirmationConfirmButton;
-    [SerializeField] private Button _rewardConfirmationRejectButton;
-    [SerializeField] private GameObject _rewardConfirmation;
-
-    [SerializeField] private Button _rewardAdvertisementButton;
-    [SerializeField] private GameObject _rewardAdvertisement;
-    [SerializeField] private GameObject _advertisementLoadingPanel;
-    [SerializeField] private Player _player;
-
-    [SerializeField] private CanvasGroup _windowGroup;
-    [SerializeField] private Button _restartGameButton;
-    [SerializeField] private RectTransform _panel;
-    [SerializeField] private Text _score;
-    [SerializeField] private Text _waveComplited;
-
-    private bool _rewardReceived = false;
-    private IPresenter _presenter;
-
-    public event Action RestartButtonClicked;
-    public event Action ScreenOpened;
-
-    public void Init(IPresenter presenter)
+    public class EndGameScreen : MonoBehaviour
     {
-        gameObject.SetActive(false);
-        _presenter = presenter;
-        gameObject.SetActive(true);
-    }
+        [SerializeField] private Button _rewardConfirmationConfirmButton;
+        [SerializeField] private Button _rewardConfirmationRejectButton;
+        [SerializeField] private GameObject _rewardConfirmation;
 
-    private void OnEnable()
-    {
-        YandexGame.RewardVideoEvent += Rewarded;
-        YandexGame.CloseVideoEvent += CloseRewardVideo;
-        _presenter?.Enable();
-        _restartGameButton.onClick.AddListener(OnButtonClick);
-        _rewardAdvertisementButton.onClick.AddListener(OpenRewardConfirmation);
-        _rewardConfirmationConfirmButton.onClick.AddListener(StartRewardVideo);
-        _rewardConfirmationRejectButton.onClick.AddListener(CloseRewardConfirmation);
-    }
+        [SerializeField] private Button _rewardAdvertisementButton;
+        [SerializeField] private GameObject _rewardAdvertisement;
+        [SerializeField] private GameObject _advertisementLoadingPanel;
+        [SerializeField] private Player _player;
 
-    private void OnDisable()
-    {
-        YandexGame.RewardVideoEvent -= Rewarded;
-        YandexGame.CloseVideoEvent -= CloseRewardVideo;
-        _presenter?.Disable();
-        _restartGameButton.onClick.RemoveListener(OnButtonClick);
-        _rewardAdvertisementButton.onClick.RemoveListener(OpenRewardConfirmation);
-        _rewardConfirmationConfirmButton.onClick.RemoveListener(StartRewardVideo);
-        _rewardConfirmationRejectButton.onClick.RemoveListener(CloseRewardConfirmation);
-    }
+        [SerializeField] private CanvasGroup _windowGroup;
+        [SerializeField] private Button _restartGameButton;
+        [SerializeField] private RectTransform _panel;
+        [SerializeField] private Text _score;
+        [SerializeField] private Text _waveComplited;
 
-    private void OnButtonClick()
-    {
-        RestartButtonClicked?.Invoke();
-    }
+        private bool _rewardReceived = false;
+        private IPresenter _presenter;
 
-    private void OpenRewardConfirmation()
-    {
-        Close();
-        _rewardConfirmation.SetActive(true);
-    }
+        public event Action RestartButtonClicked;
+        public event Action ScreenOpened;
 
-    private void CloseRewardConfirmation()
-    {
-        _windowGroup.alpha = 1f;
-        _windowGroup.blocksRaycasts = true;
-        _rewardConfirmation.SetActive(false);
-    }
-
-    public void Open(float delay, int score, int waves)
-    {
-        if (_rewardReceived)
+        public void Init(IPresenter presenter)
         {
-            _rewardAdvertisement.SetActive(false);
+            gameObject.SetActive(false);
+            _presenter = presenter;
+            gameObject.SetActive(true);
         }
 
-        _score.text = score.ToString();
-        _waveComplited.text = (waves - 1).ToString();
+        private void OnEnable()
+        {
+            YandexGame.RewardVideoEvent += Rewarded;
+            YandexGame.CloseVideoEvent += CloseRewardVideo;
+            _presenter?.Enable();
+            _restartGameButton.onClick.AddListener(OnButtonClick);
+            _rewardAdvertisementButton.onClick.AddListener(OpenRewardConfirmation);
+            _rewardConfirmationConfirmButton.onClick.AddListener(StartRewardVideo);
+            _rewardConfirmationRejectButton.onClick.AddListener(CloseRewardConfirmation);
+        }
 
-        _windowGroup.alpha = 1f;
-        _panel.localScale = Vector3.zero;
-        _panel.DOScale(1, delay).SetUpdate(true).SetLink(_panel.gameObject).OnComplete(CompleteScreenOpening);
-    }
+        private void OnDisable()
+        {
+            YandexGame.RewardVideoEvent -= Rewarded;
+            YandexGame.CloseVideoEvent -= CloseRewardVideo;
+            _presenter?.Disable();
+            _restartGameButton.onClick.RemoveListener(OnButtonClick);
+            _rewardAdvertisementButton.onClick.RemoveListener(OpenRewardConfirmation);
+            _rewardConfirmationConfirmButton.onClick.RemoveListener(StartRewardVideo);
+            _rewardConfirmationRejectButton.onClick.RemoveListener(CloseRewardConfirmation);
+        }
 
-    private void CompleteScreenOpening()
-    {
-        _windowGroup.blocksRaycasts = true;
-        ScreenOpened?.Invoke();
-    }
+        public void Open(float delay, int score, int waves)
+        {
+            if (_rewardReceived)
+            {
+                _rewardAdvertisement.SetActive(false);
+            }
 
-    private void StartRewardVideo()
-    {
-        _advertisementLoadingPanel.SetActive(true);
-        YandexGame.RewVideoShow(0);
-    }
+            string waveComplitedText = (waves - 1).ToString();
+            string scoreText = score.ToString();
 
-    private void Rewarded(int id)
-    {
-        _rewardReceived = true;
-        _player.Revive(); 
-        Close();
-        _advertisementLoadingPanel.SetActive(false);
-        _rewardConfirmation.SetActive(false);
-    }
+            _score.text = scoreText;
+            _waveComplited.text = waveComplitedText;
 
-    private void Close()
-    {
-        _windowGroup.alpha = 0f;
-        _windowGroup.blocksRaycasts = false;
-    }
+            _windowGroup.alpha = 1f;
+            _panel.localScale = Vector3.zero;
+            _panel.DOScale(1, delay).SetUpdate(true).SetLink(_panel.gameObject).OnComplete(CompleteScreenOpening);
+        }
 
-    private void CloseRewardVideo()
-    {
-        if (_rewardReceived)
-            return;
+        private void OnButtonClick()
+        {
+            RestartButtonClicked?.Invoke();
+        }
 
-        _windowGroup.blocksRaycasts = true;
-        _windowGroup.alpha = 1f;
-        _advertisementLoadingPanel.SetActive(false);
-        _rewardConfirmation.SetActive(false);
+        private void OpenRewardConfirmation()
+        {
+            Close();
+            _rewardConfirmation.SetActive(true);
+        }
+
+        private void CloseRewardConfirmation()
+        {
+            _windowGroup.alpha = 1f;
+            _windowGroup.blocksRaycasts = true;
+            _rewardConfirmation.SetActive(false);
+        }
+
+        private void CompleteScreenOpening()
+        {
+            _windowGroup.blocksRaycasts = true;
+            ScreenOpened?.Invoke();
+        }
+
+        private void StartRewardVideo()
+        {
+            _advertisementLoadingPanel.SetActive(true);
+            YandexGame.RewVideoShow(0);
+        }
+
+        private void Rewarded(int id)
+        {
+            _rewardReceived = true;
+            _player.Revive();
+            Close();
+            _advertisementLoadingPanel.SetActive(false);
+            _rewardConfirmation.SetActive(false);
+        }
+
+        private void Close()
+        {
+            _windowGroup.alpha = 0f;
+            _windowGroup.blocksRaycasts = false;
+        }
+
+        private void CloseRewardVideo()
+        {
+            if (_rewardReceived)
+                return;
+
+            _windowGroup.blocksRaycasts = true;
+            _windowGroup.alpha = 1f;
+            _advertisementLoadingPanel.SetActive(false);
+            _rewardConfirmation.SetActive(false);
+        }
     }
 }

@@ -1,41 +1,44 @@
-using YG;
+using Lean.Localization;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 using YG.Utils.LB;
-using Lean.Localization;
 
-public class AuthorizationChecker : MonoBehaviour
+namespace View.Yandex
 {
-    [SerializeField] private GameObject _AuthorizationButton;
-    [SerializeField] private Text _name;
-    [SerializeField] private LeanLocalizedText _leanLocalizedText;
-
-    private void Awake()
+    public class AuthorizationChecker : MonoBehaviour
     {
-        YandexGame.onGetLeaderboard += Check;
-    }
+        [SerializeField] private GameObject _AuthorizationButton;
+        [SerializeField] private Text _name;
+        [SerializeField] private LeanLocalizedText _leanLocalizedText;
 
-    private void OnDestroy()
-    {
-        YandexGame.onGetLeaderboard -= Check;
-    }
-
-    public void Check(LBData data)
-    {
-        if (YandexGame.auth)
+        private void Awake()
         {
-            _AuthorizationButton.SetActive(false);
+            YandexGame.onGetLeaderboard += Check;
+        }
 
-            string name = YandexGame.playerName;
+        private void OnDestroy()
+        {
+            YandexGame.onGetLeaderboard -= Check;
+        }
 
-            if (string.IsNullOrEmpty(name))
+        public void Check(LBData data)
+        {
+            if (YandexGame.auth)
             {
-                _leanLocalizedText.enabled = true;
-            }
-            else
-            {
-                _leanLocalizedText.enabled = false;
-                _name.text = name;
+                _AuthorizationButton.SetActive(false);
+
+                string name = YandexGame.playerName;
+
+                if (string.IsNullOrEmpty(name))
+                {
+                    _leanLocalizedText.enabled = true;
+                }
+                else
+                {
+                    _leanLocalizedText.enabled = false;
+                    _name.text = name;
+                }
             }
         }
     }

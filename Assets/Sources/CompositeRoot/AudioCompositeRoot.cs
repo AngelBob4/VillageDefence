@@ -1,12 +1,18 @@
+using Infrastructure;
 using UnityEngine;
+using View;
+using View.UI;
 
-public class AudioCompositeRoot : CompositeRoot
+namespace Root
 {
-    [SerializeField] private GameAudio _gameAudio;
-    [SerializeField] private AudioButton _audioButton;
-
-    public override void Compose()
+    public class AudioCompositeRoot : CompositeRoot
     {
-        _audioButton.Init(_gameAudio);
+        [SerializeField] private GameAudio _gameAudio;
+        [SerializeField] private AudioButton _audioButton;
+
+        public override void Compose()
+        {
+            _audioButton.Init(_gameAudio);
+        }
     }
 }

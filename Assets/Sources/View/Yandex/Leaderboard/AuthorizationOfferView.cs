@@ -1,54 +1,72 @@
+using Infrastructure;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using YG;
 
-public class AuthorizationOfferView : MonoBehaviour
+namespace View.Yandex.Leaderboard
 {
-    [SerializeField] private Button _closeButton;
-    [SerializeField] private Button _openButton;
-    [SerializeField] private Button _authorizeButton;
-    [SerializeField] private AuthorizationChecker _authorizationChecker;
-    [SerializeField] private GameObject _container;
-
-    private IPresenter _presenter;
-
-    public event Action AuthorizeButtonClicked;
-    public event Action OpenButtonClicked;
-    public event Action CloseButtonClicked;
-        
-    public void Init(IPresenter presenter)
+    public class AuthorizationOfferView : MonoBehaviour
     {
-        gameObject.SetActive(false);
-        _presenter = presenter;
-        gameObject.SetActive(true);
-    }
+        [SerializeField] private Button _closeButton;
+        [SerializeField] private Button _openButton;
+        [SerializeField] private Button _authorizeButton;
+        [SerializeField] private AuthorizationChecker _authorizationChecker;
+        [SerializeField] private GameObject _container;
 
-    private void Awake()
-    {
-        _openButton.onClick.AddListener(OnOpen);
-        _closeButton.onClick.AddListener(OnClose);
-        _authorizeButton.onClick.AddListener(OnAuthorizeButtonClick);
-    }
+        private IPresenter _presenter;
 
-    private void OnDestroy()
-    {
-        _openButton.onClick.RemoveListener(OnOpen);
-        _closeButton.onClick.RemoveListener(OnClose);
-        _authorizeButton.onClick.RemoveListener(OnAuthorizeButtonClick);
-    }
+        public event Action AuthorizeButtonClicked;
+        public event Action OpenButtonClicked;
+        public event Action CloseButtonClicked;
 
-    private void OnEnable() => _presenter.Enable();
+        public void Init(IPresenter presenter)
+        {
+            gameObject.SetActive(false);
+            _presenter = presenter;
+            gameObject.SetActive(true);
+        }
 
-    private void OnDisable() => _presenter.Disable();
+        private void Awake()
+        {
+            _openButton.onClick.AddListener(OnOpen);
+            _closeButton.onClick.AddListener(OnClose);
+            _authorizeButton.onClick.AddListener(OnAuthorizeButtonClick);
+        }
 
-    public void Show() => _container.SetActive(true);
-    public void Hide() => _container.SetActive(false);
-    private void OnOpen() => OpenButtonClicked?.Invoke();
-    private void OnClose() => CloseButtonClicked?.Invoke();
+        private void OnDestroy()
+        {
+            _openButton.onClick.RemoveListener(OnOpen);
+            _closeButton.onClick.RemoveListener(OnClose);
+            _authorizeButton.onClick.RemoveListener(OnAuthorizeButtonClick);
+        }
 
-    private void OnAuthorizeButtonClick()
-    {
-        AuthorizeButtonClicked?.Invoke();
+        private void OnEnable() => _presenter.Enable();
+
+        private void OnDisable() => _presenter.Disable();
+
+        public void Show()
+        {
+            _container.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            _container.SetActive(false);
+        }
+
+        private void OnOpen()
+        {
+            OpenButtonClicked?.Invoke();
+        }
+
+        private void OnClose()
+        {
+            CloseButtonClicked?.Invoke();
+        }
+
+        private void OnAuthorizeButtonClick()
+        {
+            AuthorizeButtonClicked?.Invoke();
+        }
     }
 }
